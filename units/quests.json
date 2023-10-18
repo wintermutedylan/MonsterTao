@@ -1,0 +1,263 @@
+[
+    {
+        "name": "Reach 300k CP",
+        "number": "1",
+        "type": "CP",
+        "requirement": 300000,
+        "rewardtype": "unit",
+        "reward": "Starter Dupe",
+        "rewardMessage": ""
+    },
+    {
+        "name": "Reach 400k CP",
+        "number": "2",
+        "type": "CP",
+        "requirement": 400000,
+        "rewardtype": "unit",
+        "reward": "Starter Dupe",
+        "rewardMessage": ""
+    },
+    {
+        "name": "Reach 500k CP",
+        "number": "3",
+        "type": "CP",
+        "requirement": 500000,
+        "rewardtype": "unit",
+        "reward": "Starter Dupe",
+        "rewardMessage": ""
+    },
+    {
+        "name": "Reach 600k CP",
+        "number": "4",
+        "type": "CP",
+        "requirement": 600000,
+        "rewardtype": "unit",
+        "reward": "Starter Dupe",
+        "rewardMessage": ""
+    },
+    {
+        "name": "Reach 700k CP",
+        "number": "5",
+        "type": "CP",
+        "requirement": 700000,
+        "rewardtype": "unit",
+        "reward": "Starter Dupe",
+        "rewardMessage": ""
+    },
+    {
+        "name": "Awaken Your Starter",
+        "number": "6",
+        "type": "Awaken Starter",
+        "requirement": 5,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": ""
+    },
+    {
+        "name": "Collect Milims",
+        "number": "Milim",
+        "type": "Collect",
+        "requirement": 5,
+        "rewardtype": "bootao",
+        "reward": "10000",
+        "rewardMessage": ""
+    },
+    {
+        "name": "Win a Raid",
+        "number": "7",
+        "type": "Total Raids Won",
+        "requirement": 1,
+        "rewardtype": "bootao",
+        "reward": "50",
+        "rewardMessage": "Congrats you've been rewarded 50<:bootaomonez:909294739197681754> for completing 1 raid. Next milestone: 5 raids"
+    },
+    {
+        "name": "Win 5 Raids",
+        "number": "8",
+        "type": "Total Raids Won",
+        "requirement": 5,
+        "rewardtype": "bootao",
+        "reward": "100",
+        "rewardMessage": "Congrats you've been rewarded 100<:bootaomonez:909294739197681754> for completing 5 raids. Next milestone: 50 raids"
+    },
+    {
+        "name": "Win 50 Raids",
+        "number": "9",
+        "type": "Total Raids Won",
+        "requirement": 50,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 50 raids. Next milestone: 100 raids"
+    },
+    {
+        "name": "Win 100 Raids",
+        "number": "10",
+        "type": "Total Raids Won",
+        "requirement": 100,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 100 raids. Next milestone: 150 raids"
+    },
+    {
+        "name": "Win 150 Raids",
+        "number": "11",
+        "type": "Total Raids Won",
+        "requirement": 150,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 150 raids. Next milestone: 200 raids"
+    },
+    {
+        "name": "Win 200 Raids",
+        "number": "12",
+        "type": "Total Raids Won",
+        "requirement": 200,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 200 raids. Next milestone: 250 raids"
+    },
+    {
+        "name": "Win 250 Raids",
+        "number": "13",
+        "type": "Total Raids Won",
+        "requirement": 250,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 250 raids. Next milestone: 300 raids"
+    },
+    {
+        "name": "Win 300 Raids",
+        "number": "14",
+        "type": "Total Raids Won",
+        "requirement": 300,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 300 raids. Next milestone: 350 raids"
+    },
+    {
+        "name": "Win 350 Raids",
+        "number": "15",
+        "type": "Total Raids Won",
+        "requirement": 350,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 350 raids. Next milestone: 400 raids"
+    },
+    {
+        "name": "Win 400 Raids",
+        "number": "16",
+        "type": "Total Raids Won",
+        "requirement": 400,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 400 raids. Next milestone: 450 raids"
+    },
+    {
+        "name": "Win 450 Raids",
+        "number": "17",
+        "type": "Total Raids Won",
+        "requirement": 450,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 450 raids. Next milestone: 500 raids"
+    },
+    {
+        "name": "Win 500 Raids",
+        "number": "18",
+        "type": "Total Raids Won",
+        "requirement": 500,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 500 raids. Next milestone: 550 raids"
+    },
+    {
+        "name": "Win 550 Raids",
+        "number": "19",
+        "type": "Total Raids Won",
+        "requirement": 550,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 550 raids. Next milestone: 600 raids"
+    },
+    {
+        "name": "Win 600 Raids",
+        "number": "20",
+        "type": "Total Raids Won",
+        "requirement": 600,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 600 raids. Next milestone: 650 raids"
+    },
+    {
+        "name": "Win 650 Raids",
+        "number": "21",
+        "type": "Total Raids Won",
+        "requirement": 650,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 650 raids. Next milestone: 700 raids"
+    },
+    {
+        "name": "Win 700 Raids",
+        "number": "22",
+        "type": "Total Raids Won",
+        "requirement": 700,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 700 raids. Next milestone: 750 raids"
+    },
+    {
+        "name": "Win 750 Raids",
+        "number": "23",
+        "type": "Total Raids Won",
+        "requirement": 750,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 750 raids. Next milestone: 800 raids"
+    },
+    {
+        "name": "Win 800 Raids",
+        "number": "24",
+        "type": "Total Raids Won",
+        "requirement": 800,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 800 raids. Next milestone: 850 raids"
+    },
+    {
+        "name": "Win 850 Raids",
+        "number": "25",
+        "type": "Total Raids Won",
+        "requirement": 850,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 850 raids. Next milestone: 900 raids"
+    },
+    {
+        "name": "Win 900 Raids",
+        "number": "26",
+        "type": "Total Raids Won",
+        "requirement": 900,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 900 raids. Next milestone: 950 raids"
+    },
+    {
+        "name": "Win 950 Raids",
+        "number": "27",
+        "type": "Total Raids Won",
+        "requirement": 950,
+        "rewardtype": "bootao",
+        "reward": "500",
+        "rewardMessage": "Congrats you've been rewarded 500<:bootaomonez:909294739197681754> for completing 950 raids. Next milestone: 1000 raids"
+    },
+    {
+        "name": "Win 1000 Raids",
+        "number": "28",
+        "type": "Total Raids Won",
+        "requirement": 1000,
+        "rewardtype": "bootao",
+        "reward": "1000",
+        "rewardMessage": "Congrats you've been rewarded 1000<:bootaomonez:909294739197681754> for completing 1000 raids. Next milestone: 1100 raids"
+    }
+]

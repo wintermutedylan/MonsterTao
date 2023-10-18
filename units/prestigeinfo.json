@@ -1,0 +1,32 @@
+[
+    {
+        "level": 0,
+        "cpCap": 20000000,
+        "raidCap": 20,
+        "raidBonus": 0
+    },
+    {
+        "level": 1,
+        "cpCap": 40000000,
+        "raidCap": 20,
+        "raidBonus": 3
+    },
+    {
+        "level": 2,
+        "cpCap": 60000000,
+        "raidCap": 30,
+        "raidBonus": 5
+    },
+    {
+        "level": 3,
+        "cpCap": 80000000,
+        "raidCap": 30,
+        "raidBonus": 7
+    },
+    {
+        "level": 4,
+        "cpCap": 100000000,
+        "raidCap": 40,
+        "raidBonus": 10
+    }
+]
