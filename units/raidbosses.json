@@ -1,12 +1,14 @@
 [
     {
-        "id": "Battle Mode Milim: Destroyer of Worlds",
+        "id": "Oak",
         "units": [{
-            "id": "Milim",
+            "id": "Clayman",
             "level": 5,
-            "attack": 8,
+            "attack": 5,
             "defense": 15,
-            "health": 35
+            "health": 35,
+            "currentHealth": 35,
+            "moves": ["Tackle", "Scratch"]
         }],
         "coinReward": 10
 
