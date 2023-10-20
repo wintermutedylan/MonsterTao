@@ -14,5 +14,21 @@
 
         
         
+    },
+    {
+        "id": "Jampuppy",
+        "units": [{
+            "id": "Deoxys-Speed",
+            "level": 5,
+            "attack": 5,
+            "defense": 15,
+            "health": 35,
+            "currentHealth": 35,
+            "moves": ["Tackle", "Scratch"]
+        }],
+        "coinReward": 10
+
+        
+        
     }
 ]

@@ -1,12 +1,16 @@
 [
     {
         "name": "Tackle",
-        "power": "1"
+        "element": "Normal",
+        "type": "Physical",
+        "power": "100"
         
     },
     {
         "name": "Scratch",
-        "power": "0.90"
+        "element": "Normal",
+        "type": "Physical",
+        "power": "90"
         
     }
     

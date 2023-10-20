@@ -1,10 +1,173 @@
-[{
-    "id": "Milim",
-    "level": 5,
-    "attack": 10,
-    "defense": 10,
-    "health": 25,
-    "currentHealth": 25,
-    "moves": ["Tackle", "Scratch"]
-}
+[
+    {
+        "number": 1,
+        "id": "Bulbasaur",
+        "types": ["Grass", "Poison"],
+        "health": 45,
+        "attack": 49,
+        "defense": 49,
+        "specialAttack": 65,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 2,
+        "id": "Ivysaur",
+        "types": ["Grass", "Poison"],
+        "health": 60,
+        "attack": 62,
+        "defense": 63,
+        "specialAttack": 80,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 3,
+        "id": "Venusaur",
+        "types": ["Grass", "Poison"],
+        "health": 80,
+        "attack": 82,
+        "defense": 83,
+        "specialAttack": 100,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 4,
+        "id": "Charmander",
+        "types": ["Fire"],
+        "health": 39,
+        "attack": 52,
+        "defense": 43,
+        "specialAttack": 60,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 5,
+        "id": "Charmeleon",
+        "types": ["Fire"],
+        "health": 58,
+        "attack": 64,
+        "defense": 58,
+        "specialAttack": 80,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 6,
+        "id": "Charizard",
+        "types": ["Fire", "Flying"],
+        "health": 78,
+        "attack": 84,
+        "defense": 78,
+        "specialAttack": 109,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 7,
+        "id": "Spuirtle",
+        "types": ["Water"],
+        "health": 44,
+        "attack": 48,
+        "defense": 65,
+        "specialAttack": 50,
+        "specialDefense": 64,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 8,
+        "id": "Wartortle",
+        "types": ["Water"],
+        "health": 59,
+        "attack": 63,
+        "defense": 80,
+        "specialAttack": 65,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 9,
+        "id": "Blastoise",
+        "types": ["Water"],
+        "health": 79,
+        "attack": 83,
+        "defense": 100,
+        "specialAttack": 85,
+        "specialDefense": 105,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 10,
+        "id": "Caterpie",
+        "types": ["Bug"],
+        "health": 45,
+        "attack": 30,
+        "defense": 35,
+        "specialAttack": 20,
+        "specialDefense": 20,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    }
+
 ]

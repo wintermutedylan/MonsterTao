@@ -1,0 +1,8 @@
+[
+    {
+        "type": "Bug",
+        "superEffective": ["Dark", "Grass", "Psychic"],
+        "notEffective": ["Fighting", "Fire", "Flying", "Ghost", "Poison", "Steel"],
+        "immune": []
+    }
+]

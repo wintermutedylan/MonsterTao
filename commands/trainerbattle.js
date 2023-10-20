@@ -157,7 +157,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                 movePower = moveList[i].power;
             }
         }
-        let attackStrength = Math.floor(p2current.attack * movePower);
+        let attackStrength = Math.floor(p2current.attack * (0.01 * movePower));
         for (let j = 0; j < p1party.length; j++){
             if (p1current.id === p1party[j].id){
                 p1party[j].currentHealth = p1party[j].currentHealth - attackStrength;
@@ -166,10 +166,10 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
         p1current.currentHealth = p1current.currentHealth - attackStrength;
         turn++;
         thread.send(`
-        Your current unit health is: ${p1current.currentHealth}/${p1current.health}
-        Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
-        It is your turn to take action now
-        ----------------------------------`);
+    Your current unit health is: ${p1current.currentHealth}/${p1current.health}
+    Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
+    It is your turn to take action now
+    ----------------------------------`);
 
         battle(p1party, p2party, p1current, p2current, thread, author, turn)
 
@@ -205,6 +205,8 @@ async function attack(p1party, p2party, p1current, p2current, thread, author, tu
             }
             
                 if (s.toLowerCase() == p1current.moves[0].toLowerCase()){
+                    // from here take the move that was chosen and go into a another function.  that function will ahve all the moves in a switch statement and that will tell the game what to do.  
+                    // then it will call the dmg calc function or status calc function
                     dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, p1current.moves[0])
                     
                  
@@ -221,15 +223,29 @@ async function attack(p1party, p2party, p1current, p2current, thread, author, tu
 async function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move){
     
     let movePower;
+    let moveType;
     for (let i = 0; i < moveList.length; i++){
         if (move === moveList[i].name){
             movePower = moveList[i].power;
+            moveType = moveList[i].type;
         }
     }
-    let attackStrength = Math.floor(p1current.attack * movePower);
+    let x = ((2*p1current.level)/5)+2;
+    let y;
+    if(moveType === "Physical"){
+        y = x*movePower*(p1current.attack/p2current.defense);
+    } else if(moveType === "Special"){
+        y = x*movePower*(p1current.specialAttack/p2current.specialDefense);
+    }
+        
+    let z = Math.floor((y/50) + 2); //remove math.floor from here when adding the two lines below
+    //add typing here
+    //add stab
+    
+    //let attackStrength = Math.floor(p1current.attack * (0.01 * movePower));
     for (let j = 0; j < p2party.length; j++){
         if (p2current.id === p2party[j].id){
-            p2party[j].currentHealth = p2party[j].currentHealth - attackStrength;
+            p2party[j].currentHealth = p2party[j].currentHealth - z;//z is a placeholder for the attack dmg
         }
     }
     p2current.currentHealth = p2current.currentHealth - attackStrength;
