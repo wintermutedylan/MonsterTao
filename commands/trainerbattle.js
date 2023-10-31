@@ -1,6 +1,7 @@
 var units = require("../units/maids.json");
 var bosses = require("../units/raidbosses.json");
 var moveList = require("../units/moves.json");
+var typeList = require("../units/typechart.json");
 const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
 const playerModel = require("../models/playerSchema");
 module.exports = {
@@ -135,14 +136,15 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             
                 if (s.toLowerCase() == 'attack'){
                     
-                    attack(p1party, p2party, p1current, p2current, thread, author, 1);
+                    attack(p1party, p2party, p1current, p2current, thread, author, turn);
                  
                 } else if (s.toLowerCase() == 'item'){
                     thread.send("this is a placeholder this doesn't work rn");
                     
                  
                 } else if (s.toLowerCase() == 'switch'){
-                    thread.send("this is a placeholder this doesn't work rn");
+                    pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
                     
                  
                 }
@@ -151,39 +153,90 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
         });
     } else {
         let move = p2current.moves[Math.floor(Math.random()*p2current.moves.length)];
-        let movePower;
-        for (let i = 0; i < moveList.length; i++){
-            if (move === moveList[i].name){
-                movePower = moveList[i].power;
-            }
-        }
-        let attackStrength = Math.floor(p2current.attack * (0.01 * movePower));
-        for (let j = 0; j < p1party.length; j++){
-            if (p1current.id === p1party[j].id){
-                p1party[j].currentHealth = p1party[j].currentHealth - attackStrength;
-            }
-        }
-        p1current.currentHealth = p1current.currentHealth - attackStrength;
-        turn++;
-        thread.send(`
-    Your current unit health is: ${p1current.currentHealth}/${p1current.health}
-    Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
-    It is your turn to take action now
-    ----------------------------------`);
+        thread.send(`Your opponent used ${move}`);
+        dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move);
 
-        battle(p1party, p2party, p1current, p2current, thread, author, turn)
+        
 
     }
 
 }
+async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn){
+    let pokemonAlive = [];
+    for (let i = 0; i < p1party.length; i++){
+        if (p1party[i].currentHealth > 0 && p1party[i].id != p1current.id){
+            
+            pokemonAlive.push(p1party[i].id);
+            
+        }
+    }
+    thread.send(`What unit would you like to switch in: ${pokemonAlive.join(", ")} or type Cancel to go back(currently doesn't work)`);
+    const filter = (m) => {
+        let isPokemon = false;
+        for (let j = 0; j < pokemonAlive.length; j++){
+            if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase() || m.content.toLowerCase() === "cancel"){
+                isPokemon = true;
+                break;
+            }
+        }
+        return  m.author.id === author.id && (isPokemon);
+    }
+    const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+    var s;
+    
+    
+
+    collector.on('collect', message => {
+        s = message.content;
+        
+    });
+
+    collector.on('end', collected => {
+    
+        if (collected.size === 0) {
+                thread.send(`You took too long going back to battle select`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            
+            return
+        }
+        if (s.toLowerCase() == "cancel"){
+            thread.send(`You have cancelled and have been sent back to battle select`);
+            battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        } else {
+            let oldCurrent = p1current.id;
+            for (let k = 0; k < p1party.length; k++){
+                if (p1party[k].id.toLowerCase() == s.toLowerCase()){
+                    p1current = p1party[k];
+                    break;
+                }
+            }
+            thread.send(`You have switched out ${oldCurrent} and sent in ${p1current.id}`);
+            turn++;
+
+            battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        }
+        
+            
+        
+        
+    });
+
+}
 
 async function attack(p1party, p2party, p1current, p2current, thread, author, turn){
-    let moves = p1current.moves.join(", ");
-    thread.send(`What attack would you like to use: ${moves}`);
+    let moves = p1current.moves;
+    thread.send(`What attack would you like to use: ${moves.join(", ")}`);
 
 
         const filter = (m) => {
-            return  m.author.id === author.id && (m.content.toLowerCase() === p1current.moves[0].toLowerCase() || m.content.toLowerCase() === p1current.moves[1].toLowerCase() || m.content.toLowerCase() === 'placeholder' || m.content.toLowerCase() === 'placeholder');
+            let isPokemonMove = false;
+            for (let j = 0; j < moves.length; j++){
+                if (m.content.toLowerCase() === moves[j].toLowerCase() || m.content.toLowerCase() === "cancel"){
+                    isPokemonMove = true;
+                    break;
+                }
+            }
+            return  m.author.id === author.id && (isPokemonMove);
         }
         const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
         var s;
@@ -199,64 +252,159 @@ async function attack(p1party, p2party, p1current, p2current, thread, author, tu
         
             if (collected.size === 0) {
                 
-                    battle(p1party, p2party, p1current, p2current, thread, author, 1);
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 
                 return
+            } if (s.toLowerCase() == "cancel"){
+                thread.send(`You have cancelled and have been sent back to battle select`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else {
+                
+                thread.send(`You have selected the following move: ${s}`);
+                
+    
+                dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, s)
             }
             
-                if (s.toLowerCase() == p1current.moves[0].toLowerCase()){
-                    // from here take the move that was chosen and go into a another function.  that function will ahve all the moves in a switch statement and that will tell the game what to do.  
-                    // then it will call the dmg calc function or status calc function
-                    dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, p1current.moves[0])
-                    
-                 
-                } else if (s.toLowerCase() == p1current.moves[1].toLowerCase()){
-                    dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, p1current.moves[1])
-                    
-                 
-                } //add a cancel here to go back to main battle thing tell them current hp again and ask what they want to do again.  don't remove a turn.  
             
             
         });
 
 }
-async function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move){
+function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move){
+
     
-    let movePower;
-    let moveType;
+    let moveDetails;
+    let damage;
     for (let i = 0; i < moveList.length; i++){
-        if (move === moveList[i].name){
-            movePower = moveList[i].power;
-            moveType = moveList[i].type;
+        if (move.replace(" ", "-").toLowerCase() === moveList[i].move.toLowerCase()){
+            moveDetails = moveList[i];
+            break;
         }
     }
-    let x = ((2*p1current.level)/5)+2;
-    let y;
-    if(moveType === "Physical"){
-        y = x*movePower*(p1current.attack/p2current.defense);
-    } else if(moveType === "Special"){
-        y = x*movePower*(p1current.specialAttack/p2current.specialDefense);
+    //check accuracy here.  if it misses don't do the switch statement
+    let accuracyCheck = Math.random() * 100;
+    if (accuracyCheck < moveDetails.accuracy){
+        switch(moveDetails.move){
+            case "Double-slap":
+                let amountCheck = Math.random() * 100;
+                let amount;
+                if (amountCheck < 35){ // this is 2 slaps
+                    amount = 2;
+                } else if(amountCheck < 70 ){ // this is 3 slaps
+                    amount = 3;
+                } else if (amountCheck < 85){ // this is 4 slaps
+                    amount = 4;
+                } else { // this is 5 slaps
+                    amount = 5;
+                }
+                for (let a = 0; a < amount; a++){
+                    damage += damageFormula(moveDetails, p1current, p2current);
+                }
+                thread.send(`Double slap hit ${amount} times.`);
+                
+                break;
+            default:
+                damage = damageFormula(moveDetails, p1current, p2current);
+        }
+
+        
+        
+        
+        if(turn % 2 == 1){ //p1 doing the dmg
+            for (let j = 0; j < p2party.length; j++){
+                if (p2current.id === p2party[j].id){
+                    p2party[j].currentHealth = p2party[j].currentHealth - damage;
+                }
+            }
+            p2current.currentHealth = p2current.currentHealth - damage;
+            thread.send(`
+        You did a total of ${damage} to your opponent
+        ----------------------------------`);
+            thread.send(`
+        Your current unit health is: ${p1current.currentHealth}/${p1current.health}
+        Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
+        Your foe will now take action
+        ----------------------------------`);
+        } else { //p2 doing the dmg
+            for (let j = 0; j < p2party.length; j++){
+                if (p1current.id === p1party[j].id){
+                    p1party[j].currentHealth = p1party[j].currentHealth - damage;
+                }
+            }
+            p1current.currentHealth = p1current.currentHealth - damage;
+            thread.send(`
+        Your opponent did ${damage} to you
+        ----------------------------------`);
+            thread.send(`
+        Your current unit health is: ${p1current.currentHealth}/${p1current.health}
+        Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
+        It is your turn to take action
+        ----------------------------------`);
+        }
+        turn++;
+        
+        battle(p1party, p2party, p1current, p2current, thread, author, turn)
+    } else {
+        if(turn % 2 == 1){//p1 miss
+            thread.send(`
+            Your move missed
+            ----------------------------------`);
+            turn++;
+            thread.send(`
+            Your current unit health is: ${p1current.currentHealth}/${p1current.health}
+            Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
+            Your foe will now take action
+            ----------------------------------`);
+            battle(p1party, p2party, p1current, p2current, thread, author, turn)
+        } else {//p2 miss
+            thread.send(`
+        Your opponent missed
+        ----------------------------------`);
+        turn++;
+        thread.send(`
+        Your current unit health is: ${p1current.currentHealth}/${p1current.health}
+        Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
+        It is your turn to take action
+        ----------------------------------`);
+        battle(p1party, p2party, p1current, p2current, thread, author, turn)
+        }
+        
+    }
+}
+function damageFormula(details, p1current, p2current){
+    let stab = 1;
+    let weakness = 1;
+    let randomNumber = randomIntFromInterval(85, 100);
+    for(let f = 0; f < p1current.types.length; f++){
+        if (details.type == p1current.types[f]){
+            stab = 1.5;
+        }
+    }
+    for (let i = 0; i < typeList.length; i++){
+        if (details.type == typeList[i].type){
+            for (let j = 0; j < p2current.types.length; j++){
+                if(typeList[i].superEffective.includes(p2current.types[j])){
+                    weakness = weakness * 2;
+                } else if(typeList[i].notEffective.includes(p2current.types[j])){
+                    weakness = weakness / 2;
+                } else if(typeList[i].immune.includes(p2current.types[j])){
+                    weakness = 0;
+                } 
+            }
+        }
+    }
+    let d;
+    if (details.damageClass === "Physical"){
+        d = ((((2 * p1current.level / 5 + 2) * p1current.attack * details.power / p2current.defense) / 50) + 2) * stab * weakness * randomNumber / 100;
+    } else if (details.damageClass === "Special"){
+        d = ((((2 * p1current.level / 5 + 2) * p1current.specialAttack * details.power / p2current.specialDefense) / 50) + 2) * stab * weakness * randomNumber / 100;
     }
         
-    let z = Math.floor((y/50) + 2); //remove math.floor from here when adding the two lines below
-    //add typing here
-    //add stab
-    
-    //let attackStrength = Math.floor(p1current.attack * (0.01 * movePower));
-    for (let j = 0; j < p2party.length; j++){
-        if (p2current.id === p2party[j].id){
-            p2party[j].currentHealth = p2party[j].currentHealth - z;//z is a placeholder for the attack dmg
-        }
-    }
-    p2current.currentHealth = p2current.currentHealth - attackStrength;
-    turn++;
-    thread.send(`
-    Your current unit health is: ${p1current.currentHealth}/${p1current.health}
-    Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
-    Your foe will now take action
-    ----------------------------------`);
-    battle(p1party, p2party, p1current, p2current, thread, author, turn)
-
+    return Math.floor(d);
+}
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
 async function snapshot(message, boss, thread){

@@ -1,6 +1,23 @@
 [
     {
         "number": 1,
+        "id": "Milim",
+        "types": ["Dragon"],
+        "health": 45,
+        "attack": 49,
+        "defense": 49,
+        "specialAttack": 65,
+        "specialDefense": 65,
+        "moves": ["Tackle","Scratch","Leer","Growl"],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+    {
+        "number": 1,
         "id": "Bulbasaur",
         "types": ["Grass", "Poison"],
         "health": 45,
