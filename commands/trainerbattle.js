@@ -299,13 +299,13 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     amount = 5;
                 }
                 for (let a = 0; a < amount; a++){
-                    damage += damageFormula(moveDetails, p1current, p2current);
+                    damage += damageFormula(moveDetails, p1current, p2current, turn);
                 }
                 thread.send(`Double slap hit ${amount} times.`);
                 
                 break;
             default:
-                damage = damageFormula(moveDetails, p1current, p2current);
+                damage = damageFormula(moveDetails, p1current, p2current, turn);
         }
 
         
@@ -317,62 +317,38 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2party[j].currentHealth = p2party[j].currentHealth - damage;
                 }
             }
-            p2current.currentHealth = p2current.currentHealth - damage;
-            thread.send(`
-        You did a total of ${damage} to your opponent
-        ----------------------------------`);
-            thread.send(`
-        Your current unit health is: ${p1current.currentHealth}/${p1current.health}
-        Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
-        Your foe will now take action
-        ----------------------------------`);
+            //p2current.currentHealth = p2current.currentHealth - damage;
+            thread.send(`You did a total of ${damage} damage to your opponent\n----------------------------------`);
+            thread.send(`Your current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
         } else { //p2 doing the dmg
-            for (let j = 0; j < p2party.length; j++){
+            for (let j = 0; j < p1party.length; j++){
                 if (p1current.id === p1party[j].id){
                     p1party[j].currentHealth = p1party[j].currentHealth - damage;
                 }
             }
-            p1current.currentHealth = p1current.currentHealth - damage;
-            thread.send(`
-        Your opponent did ${damage} to you
-        ----------------------------------`);
-            thread.send(`
-        Your current unit health is: ${p1current.currentHealth}/${p1current.health}
-        Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
-        It is your turn to take action
-        ----------------------------------`);
+            //p1current.currentHealth = p1current.currentHealth - damage;
+            thread.send(`Your opponent did ${damage} damage to you\n----------------------------------`);
+            thread.send(`Your current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
         }
         turn++;
         
         battle(p1party, p2party, p1current, p2current, thread, author, turn)
     } else {
         if(turn % 2 == 1){//p1 miss
-            thread.send(`
-            Your move missed
-            ----------------------------------`);
+            thread.send(`Your move missed\n----------------------------------`);
             turn++;
-            thread.send(`
-            Your current unit health is: ${p1current.currentHealth}/${p1current.health}
-            Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
-            Your foe will now take action
-            ----------------------------------`);
+            thread.send(`Your current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
             battle(p1party, p2party, p1current, p2current, thread, author, turn)
         } else {//p2 miss
-            thread.send(`
-        Your opponent missed
-        ----------------------------------`);
+            thread.send(`Your opponent missed\n----------------------------------`);
         turn++;
-        thread.send(`
-        Your current unit health is: ${p1current.currentHealth}/${p1current.health}
-        Your foes current unit health is: ${p2current.currentHealth}/${p2current.health}
-        It is your turn to take action
-        ----------------------------------`);
+        thread.send(`Your current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
         battle(p1party, p2party, p1current, p2current, thread, author, turn)
         }
         
     }
 }
-function damageFormula(details, p1current, p2current){
+function damageFormula(details, p1current, p2current, turn){
     let p1Type;
     let p2Type;
     let stab = 1;
@@ -387,18 +363,18 @@ function damageFormula(details, p1current, p2current){
     }
     if(turn % 2 == 1){
         for(let f = 0; f < p1Type.length; f++){
-            if (details.type == p1Types[f]){
+            if (details.type == p1Type[f]){
                 stab = 1.5;
             }
         }
         for (let i = 0; i < typeList.length; i++){
             if (details.type == typeList[i].type){
                 for (let j = 0; j < p2Type.length; j++){
-                    if(typeList[i].superEffective.includes(p2Types[j])){
+                    if(typeList[i].superEffective.includes(p2Type[j])){
                         weakness = weakness * 2;
-                    } else if(typeList[i].notEffective.includes(p2Types[j])){
+                    } else if(typeList[i].notEffective.includes(p2Type[j])){
                         weakness = weakness / 2;
-                    } else if(typeList[i].immune.includes(p2Types[j])){
+                    } else if(typeList[i].immune.includes(p2Type[j])){
                         weakness = 0;
                     } 
                 }
@@ -414,18 +390,18 @@ function damageFormula(details, p1current, p2current){
         return Math.floor(d);
     } else {
         for(let f = 0; f < p2Type.length; f++){
-            if (details.type == p2Types[f]){
+            if (details.type == p2Type[f]){
                 stab = 1.5;
             }
         }
         for (let i = 0; i < typeList.length; i++){
             if (details.type == typeList[i].type){
                 for (let j = 0; j < p1Type.length; j++){
-                    if(typeList[i].superEffective.includes(p1Types[j])){
+                    if(typeList[i].superEffective.includes(p1Type[j])){
                         weakness = weakness * 2;
-                    } else if(typeList[i].notEffective.includes(p1Types[j])){
+                    } else if(typeList[i].notEffective.includes(p1Type[j])){
                         weakness = weakness / 2;
-                    } else if(typeList[i].immune.includes(p1Types[j])){
+                    } else if(typeList[i].immune.includes(p1Type[j])){
                         weakness = 0;
                     } 
                 }

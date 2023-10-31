@@ -6,15 +6,99 @@
         "immune": ["Ghost"]
     },
     {
-        "type": "Normal",
-        "superEffective": [],
-        "notEffective": ["Rock", "Steel"],
+        "type": "Fire",
+        "superEffective": ["Grass", "Ice", "Bug", "Steel"],
+        "notEffective": ["Fire", "Water", "Rock", "Dragon"],
+        "immune": []
+    },
+    {
+        "type": "Water",
+        "superEffective": ["Fire", "Ground", "Rock", "Steel"],
+        "notEffective": ["Water", "Grass", "Dragon"],
+        "immune": []
+    },
+    {
+        "type": "Grass",
+        "superEffective": ["Water", "Ground", "Rock"],
+        "notEffective": ["Fire", "Grass", "Poison", "Flying", "Bug", "Dragon", "Steel"],
+        "immune": []
+    },
+    {
+        "type": "Electric",
+        "superEffective": ["Water", "Flying"],
+        "notEffective": ["Grass", "Electric", "Dragon"],
+        "immune": ["Ground"]
+    },
+    {
+        "type": "Ice",
+        "superEffective": ["Grass", "Ground", "Flying", "Dragon"],
+        "notEffective": ["Fire", "Water", "Ice", "Steel"],
+        "immune": []
+    },
+    {
+        "type": "Fighting",
+        "superEffective": ["Normal", "Ice", "Rock", "Dark", "Steel"],
+        "notEffective": ["Poison", "Flying", "Psychic", "Bug"],
         "immune": ["Ghost"]
+    },
+    {
+        "type": "Poison",
+        "superEffective": ["Grass"],
+        "notEffective": ["Poison", "Ground", "Rock", "Ghost"],
+        "immune": ["Steel"]
+    },
+    {
+        "type": "Ground",
+        "superEffective": ["Fire", "Electric", "Poison", "Rock", "Steel"],
+        "notEffective": ["Grass", "Bug"],
+        "immune": ["Flying"]
+    },
+    {
+        "type": "Flying",
+        "superEffective": ["Grass", "Fighting", "Bug"],
+        "notEffective": ["Electric", "Rock", "Steel"],
+        "immune": []
+    },
+    {
+        "type": "Psychic",
+        "superEffective": ["Fighting", "Poison"],
+        "notEffective": ["Psychic", "Steel"],
+        "immune": ["Dark"]
     },
     {
         "type": "Bug",
         "superEffective": ["Dark", "Grass", "Psychic"],
         "notEffective": ["Fighting", "Fire", "Flying", "Ghost", "Poison", "Steel"],
+        "immune": []
+    },
+    {
+        "type": "Rock",
+        "superEffective": ["Fire", "Ice", "Flying", "Bug"],
+        "notEffective": ["Fighting", "Ground", "Steel"],
+        "immune": []
+    },
+    {
+        "type": "Ghost",
+        "superEffective": ["Psychic", "Ghost"],
+        "notEffective": ["Dark"],
+        "immune": ["Normal"]
+    },
+    {
+        "type": "Dragon",
+        "superEffective": ["Dragon"],
+        "notEffective": ["Steel"],
+        "immune": []
+    },
+    {
+        "type": "Dark",
+        "superEffective": ["Psychic", "Ghost"],
+        "notEffective": ["Fighting", "Dark"],
+        "immune": []
+    },
+    {
+        "type": "Steel",
+        "superEffective": ["Ice", "Rock"],
+        "notEffective": ["Fire", "Water", "Electric", "Steel"],
         "immune": []
     }
 ]

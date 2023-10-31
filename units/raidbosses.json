@@ -4,10 +4,12 @@
         "units": [{
             "id": "Bulbasaur",
             "level": 5,
-            "attack": 5,
-            "defense": 15,
-            "health": 35,
-            "currentHealth": 35,
+            "health": 20,
+            "attack": 10,
+            "defense": 10,
+            "specialAttack": 10,
+            "specialDefense": 9,
+            "currentHealth": 20,
             "moves": ["Tackle", "Scratch"]
         }],
         "coinReward": 10
