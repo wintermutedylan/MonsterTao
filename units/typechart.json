@@ -1,5 +1,17 @@
 [
     {
+        "type": "Normal",
+        "superEffective": [],
+        "notEffective": ["Rock", "Steel"],
+        "immune": ["Ghost"]
+    },
+    {
+        "type": "Normal",
+        "superEffective": [],
+        "notEffective": ["Rock", "Steel"],
+        "immune": ["Ghost"]
+    },
+    {
         "type": "Bug",
         "superEffective": ["Dark", "Grass", "Psychic"],
         "notEffective": ["Fighting", "Fire", "Flying", "Ghost", "Poison", "Steel"],

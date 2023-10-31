@@ -373,35 +373,74 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
     }
 }
 function damageFormula(details, p1current, p2current){
+    let p1Type;
+    let p2Type;
     let stab = 1;
     let weakness = 1;
     let randomNumber = randomIntFromInterval(85, 100);
-    for(let f = 0; f < p1current.types.length; f++){
-        if (details.type == p1current.types[f]){
-            stab = 1.5;
+    for (let u = 0; u < units.length; u++){
+        if (p1current.id == units[u].id){
+            p1Type = units[u].types;
+        } else if (p2current.id == units[u].id){
+            p2Type = units[u].types;
         }
     }
-    for (let i = 0; i < typeList.length; i++){
-        if (details.type == typeList[i].type){
-            for (let j = 0; j < p2current.types.length; j++){
-                if(typeList[i].superEffective.includes(p2current.types[j])){
-                    weakness = weakness * 2;
-                } else if(typeList[i].notEffective.includes(p2current.types[j])){
-                    weakness = weakness / 2;
-                } else if(typeList[i].immune.includes(p2current.types[j])){
-                    weakness = 0;
-                } 
+    if(turn % 2 == 1){
+        for(let f = 0; f < p1Type.length; f++){
+            if (details.type == p1Types[f]){
+                stab = 1.5;
             }
         }
+        for (let i = 0; i < typeList.length; i++){
+            if (details.type == typeList[i].type){
+                for (let j = 0; j < p2Type.length; j++){
+                    if(typeList[i].superEffective.includes(p2Types[j])){
+                        weakness = weakness * 2;
+                    } else if(typeList[i].notEffective.includes(p2Types[j])){
+                        weakness = weakness / 2;
+                    } else if(typeList[i].immune.includes(p2Types[j])){
+                        weakness = 0;
+                    } 
+                }
+            }
+        }
+        let d;
+        if (details.damageClass === "Physical"){
+            d = ((((2 * p1current.level / 5 + 2) * p1current.attack * details.power / p2current.defense) / 50) + 2) * stab * weakness * randomNumber / 100;
+        } else if (details.damageClass === "Special"){
+            d = ((((2 * p1current.level / 5 + 2) * p1current.specialAttack * details.power / p2current.specialDefense) / 50) + 2) * stab * weakness * randomNumber / 100;
+        }
+            
+        return Math.floor(d);
+    } else {
+        for(let f = 0; f < p2Type.length; f++){
+            if (details.type == p2Types[f]){
+                stab = 1.5;
+            }
+        }
+        for (let i = 0; i < typeList.length; i++){
+            if (details.type == typeList[i].type){
+                for (let j = 0; j < p1Type.length; j++){
+                    if(typeList[i].superEffective.includes(p1Types[j])){
+                        weakness = weakness * 2;
+                    } else if(typeList[i].notEffective.includes(p1Types[j])){
+                        weakness = weakness / 2;
+                    } else if(typeList[i].immune.includes(p1Types[j])){
+                        weakness = 0;
+                    } 
+                }
+            }
+        }
+        let d;
+        if (details.damageClass === "Physical"){
+            d = ((((2 * p2current.level / 5 + 2) * p2current.attack * details.power / p1current.defense) / 50) + 2) * stab * weakness * randomNumber / 100;
+        } else if (details.damageClass === "Special"){
+            d = ((((2 * p2current.level / 5 + 2) * p2current.specialAttack * details.power / p1current.specialDefense) / 50) + 2) * stab * weakness * randomNumber / 100;
+        }
+            
+        return Math.floor(d);
+
     }
-    let d;
-    if (details.damageClass === "Physical"){
-        d = ((((2 * p1current.level / 5 + 2) * p1current.attack * details.power / p2current.defense) / 50) + 2) * stab * weakness * randomNumber / 100;
-    } else if (details.damageClass === "Special"){
-        d = ((((2 * p1current.level / 5 + 2) * p1current.specialAttack * details.power / p2current.specialDefense) / 50) + 2) * stab * weakness * randomNumber / 100;
-    }
-        
-    return Math.floor(d);
 }
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
