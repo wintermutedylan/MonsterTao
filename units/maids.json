@@ -1,23 +1,6 @@
 [
     {
         "number": 1,
-        "id": "Milim",
-        "types": ["Dragon"],
-        "health": 45,
-        "attack": 49,
-        "defense": 49,
-        "specialAttack": 65,
-        "specialDefense": 65,
-        "moves": ["Tackle","Scratch","Leer","Growl"],
-        "healthIV": 0,
-        "attackIV": 0,
-        "defenseIV": 0,
-        "specialAttackIV": 0,
-        "specialDefenseIV": 0
-        
-    },
-    {
-        "number": 1,
         "id": "Bulbasaur",
         "types": ["Grass", "Poison"],
         "health": 45,
@@ -31,9 +14,10 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
-        
+
     },
-    {
+
+{
         "number": 2,
         "id": "Ivysaur",
         "types": ["Grass", "Poison"],
@@ -48,9 +32,10 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
-        
+
     },
-    {
+
+{
         "number": 3,
         "id": "Venusaur",
         "types": ["Grass", "Poison"],
@@ -65,9 +50,10 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
-        
+
     },
-    {
+
+{
         "number": 4,
         "id": "Charmander",
         "types": ["Fire"],
@@ -82,9 +68,10 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
-        
+
     },
-    {
+
+{
         "number": 5,
         "id": "Charmeleon",
         "types": ["Fire"],
@@ -99,9 +86,10 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
-        
+
     },
-    {
+
+{
         "number": 6,
         "id": "Charizard",
         "types": ["Fire", "Flying"],
@@ -116,11 +104,12 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
-        
+
     },
-    {
+
+{
         "number": 7,
-        "id": "Spuirtle",
+        "id": "Squirtle",
         "types": ["Water"],
         "health": 44,
         "attack": 48,
@@ -133,9 +122,10 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
-        
+
     },
-    {
+
+{
         "number": 8,
         "id": "Wartortle",
         "types": ["Water"],
@@ -150,9 +140,10 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
-        
+
     },
-    {
+
+{
         "number": 9,
         "id": "Blastoise",
         "types": ["Water"],
@@ -167,9 +158,10 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
-        
+
     },
-    {
+
+{
         "number": 10,
         "id": "Caterpie",
         "types": ["Bug"],
@@ -184,7 +176,8699 @@
         "defenseIV": 0,
         "specialAttackIV": 0,
         "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 11,
+        "id": "Metapod",
+        "types": ["Bug"],
+        "health": 50,
+        "attack": 20,
+        "defense": 55,
+        "specialAttack": 25,
+        "specialDefense": 25,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 12,
+        "id": "Butterfree",
+        "types": ["Bug", "Flying"],
+        "health": 60,
+        "attack": 45,
+        "defense": 50,
+        "specialAttack": 90,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 13,
+        "id": "Weedle",
+        "types": ["Bug", "Poison"],
+        "health": 40,
+        "attack": 35,
+        "defense": 30,
+        "specialAttack": 20,
+        "specialDefense": 20,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 14,
+        "id": "Kakuna",
+        "types": ["Bug", "Poison"],
+        "health": 45,
+        "attack": 25,
+        "defense": 50,
+        "specialAttack": 25,
+        "specialDefense": 25,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 15,
+        "id": "Beedrill",
+        "types": ["Bug", "Poison"],
+        "health": 65,
+        "attack": 90,
+        "defense": 40,
+        "specialAttack": 45,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 16,
+        "id": "Pidgey",
+        "types": ["Normal", "Flying"],
+        "health": 40,
+        "attack": 45,
+        "defense": 40,
+        "specialAttack": 35,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 17,
+        "id": "Pidgeotto",
+        "types": ["Normal", "Flying"],
+        "health": 63,
+        "attack": 60,
+        "defense": 55,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 18,
+        "id": "Pidgeot",
+        "types": ["Normal", "Flying"],
+        "health": 83,
+        "attack": 80,
+        "defense": 75,
+        "specialAttack": 70,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 19,
+        "id": "Rattata",
+        "types": ["Normal"],
+        "health": 30,
+        "attack": 56,
+        "defense": 35,
+        "specialAttack": 25,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 20,
+        "id": "Raticate",
+        "types": ["Normal"],
+        "health": 55,
+        "attack": 81,
+        "defense": 60,
+        "specialAttack": 50,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 21,
+        "id": "Spearow",
+        "types": ["Normal", "Flying"],
+        "health": 40,
+        "attack": 60,
+        "defense": 30,
+        "specialAttack": 31,
+        "specialDefense": 31,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 22,
+        "id": "Fearow",
+        "types": ["Normal", "Flying"],
+        "health": 65,
+        "attack": 90,
+        "defense": 65,
+        "specialAttack": 61,
+        "specialDefense": 61,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 23,
+        "id": "Ekans",
+        "types": ["Poison"],
+        "health": 35,
+        "attack": 60,
+        "defense": 44,
+        "specialAttack": 40,
+        "specialDefense": 54,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 24,
+        "id": "Arbok",
+        "types": ["Poison"],
+        "health": 60,
+        "attack": 95,
+        "defense": 69,
+        "specialAttack": 65,
+        "specialDefense": 79,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 25,
+        "id": "Pikachu",
+        "types": ["Electric"],
+        "health": 35,
+        "attack": 55,
+        "defense": 40,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 26,
+        "id": "Raichu",
+        "types": ["Electric"],
+        "health": 60,
+        "attack": 90,
+        "defense": 55,
+        "specialAttack": 90,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 27,
+        "id": "Sandshrew",
+        "types": ["Ground"],
+        "health": 50,
+        "attack": 75,
+        "defense": 85,
+        "specialAttack": 20,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 28,
+        "id": "Sandslash",
+        "types": ["Ground"],
+        "health": 75,
+        "attack": 100,
+        "defense": 110,
+        "specialAttack": 45,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 29,
+        "id": "Nidoran-f",
+        "types": ["Poison"],
+        "health": 55,
+        "attack": 47,
+        "defense": 52,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 30,
+        "id": "Nidorina",
+        "types": ["Poison"],
+        "health": 70,
+        "attack": 62,
+        "defense": 67,
+        "specialAttack": 55,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 31,
+        "id": "Nidoqueen",
+        "types": ["Poison", "Ground"],
+        "health": 90,
+        "attack": 92,
+        "defense": 87,
+        "specialAttack": 75,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 32,
+        "id": "Nidoran-m",
+        "types": ["Poison"],
+        "health": 46,
+        "attack": 57,
+        "defense": 40,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 33,
+        "id": "Nidorino",
+        "types": ["Poison"],
+        "health": 61,
+        "attack": 72,
+        "defense": 57,
+        "specialAttack": 55,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 34,
+        "id": "Nidoking",
+        "types": ["Poison", "Ground"],
+        "health": 81,
+        "attack": 102,
+        "defense": 77,
+        "specialAttack": 85,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 35,
+        "id": "Clefairy",
+        "types": ["Fairy"],
+        "health": 70,
+        "attack": 45,
+        "defense": 48,
+        "specialAttack": 60,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 36,
+        "id": "Clefable",
+        "types": ["Fairy"],
+        "health": 95,
+        "attack": 70,
+        "defense": 73,
+        "specialAttack": 95,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 37,
+        "id": "Vulpix",
+        "types": ["Fire"],
+        "health": 38,
+        "attack": 41,
+        "defense": 40,
+        "specialAttack": 50,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 38,
+        "id": "Ninetales",
+        "types": ["Fire"],
+        "health": 73,
+        "attack": 76,
+        "defense": 75,
+        "specialAttack": 81,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 39,
+        "id": "Jigglypuff",
+        "types": ["Normal", "Fairy"],
+        "health": 115,
+        "attack": 45,
+        "defense": 20,
+        "specialAttack": 45,
+        "specialDefense": 25,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 40,
+        "id": "Wigglytuff",
+        "types": ["Normal", "Fairy"],
+        "health": 140,
+        "attack": 70,
+        "defense": 45,
+        "specialAttack": 85,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 41,
+        "id": "Zubat",
+        "types": ["Poison", "Flying"],
+        "health": 40,
+        "attack": 45,
+        "defense": 35,
+        "specialAttack": 30,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+
+{
+        "number": 42,
+        "id": "Golbat",
+        "types": ["Poison", "Flying"],
+        "health": 75,
+        "attack": 80,
+        "defense": 70,
+        "specialAttack": 65,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 43,
+        "id": "Oddish",
+        "types": ["Grass", "Poison"],
+        "health": 45,
+        "attack": 50,
+        "defense": 55,
+        "specialAttack": 75,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 44,
+        "id": "Gloom",
+        "types": ["Grass", "Poison"],
+        "health": 60,
+        "attack": 65,
+        "defense": 70,
+        "specialAttack": 85,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 45,
+        "id": "Vileplume",
+        "types": ["Grass", "Poison"],
+        "health": 75,
+        "attack": 80,
+        "defense": 85,
+        "specialAttack": 110,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 46,
+        "id": "Paras",
+        "types": ["Bug", "Grass"],
+        "health": 35,
+        "attack": 70,
+        "defense": 55,
+        "specialAttack": 45,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 47,
+        "id": "Parasect",
+        "types": ["Bug", "Grass"],
+        "health": 60,
+        "attack": 95,
+        "defense": 80,
+        "specialAttack": 60,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 48,
+        "id": "Venonat",
+        "types": ["Bug", "Poison"],
+        "health": 60,
+        "attack": 55,
+        "defense": 50,
+        "specialAttack": 40,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 49,
+        "id": "Venomoth",
+        "types": ["Bug", "Poison"],
+        "health": 70,
+        "attack": 65,
+        "defense": 60,
+        "specialAttack": 90,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 50,
+        "id": "Diglett",
+        "types": ["Ground"],
+        "health": 10,
+        "attack": 55,
+        "defense": 25,
+        "specialAttack": 35,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 51,
+        "id": "Dugtrio",
+        "types": ["Ground"],
+        "health": 35,
+        "attack": 100,
+        "defense": 50,
+        "specialAttack": 50,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 52,
+        "id": "Meowth",
+        "types": ["Normal"],
+        "health": 40,
+        "attack": 45,
+        "defense": 35,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 53,
+        "id": "Persian",
+        "types": ["Normal"],
+        "health": 65,
+        "attack": 70,
+        "defense": 60,
+        "specialAttack": 65,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 54,
+        "id": "Psyduck",
+        "types": ["Water"],
+        "health": 50,
+        "attack": 52,
+        "defense": 48,
+        "specialAttack": 65,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 55,
+        "id": "Golduck",
+        "types": ["Water"],
+        "health": 80,
+        "attack": 82,
+        "defense": 78,
+        "specialAttack": 95,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 56,
+        "id": "Mankey",
+        "types": ["Fighting"],
+        "health": 40,
+        "attack": 80,
+        "defense": 35,
+        "specialAttack": 35,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 57,
+        "id": "Primeape",
+        "types": ["Fighting"],
+        "health": 65,
+        "attack": 105,
+        "defense": 60,
+        "specialAttack": 60,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 58,
+        "id": "Growlithe",
+        "types": ["Fire"],
+        "health": 55,
+        "attack": 70,
+        "defense": 45,
+        "specialAttack": 70,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 59,
+        "id": "Arcanine",
+        "types": ["Fire"],
+        "health": 90,
+        "attack": 110,
+        "defense": 80,
+        "specialAttack": 100,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 60,
+        "id": "Poliwag",
+        "types": ["Water"],
+        "health": 40,
+        "attack": 50,
+        "defense": 40,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 61,
+        "id": "Poliwhirl",
+        "types": ["Water"],
+        "health": 65,
+        "attack": 65,
+        "defense": 65,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 62,
+        "id": "Poliwrath",
+        "types": ["Water", "Fighting"],
+        "health": 90,
+        "attack": 95,
+        "defense": 95,
+        "specialAttack": 70,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 63,
+        "id": "Abra",
+        "types": ["Psychic"],
+        "health": 25,
+        "attack": 20,
+        "defense": 15,
+        "specialAttack": 105,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 64,
+        "id": "Kadabra",
+        "types": ["Psychic"],
+        "health": 40,
+        "attack": 35,
+        "defense": 30,
+        "specialAttack": 120,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 65,
+        "id": "Alakazam",
+        "types": ["Psychic"],
+        "health": 55,
+        "attack": 50,
+        "defense": 45,
+        "specialAttack": 135,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 66,
+        "id": "Machop",
+        "types": ["Fighting"],
+        "health": 70,
+        "attack": 80,
+        "defense": 50,
+        "specialAttack": 35,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 67,
+        "id": "Machoke",
+        "types": ["Fighting"],
+        "health": 80,
+        "attack": 100,
+        "defense": 70,
+        "specialAttack": 50,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 68,
+        "id": "Machamp",
+        "types": ["Fighting"],
+        "health": 90,
+        "attack": 130,
+        "defense": 80,
+        "specialAttack": 65,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 69,
+        "id": "Bellsprout",
+        "types": ["Grass", "Poison"],
+        "health": 50,
+        "attack": 75,
+        "defense": 35,
+        "specialAttack": 70,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 70,
+        "id": "Weepinbell",
+        "types": ["Grass", "Poison"],
+        "health": 65,
+        "attack": 90,
+        "defense": 50,
+        "specialAttack": 85,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 71,
+        "id": "Victreebel",
+        "types": ["Grass", "Poison"],
+        "health": 80,
+        "attack": 105,
+        "defense": 65,
+        "specialAttack": 100,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 72,
+        "id": "Tentacool",
+        "types": ["Water", "Poison"],
+        "health": 40,
+        "attack": 40,
+        "defense": 35,
+        "specialAttack": 50,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 73,
+        "id": "Tentacruel",
+        "types": ["Water", "Poison"],
+        "health": 80,
+        "attack": 70,
+        "defense": 65,
+        "specialAttack": 80,
+        "specialDefense": 120,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 74,
+        "id": "Geodude",
+        "types": ["Rock", "Ground"],
+        "health": 40,
+        "attack": 80,
+        "defense": 100,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 75,
+        "id": "Graveler",
+        "types": ["Rock", "Ground"],
+        "health": 55,
+        "attack": 95,
+        "defense": 115,
+        "specialAttack": 45,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 76,
+        "id": "Golem",
+        "types": ["Rock", "Ground"],
+        "health": 80,
+        "attack": 120,
+        "defense": 130,
+        "specialAttack": 55,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 77,
+        "id": "Ponyta",
+        "types": ["Fire"],
+        "health": 50,
+        "attack": 85,
+        "defense": 55,
+        "specialAttack": 65,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 78,
+        "id": "Rapidash",
+        "types": ["Fire"],
+        "health": 65,
+        "attack": 100,
+        "defense": 70,
+        "specialAttack": 80,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 79,
+        "id": "Slowpoke",
+        "types": ["Water", "Psychic"],
+        "health": 90,
+        "attack": 65,
+        "defense": 65,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 80,
+        "id": "Slowbro",
+        "types": ["Water", "Psychic"],
+        "health": 95,
+        "attack": 75,
+        "defense": 110,
+        "specialAttack": 100,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 81,
+        "id": "Magnemite",
+        "types": ["Electric", "Steel"],
+        "health": 25,
+        "attack": 35,
+        "defense": 70,
+        "specialAttack": 95,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 82,
+        "id": "Magneton",
+        "types": ["Electric", "Steel"],
+        "health": 50,
+        "attack": 60,
+        "defense": 95,
+        "specialAttack": 120,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 83,
+        "id": "Farfetchd",
+        "types": ["Normal", "Flying"],
+        "health": 52,
+        "attack": 90,
+        "defense": 55,
+        "specialAttack": 58,
+        "specialDefense": 62,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 84,
+        "id": "Doduo",
+        "types": ["Normal", "Flying"],
+        "health": 35,
+        "attack": 85,
+        "defense": 45,
+        "specialAttack": 35,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 85,
+        "id": "Dodrio",
+        "types": ["Normal", "Flying"],
+        "health": 60,
+        "attack": 110,
+        "defense": 70,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 86,
+        "id": "Seel",
+        "types": ["Water"],
+        "health": 65,
+        "attack": 45,
+        "defense": 55,
+        "specialAttack": 45,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 87,
+        "id": "Dewgong",
+        "types": ["Water", "Ice"],
+        "health": 90,
+        "attack": 70,
+        "defense": 80,
+        "specialAttack": 70,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 88,
+        "id": "Grimer",
+        "types": ["Poison"],
+        "health": 80,
+        "attack": 80,
+        "defense": 50,
+        "specialAttack": 40,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 89,
+        "id": "Muk",
+        "types": ["Poison"],
+        "health": 105,
+        "attack": 105,
+        "defense": 75,
+        "specialAttack": 65,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 90,
+        "id": "Shellder",
+        "types": ["Water"],
+        "health": 30,
+        "attack": 65,
+        "defense": 100,
+        "specialAttack": 45,
+        "specialDefense": 25,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 91,
+        "id": "Cloyster",
+        "types": ["Water", "Ice"],
+        "health": 50,
+        "attack": 95,
+        "defense": 180,
+        "specialAttack": 85,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 92,
+        "id": "Gastly",
+        "types": ["Ghost", "Poison"],
+        "health": 30,
+        "attack": 35,
+        "defense": 30,
+        "specialAttack": 100,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 93,
+        "id": "Haunter",
+        "types": ["Ghost", "Poison"],
+        "health": 45,
+        "attack": 50,
+        "defense": 45,
+        "specialAttack": 115,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 94,
+        "id": "Gengar",
+        "types": ["Ghost", "Poison"],
+        "health": 60,
+        "attack": 65,
+        "defense": 60,
+        "specialAttack": 130,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 95,
+        "id": "Onix",
+        "types": ["Rock", "Ground"],
+        "health": 35,
+        "attack": 45,
+        "defense": 160,
+        "specialAttack": 30,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 96,
+        "id": "Drowzee",
+        "types": ["Psychic"],
+        "health": 60,
+        "attack": 48,
+        "defense": 45,
+        "specialAttack": 43,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 97,
+        "id": "Hypno",
+        "types": ["Psychic"],
+        "health": 85,
+        "attack": 73,
+        "defense": 70,
+        "specialAttack": 73,
+        "specialDefense": 115,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 98,
+        "id": "Krabby",
+        "types": ["Water"],
+        "health": 30,
+        "attack": 105,
+        "defense": 90,
+        "specialAttack": 25,
+        "specialDefense": 25,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 99,
+        "id": "Kingler",
+        "types": ["Water"],
+        "health": 55,
+        "attack": 130,
+        "defense": 115,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 100,
+        "id": "Voltorb",
+        "types": ["Electric"],
+        "health": 40,
+        "attack": 30,
+        "defense": 50,
+        "specialAttack": 55,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 101,
+        "id": "Electrode",
+        "types": ["Electric"],
+        "health": 60,
+        "attack": 50,
+        "defense": 70,
+        "specialAttack": 80,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 102,
+        "id": "Exeggcute",
+        "types": ["Grass", "Psychic"],
+        "health": 60,
+        "attack": 40,
+        "defense": 80,
+        "specialAttack": 60,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 103,
+        "id": "Exeggutor",
+        "types": ["Grass", "Psychic"],
+        "health": 95,
+        "attack": 95,
+        "defense": 85,
+        "specialAttack": 125,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 104,
+        "id": "Cubone",
+        "types": ["Ground"],
+        "health": 50,
+        "attack": 50,
+        "defense": 95,
+        "specialAttack": 40,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 105,
+        "id": "Marowak",
+        "types": ["Ground"],
+        "health": 60,
+        "attack": 80,
+        "defense": 110,
+        "specialAttack": 50,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 106,
+        "id": "Hitmonlee",
+        "types": ["Fighting"],
+        "health": 50,
+        "attack": 120,
+        "defense": 53,
+        "specialAttack": 35,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 107,
+        "id": "Hitmonchan",
+        "types": ["Fighting"],
+        "health": 50,
+        "attack": 105,
+        "defense": 79,
+        "specialAttack": 35,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 108,
+        "id": "Lickitung",
+        "types": ["Normal"],
+        "health": 90,
+        "attack": 55,
+        "defense": 75,
+        "specialAttack": 60,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 109,
+        "id": "Koffing",
+        "types": ["Poison"],
+        "health": 40,
+        "attack": 65,
+        "defense": 95,
+        "specialAttack": 60,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 110,
+        "id": "Weezing",
+        "types": ["Poison"],
+        "health": 65,
+        "attack": 90,
+        "defense": 120,
+        "specialAttack": 85,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 111,
+        "id": "Rhyhorn",
+        "types": ["Ground", "Rock"],
+        "health": 80,
+        "attack": 85,
+        "defense": 95,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 112,
+        "id": "Rhydon",
+        "types": ["Ground", "Rock"],
+        "health": 105,
+        "attack": 130,
+        "defense": 120,
+        "specialAttack": 45,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 113,
+        "id": "Chansey",
+        "types": ["Normal"],
+        "health": 250,
+        "attack": 5,
+        "defense": 5,
+        "specialAttack": 35,
+        "specialDefense": 105,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 114,
+        "id": "Tangela",
+        "types": ["Grass"],
+        "health": 65,
+        "attack": 55,
+        "defense": 115,
+        "specialAttack": 100,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 115,
+        "id": "Kangaskhan",
+        "types": ["Normal"],
+        "health": 105,
+        "attack": 95,
+        "defense": 80,
+        "specialAttack": 40,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 116,
+        "id": "Horsea",
+        "types": ["Water"],
+        "health": 30,
+        "attack": 40,
+        "defense": 70,
+        "specialAttack": 70,
+        "specialDefense": 25,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 117,
+        "id": "Seadra",
+        "types": ["Water"],
+        "health": 55,
+        "attack": 65,
+        "defense": 95,
+        "specialAttack": 95,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 118,
+        "id": "Goldeen",
+        "types": ["Water"],
+        "health": 45,
+        "attack": 67,
+        "defense": 60,
+        "specialAttack": 35,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 119,
+        "id": "Seaking",
+        "types": ["Water"],
+        "health": 80,
+        "attack": 92,
+        "defense": 65,
+        "specialAttack": 65,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 120,
+        "id": "Staryu",
+        "types": ["Water"],
+        "health": 30,
+        "attack": 45,
+        "defense": 55,
+        "specialAttack": 70,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 121,
+        "id": "Starmie",
+        "types": ["Water", "Psychic"],
+        "health": 60,
+        "attack": 75,
+        "defense": 85,
+        "specialAttack": 100,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 122,
+        "id": "Mr-mime",
+        "types": ["Psychic", "Fairy"],
+        "health": 40,
+        "attack": 45,
+        "defense": 65,
+        "specialAttack": 100,
+        "specialDefense": 120,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 123,
+        "id": "Scyther",
+        "types": ["Bug", "Flying"],
+        "health": 70,
+        "attack": 110,
+        "defense": 80,
+        "specialAttack": 55,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 124,
+        "id": "Jynx",
+        "types": ["Ice", "Psychic"],
+        "health": 65,
+        "attack": 50,
+        "defense": 35,
+        "specialAttack": 115,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 125,
+        "id": "Electabuzz",
+        "types": ["Electric"],
+        "health": 65,
+        "attack": 83,
+        "defense": 57,
+        "specialAttack": 95,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 126,
+        "id": "Magmar",
+        "types": ["Fire"],
+        "health": 65,
+        "attack": 95,
+        "defense": 57,
+        "specialAttack": 100,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 127,
+        "id": "Pinsir",
+        "types": ["Bug"],
+        "health": 65,
+        "attack": 125,
+        "defense": 100,
+        "specialAttack": 55,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 128,
+        "id": "Tauros",
+        "types": ["Normal"],
+        "health": 75,
+        "attack": 100,
+        "defense": 95,
+        "specialAttack": 40,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 129,
+        "id": "Magikarp",
+        "types": ["Water"],
+        "health": 20,
+        "attack": 10,
+        "defense": 55,
+        "specialAttack": 15,
+        "specialDefense": 20,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 130,
+        "id": "Gyarados",
+        "types": ["Water", "Flying"],
+        "health": 95,
+        "attack": 125,
+        "defense": 79,
+        "specialAttack": 60,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 131,
+        "id": "Lapras",
+        "types": ["Water", "Ice"],
+        "health": 130,
+        "attack": 85,
+        "defense": 80,
+        "specialAttack": 85,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 132,
+        "id": "Ditto",
+        "types": ["Normal"],
+        "health": 48,
+        "attack": 48,
+        "defense": 48,
+        "specialAttack": 48,
+        "specialDefense": 48,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 133,
+        "id": "Eevee",
+        "types": ["Normal"],
+        "health": 55,
+        "attack": 55,
+        "defense": 50,
+        "specialAttack": 45,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 134,
+        "id": "Vaporeon",
+        "types": ["Water"],
+        "health": 130,
+        "attack": 65,
+        "defense": 60,
+        "specialAttack": 110,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 135,
+        "id": "Jolteon",
+        "types": ["Electric"],
+        "health": 65,
+        "attack": 65,
+        "defense": 60,
+        "specialAttack": 110,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 136,
+        "id": "Flareon",
+        "types": ["Fire"],
+        "health": 65,
+        "attack": 130,
+        "defense": 60,
+        "specialAttack": 95,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 137,
+        "id": "Porygon",
+        "types": ["Normal"],
+        "health": 65,
+        "attack": 60,
+        "defense": 70,
+        "specialAttack": 85,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 138,
+        "id": "Omanyte",
+        "types": ["Rock", "Water"],
+        "health": 35,
+        "attack": 40,
+        "defense": 100,
+        "specialAttack": 90,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 139,
+        "id": "Omastar",
+        "types": ["Rock", "Water"],
+        "health": 70,
+        "attack": 60,
+        "defense": 125,
+        "specialAttack": 115,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 140,
+        "id": "Kabuto",
+        "types": ["Rock", "Water"],
+        "health": 30,
+        "attack": 80,
+        "defense": 90,
+        "specialAttack": 55,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 141,
+        "id": "Kabutops",
+        "types": ["Rock", "Water"],
+        "health": 60,
+        "attack": 115,
+        "defense": 105,
+        "specialAttack": 65,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 142,
+        "id": "Aerodactyl",
+        "types": ["Rock", "Flying"],
+        "health": 80,
+        "attack": 105,
+        "defense": 65,
+        "specialAttack": 60,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 143,
+        "id": "Snorlax",
+        "types": ["Normal"],
+        "health": 160,
+        "attack": 110,
+        "defense": 65,
+        "specialAttack": 65,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 144,
+        "id": "Articuno",
+        "types": ["Ice", "Flying"],
+        "health": 90,
+        "attack": 85,
+        "defense": 100,
+        "specialAttack": 95,
+        "specialDefense": 125,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 145,
+        "id": "Zapdos",
+        "types": ["Electric", "Flying"],
+        "health": 90,
+        "attack": 90,
+        "defense": 85,
+        "specialAttack": 125,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 146,
+        "id": "Moltres",
+        "types": ["Fire", "Flying"],
+        "health": 90,
+        "attack": 100,
+        "defense": 90,
+        "specialAttack": 125,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 147,
+        "id": "Dratini",
+        "types": ["Dragon"],
+        "health": 41,
+        "attack": 64,
+        "defense": 45,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 148,
+        "id": "Dragonair",
+        "types": ["Dragon"],
+        "health": 61,
+        "attack": 84,
+        "defense": 65,
+        "specialAttack": 70,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 149,
+        "id": "Dragonite",
+        "types": ["Dragon", "Flying"],
+        "health": 91,
+        "attack": 134,
+        "defense": 95,
+        "specialAttack": 100,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 150,
+        "id": "Mewtwo",
+        "types": ["Psychic"],
+        "health": 106,
+        "attack": 110,
+        "defense": 90,
+        "specialAttack": 154,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 151,
+        "id": "Mew",
+        "types": ["Psychic"],
+        "health": 100,
+        "attack": 100,
+        "defense": 100,
+        "specialAttack": 100,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 152,
+        "id": "Chikorita",
+        "types": ["Grass"],
+        "health": 45,
+        "attack": 49,
+        "defense": 65,
+        "specialAttack": 49,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 153,
+        "id": "Bayleef",
+        "types": ["Grass"],
+        "health": 60,
+        "attack": 62,
+        "defense": 80,
+        "specialAttack": 63,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 154,
+        "id": "Meganium",
+        "types": ["Grass"],
+        "health": 80,
+        "attack": 82,
+        "defense": 100,
+        "specialAttack": 83,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 155,
+        "id": "Cyndaquil",
+        "types": ["Fire"],
+        "health": 39,
+        "attack": 52,
+        "defense": 43,
+        "specialAttack": 60,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 156,
+        "id": "Quilava",
+        "types": ["Fire"],
+        "health": 58,
+        "attack": 64,
+        "defense": 58,
+        "specialAttack": 80,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 157,
+        "id": "Typhlosion",
+        "types": ["Fire"],
+        "health": 78,
+        "attack": 84,
+        "defense": 78,
+        "specialAttack": 109,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 158,
+        "id": "Totodile",
+        "types": ["Water"],
+        "health": 50,
+        "attack": 65,
+        "defense": 64,
+        "specialAttack": 44,
+        "specialDefense": 48,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 159,
+        "id": "Croconaw",
+        "types": ["Water"],
+        "health": 65,
+        "attack": 80,
+        "defense": 80,
+        "specialAttack": 59,
+        "specialDefense": 63,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 160,
+        "id": "Feraligatr",
+        "types": ["Water"],
+        "health": 85,
+        "attack": 105,
+        "defense": 100,
+        "specialAttack": 79,
+        "specialDefense": 83,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 161,
+        "id": "Sentret",
+        "types": ["Normal"],
+        "health": 35,
+        "attack": 46,
+        "defense": 34,
+        "specialAttack": 35,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 162,
+        "id": "Furret",
+        "types": ["Normal"],
+        "health": 85,
+        "attack": 76,
+        "defense": 64,
+        "specialAttack": 45,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 163,
+        "id": "Hoothoot",
+        "types": ["Normal", "Flying"],
+        "health": 60,
+        "attack": 30,
+        "defense": 30,
+        "specialAttack": 36,
+        "specialDefense": 56,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 164,
+        "id": "Noctowl",
+        "types": ["Normal", "Flying"],
+        "health": 100,
+        "attack": 50,
+        "defense": 50,
+        "specialAttack": 86,
+        "specialDefense": 96,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 165,
+        "id": "Ledyba",
+        "types": ["Bug", "Flying"],
+        "health": 40,
+        "attack": 20,
+        "defense": 30,
+        "specialAttack": 40,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 166,
+        "id": "Ledian",
+        "types": ["Bug", "Flying"],
+        "health": 55,
+        "attack": 35,
+        "defense": 50,
+        "specialAttack": 55,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 167,
+        "id": "Spinarak",
+        "types": ["Bug", "Poison"],
+        "health": 40,
+        "attack": 60,
+        "defense": 40,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 168,
+        "id": "Ariados",
+        "types": ["Bug", "Poison"],
+        "health": 70,
+        "attack": 90,
+        "defense": 70,
+        "specialAttack": 60,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 169,
+        "id": "Crobat",
+        "types": ["Poison", "Flying"],
+        "health": 85,
+        "attack": 90,
+        "defense": 80,
+        "specialAttack": 70,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 170,
+        "id": "Chinchou",
+        "types": ["Water", "Electric"],
+        "health": 75,
+        "attack": 38,
+        "defense": 38,
+        "specialAttack": 56,
+        "specialDefense": 56,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 171,
+        "id": "Lanturn",
+        "types": ["Water", "Electric"],
+        "health": 125,
+        "attack": 58,
+        "defense": 58,
+        "specialAttack": 76,
+        "specialDefense": 76,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 172,
+        "id": "Pichu",
+        "types": ["Electric"],
+        "health": 20,
+        "attack": 40,
+        "defense": 15,
+        "specialAttack": 35,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 173,
+        "id": "Cleffa",
+        "types": ["Fairy"],
+        "health": 50,
+        "attack": 25,
+        "defense": 28,
+        "specialAttack": 45,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 174,
+        "id": "Igglybuff",
+        "types": ["Normal", "Fairy"],
+        "health": 90,
+        "attack": 30,
+        "defense": 15,
+        "specialAttack": 40,
+        "specialDefense": 20,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 175,
+        "id": "Togepi",
+        "types": ["Fairy"],
+        "health": 35,
+        "attack": 20,
+        "defense": 65,
+        "specialAttack": 40,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 176,
+        "id": "Togetic",
+        "types": ["Fairy", "Flying"],
+        "health": 55,
+        "attack": 40,
+        "defense": 85,
+        "specialAttack": 80,
+        "specialDefense": 105,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 177,
+        "id": "Natu",
+        "types": ["Psychic", "Flying"],
+        "health": 40,
+        "attack": 50,
+        "defense": 45,
+        "specialAttack": 70,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 178,
+        "id": "Xatu",
+        "types": ["Psychic", "Flying"],
+        "health": 65,
+        "attack": 75,
+        "defense": 70,
+        "specialAttack": 95,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 179,
+        "id": "Mareep",
+        "types": ["Electric"],
+        "health": 55,
+        "attack": 40,
+        "defense": 40,
+        "specialAttack": 65,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 180,
+        "id": "Flaaffy",
+        "types": ["Electric"],
+        "health": 70,
+        "attack": 55,
+        "defense": 55,
+        "specialAttack": 80,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 181,
+        "id": "Ampharos",
+        "types": ["Electric"],
+        "health": 90,
+        "attack": 75,
+        "defense": 85,
+        "specialAttack": 115,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 182,
+        "id": "Bellossom",
+        "types": ["Grass"],
+        "health": 75,
+        "attack": 80,
+        "defense": 95,
+        "specialAttack": 90,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 183,
+        "id": "Marill",
+        "types": ["Water", "Fairy"],
+        "health": 70,
+        "attack": 20,
+        "defense": 50,
+        "specialAttack": 20,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 184,
+        "id": "Azumarill",
+        "types": ["Water", "Fairy"],
+        "health": 100,
+        "attack": 50,
+        "defense": 80,
+        "specialAttack": 60,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 185,
+        "id": "Sudowoodo",
+        "types": ["Rock"],
+        "health": 70,
+        "attack": 100,
+        "defense": 115,
+        "specialAttack": 30,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 186,
+        "id": "Politoed",
+        "types": ["Water"],
+        "health": 90,
+        "attack": 75,
+        "defense": 75,
+        "specialAttack": 90,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 187,
+        "id": "Hoppip",
+        "types": ["Grass", "Flying"],
+        "health": 35,
+        "attack": 35,
+        "defense": 40,
+        "specialAttack": 35,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 188,
+        "id": "Skiploom",
+        "types": ["Grass", "Flying"],
+        "health": 55,
+        "attack": 45,
+        "defense": 50,
+        "specialAttack": 45,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 189,
+        "id": "Jumpluff",
+        "types": ["Grass", "Flying"],
+        "health": 75,
+        "attack": 55,
+        "defense": 70,
+        "specialAttack": 55,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 190,
+        "id": "Aipom",
+        "types": ["Normal"],
+        "health": 55,
+        "attack": 70,
+        "defense": 55,
+        "specialAttack": 40,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 191,
+        "id": "Sunkern",
+        "types": ["Grass"],
+        "health": 30,
+        "attack": 30,
+        "defense": 30,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 192,
+        "id": "Sunflora",
+        "types": ["Grass"],
+        "health": 75,
+        "attack": 75,
+        "defense": 55,
+        "specialAttack": 105,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 193,
+        "id": "Yanma",
+        "types": ["Bug", "Flying"],
+        "health": 65,
+        "attack": 65,
+        "defense": 45,
+        "specialAttack": 75,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 194,
+        "id": "Wooper",
+        "types": ["Water", "Ground"],
+        "health": 55,
+        "attack": 45,
+        "defense": 45,
+        "specialAttack": 25,
+        "specialDefense": 25,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 195,
+        "id": "Quagsire",
+        "types": ["Water", "Ground"],
+        "health": 95,
+        "attack": 85,
+        "defense": 85,
+        "specialAttack": 65,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 196,
+        "id": "Espeon",
+        "types": ["Psychic"],
+        "health": 65,
+        "attack": 65,
+        "defense": 60,
+        "specialAttack": 130,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 197,
+        "id": "Umbreon",
+        "types": ["Dark"],
+        "health": 95,
+        "attack": 65,
+        "defense": 110,
+        "specialAttack": 60,
+        "specialDefense": 130,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 198,
+        "id": "Murkrow",
+        "types": ["Dark", "Flying"],
+        "health": 60,
+        "attack": 85,
+        "defense": 42,
+        "specialAttack": 85,
+        "specialDefense": 42,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 199,
+        "id": "Slowking",
+        "types": ["Water", "Psychic"],
+        "health": 95,
+        "attack": 75,
+        "defense": 80,
+        "specialAttack": 100,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 200,
+        "id": "Misdreavus",
+        "types": ["Ghost"],
+        "health": 60,
+        "attack": 60,
+        "defense": 60,
+        "specialAttack": 85,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 201,
+        "id": "Unown",
+        "types": ["Psychic"],
+        "health": 48,
+        "attack": 72,
+        "defense": 48,
+        "specialAttack": 72,
+        "specialDefense": 48,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 202,
+        "id": "Wobbuffet",
+        "types": ["Psychic"],
+        "health": 190,
+        "attack": 33,
+        "defense": 58,
+        "specialAttack": 33,
+        "specialDefense": 58,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 203,
+        "id": "Girafarig",
+        "types": ["Normal", "Psychic"],
+        "health": 70,
+        "attack": 80,
+        "defense": 65,
+        "specialAttack": 90,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 204,
+        "id": "Pineco",
+        "types": ["Bug"],
+        "health": 50,
+        "attack": 65,
+        "defense": 90,
+        "specialAttack": 35,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 205,
+        "id": "Forretress",
+        "types": ["Bug", "Steel"],
+        "health": 75,
+        "attack": 90,
+        "defense": 140,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 206,
+        "id": "Dunsparce",
+        "types": ["Normal"],
+        "health": 100,
+        "attack": 70,
+        "defense": 70,
+        "specialAttack": 65,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 207,
+        "id": "Gligar",
+        "types": ["Ground", "Flying"],
+        "health": 65,
+        "attack": 75,
+        "defense": 105,
+        "specialAttack": 35,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 208,
+        "id": "Steelix",
+        "types": ["Steel", "Ground"],
+        "health": 75,
+        "attack": 85,
+        "defense": 200,
+        "specialAttack": 55,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 209,
+        "id": "Snubbull",
+        "types": ["Fairy"],
+        "health": 60,
+        "attack": 80,
+        "defense": 50,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 210,
+        "id": "Granbull",
+        "types": ["Fairy"],
+        "health": 90,
+        "attack": 120,
+        "defense": 75,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 211,
+        "id": "Qwilfish",
+        "types": ["Water", "Poison"],
+        "health": 65,
+        "attack": 95,
+        "defense": 85,
+        "specialAttack": 55,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 212,
+        "id": "Scizor",
+        "types": ["Bug", "Steel"],
+        "health": 70,
+        "attack": 130,
+        "defense": 100,
+        "specialAttack": 55,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 213,
+        "id": "Shuckle",
+        "types": ["Bug", "Rock"],
+        "health": 20,
+        "attack": 10,
+        "defense": 230,
+        "specialAttack": 10,
+        "specialDefense": 230,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 214,
+        "id": "Heracross",
+        "types": ["Bug", "Fighting"],
+        "health": 80,
+        "attack": 125,
+        "defense": 75,
+        "specialAttack": 40,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 215,
+        "id": "Sneasel",
+        "types": ["Dark", "Ice"],
+        "health": 55,
+        "attack": 95,
+        "defense": 55,
+        "specialAttack": 35,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 216,
+        "id": "Teddiursa",
+        "types": ["Normal"],
+        "health": 60,
+        "attack": 80,
+        "defense": 50,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 217,
+        "id": "Ursaring",
+        "types": ["Normal"],
+        "health": 90,
+        "attack": 130,
+        "defense": 75,
+        "specialAttack": 75,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 218,
+        "id": "Slugma",
+        "types": ["Fire"],
+        "health": 40,
+        "attack": 40,
+        "defense": 40,
+        "specialAttack": 70,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 219,
+        "id": "Magcargo",
+        "types": ["Fire", "Rock"],
+        "health": 60,
+        "attack": 50,
+        "defense": 120,
+        "specialAttack": 90,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 220,
+        "id": "Swinub",
+        "types": ["Ice", "Ground"],
+        "health": 50,
+        "attack": 50,
+        "defense": 40,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 221,
+        "id": "Piloswine",
+        "types": ["Ice", "Ground"],
+        "health": 100,
+        "attack": 100,
+        "defense": 80,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 222,
+        "id": "Corsola",
+        "types": ["Water", "Rock"],
+        "health": 65,
+        "attack": 55,
+        "defense": 95,
+        "specialAttack": 65,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 223,
+        "id": "Remoraid",
+        "types": ["Water"],
+        "health": 35,
+        "attack": 65,
+        "defense": 35,
+        "specialAttack": 65,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 224,
+        "id": "Octillery",
+        "types": ["Water"],
+        "health": 75,
+        "attack": 105,
+        "defense": 75,
+        "specialAttack": 105,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 225,
+        "id": "Delibird",
+        "types": ["Ice", "Flying"],
+        "health": 45,
+        "attack": 55,
+        "defense": 45,
+        "specialAttack": 65,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 226,
+        "id": "Mantine",
+        "types": ["Water", "Flying"],
+        "health": 85,
+        "attack": 40,
+        "defense": 70,
+        "specialAttack": 80,
+        "specialDefense": 140,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 227,
+        "id": "Skarmory",
+        "types": ["Steel", "Flying"],
+        "health": 65,
+        "attack": 80,
+        "defense": 140,
+        "specialAttack": 40,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 228,
+        "id": "Houndour",
+        "types": ["Dark", "Fire"],
+        "health": 45,
+        "attack": 60,
+        "defense": 30,
+        "specialAttack": 80,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 229,
+        "id": "Houndoom",
+        "types": ["Dark", "Fire"],
+        "health": 75,
+        "attack": 90,
+        "defense": 50,
+        "specialAttack": 110,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 230,
+        "id": "Kingdra",
+        "types": ["Water", "Dragon"],
+        "health": 75,
+        "attack": 95,
+        "defense": 95,
+        "specialAttack": 95,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 231,
+        "id": "Phanpy",
+        "types": ["Ground"],
+        "health": 90,
+        "attack": 60,
+        "defense": 60,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 232,
+        "id": "Donphan",
+        "types": ["Ground"],
+        "health": 90,
+        "attack": 120,
+        "defense": 120,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 233,
+        "id": "Porygon2",
+        "types": ["Normal"],
+        "health": 85,
+        "attack": 80,
+        "defense": 90,
+        "specialAttack": 105,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 234,
+        "id": "Stantler",
+        "types": ["Normal"],
+        "health": 73,
+        "attack": 95,
+        "defense": 62,
+        "specialAttack": 85,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 235,
+        "id": "Smeargle",
+        "types": ["Normal"],
+        "health": 55,
+        "attack": 20,
+        "defense": 35,
+        "specialAttack": 20,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 236,
+        "id": "Tyrogue",
+        "types": ["Fighting"],
+        "health": 35,
+        "attack": 35,
+        "defense": 35,
+        "specialAttack": 35,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 237,
+        "id": "Hitmontop",
+        "types": ["Fighting"],
+        "health": 50,
+        "attack": 95,
+        "defense": 95,
+        "specialAttack": 35,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 238,
+        "id": "Smoochum",
+        "types": ["Ice", "Psychic"],
+        "health": 45,
+        "attack": 30,
+        "defense": 15,
+        "specialAttack": 85,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 239,
+        "id": "Elekid",
+        "types": ["Electric"],
+        "health": 45,
+        "attack": 63,
+        "defense": 37,
+        "specialAttack": 65,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 240,
+        "id": "Magby",
+        "types": ["Fire"],
+        "health": 45,
+        "attack": 75,
+        "defense": 37,
+        "specialAttack": 70,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 241,
+        "id": "Miltank",
+        "types": ["Normal"],
+        "health": 95,
+        "attack": 80,
+        "defense": 105,
+        "specialAttack": 40,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 242,
+        "id": "Blissey",
+        "types": ["Normal"],
+        "health": 255,
+        "attack": 10,
+        "defense": 10,
+        "specialAttack": 75,
+        "specialDefense": 135,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 243,
+        "id": "Raikou",
+        "types": ["Electric"],
+        "health": 90,
+        "attack": 85,
+        "defense": 75,
+        "specialAttack": 115,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 244,
+        "id": "Entei",
+        "types": ["Fire"],
+        "health": 115,
+        "attack": 115,
+        "defense": 85,
+        "specialAttack": 90,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 245,
+        "id": "Suicune",
+        "types": ["Water"],
+        "health": 100,
+        "attack": 75,
+        "defense": 115,
+        "specialAttack": 90,
+        "specialDefense": 115,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 246,
+        "id": "Larvitar",
+        "types": ["Rock", "Ground"],
+        "health": 50,
+        "attack": 64,
+        "defense": 50,
+        "specialAttack": 45,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 247,
+        "id": "Pupitar",
+        "types": ["Rock", "Ground"],
+        "health": 70,
+        "attack": 84,
+        "defense": 70,
+        "specialAttack": 65,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 248,
+        "id": "Tyranitar",
+        "types": ["Rock", "Dark"],
+        "health": 100,
+        "attack": 134,
+        "defense": 110,
+        "specialAttack": 95,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 249,
+        "id": "Lugia",
+        "types": ["Psychic", "Flying"],
+        "health": 106,
+        "attack": 90,
+        "defense": 130,
+        "specialAttack": 90,
+        "specialDefense": 154,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 250,
+        "id": "Ho-Oh",
+        "types": ["Fire", "Flying"],
+        "health": 106,
+        "attack": 130,
+        "defense": 90,
+        "specialAttack": 110,
+        "specialDefense": 154,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 251,
+        "id": "Celebi",
+        "types": ["Psychic", "Grass"],
+        "health": 100,
+        "attack": 100,
+        "defense": 100,
+        "specialAttack": 100,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 252,
+        "id": "Treecko",
+        "types": ["Grass"],
+        "health": 40,
+        "attack": 45,
+        "defense": 35,
+        "specialAttack": 65,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 253,
+        "id": "Grovyle",
+        "types": ["Grass"],
+        "health": 50,
+        "attack": 65,
+        "defense": 45,
+        "specialAttack": 85,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 254,
+        "id": "Sceptile",
+        "types": ["Grass"],
+        "health": 70,
+        "attack": 85,
+        "defense": 65,
+        "specialAttack": 105,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 255,
+        "id": "Torchic",
+        "types": ["Fire"],
+        "health": 45,
+        "attack": 60,
+        "defense": 40,
+        "specialAttack": 70,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 256,
+        "id": "Combusken",
+        "types": ["Fire", "Fighting"],
+        "health": 60,
+        "attack": 85,
+        "defense": 60,
+        "specialAttack": 85,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 257,
+        "id": "Blaziken",
+        "types": ["Fire", "Fighting"],
+        "health": 80,
+        "attack": 120,
+        "defense": 70,
+        "specialAttack": 110,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 258,
+        "id": "Mudkip",
+        "types": ["Water"],
+        "health": 50,
+        "attack": 70,
+        "defense": 50,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 259,
+        "id": "Marshtomp",
+        "types": ["Water", "Ground"],
+        "health": 70,
+        "attack": 85,
+        "defense": 70,
+        "specialAttack": 60,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 260,
+        "id": "Swampert",
+        "types": ["Water", "Ground"],
+        "health": 100,
+        "attack": 110,
+        "defense": 90,
+        "specialAttack": 85,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 261,
+        "id": "Poochyena",
+        "types": ["Dark"],
+        "health": 35,
+        "attack": 55,
+        "defense": 35,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 262,
+        "id": "Mightyena",
+        "types": ["Dark"],
+        "health": 70,
+        "attack": 90,
+        "defense": 70,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 263,
+        "id": "Zigzagoon",
+        "types": ["Normal"],
+        "health": 38,
+        "attack": 30,
+        "defense": 41,
+        "specialAttack": 30,
+        "specialDefense": 41,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 264,
+        "id": "Linoone",
+        "types": ["Normal"],
+        "health": 78,
+        "attack": 70,
+        "defense": 61,
+        "specialAttack": 50,
+        "specialDefense": 61,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 265,
+        "id": "Wurmple",
+        "types": ["Bug"],
+        "health": 45,
+        "attack": 45,
+        "defense": 35,
+        "specialAttack": 20,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 266,
+        "id": "Silcoon",
+        "types": ["Bug"],
+        "health": 50,
+        "attack": 35,
+        "defense": 55,
+        "specialAttack": 25,
+        "specialDefense": 25,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 267,
+        "id": "Beautifly",
+        "types": ["Bug", "Flying"],
+        "health": 60,
+        "attack": 70,
+        "defense": 50,
+        "specialAttack": 100,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 268,
+        "id": "Cascoon",
+        "types": ["Bug"],
+        "health": 50,
+        "attack": 35,
+        "defense": 55,
+        "specialAttack": 25,
+        "specialDefense": 25,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 269,
+        "id": "Dustox",
+        "types": ["Bug", "Poison"],
+        "health": 60,
+        "attack": 50,
+        "defense": 70,
+        "specialAttack": 50,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 270,
+        "id": "Lotad",
+        "types": ["Water", "Grass"],
+        "health": 40,
+        "attack": 30,
+        "defense": 30,
+        "specialAttack": 40,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 271,
+        "id": "Lombre",
+        "types": ["Water", "Grass"],
+        "health": 60,
+        "attack": 50,
+        "defense": 50,
+        "specialAttack": 60,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 272,
+        "id": "Ludicolo",
+        "types": ["Water", "Grass"],
+        "health": 80,
+        "attack": 70,
+        "defense": 70,
+        "specialAttack": 90,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 273,
+        "id": "Seedot",
+        "types": ["Grass"],
+        "health": 40,
+        "attack": 40,
+        "defense": 50,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 274,
+        "id": "Nuzleaf",
+        "types": ["Grass", "Dark"],
+        "health": 70,
+        "attack": 70,
+        "defense": 40,
+        "specialAttack": 60,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 275,
+        "id": "Shiftry",
+        "types": ["Grass", "Dark"],
+        "health": 90,
+        "attack": 100,
+        "defense": 60,
+        "specialAttack": 90,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 276,
+        "id": "Taillow",
+        "types": ["Normal", "Flying"],
+        "health": 40,
+        "attack": 55,
+        "defense": 30,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 277,
+        "id": "Swellow",
+        "types": ["Normal", "Flying"],
+        "health": 60,
+        "attack": 85,
+        "defense": 60,
+        "specialAttack": 75,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 278,
+        "id": "Wingull",
+        "types": ["Water", "Flying"],
+        "health": 40,
+        "attack": 30,
+        "defense": 30,
+        "specialAttack": 55,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 279,
+        "id": "Pelipper",
+        "types": ["Water", "Flying"],
+        "health": 60,
+        "attack": 50,
+        "defense": 100,
+        "specialAttack": 95,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 280,
+        "id": "Ralts",
+        "types": ["Psychic", "Fairy"],
+        "health": 28,
+        "attack": 25,
+        "defense": 25,
+        "specialAttack": 45,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 281,
+        "id": "Kirlia",
+        "types": ["Psychic", "Fairy"],
+        "health": 38,
+        "attack": 35,
+        "defense": 35,
+        "specialAttack": 65,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 282,
+        "id": "Gardevoir",
+        "types": ["Psychic", "Fairy"],
+        "health": 68,
+        "attack": 65,
+        "defense": 65,
+        "specialAttack": 125,
+        "specialDefense": 115,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 283,
+        "id": "Surskit",
+        "types": ["Bug", "Water"],
+        "health": 40,
+        "attack": 30,
+        "defense": 32,
+        "specialAttack": 50,
+        "specialDefense": 52,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 284,
+        "id": "Masquerain",
+        "types": ["Bug", "Flying"],
+        "health": 70,
+        "attack": 60,
+        "defense": 62,
+        "specialAttack": 100,
+        "specialDefense": 82,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 285,
+        "id": "Shroomish",
+        "types": ["Grass"],
+        "health": 60,
+        "attack": 40,
+        "defense": 60,
+        "specialAttack": 40,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 286,
+        "id": "Breloom",
+        "types": ["Grass", "Fighting"],
+        "health": 60,
+        "attack": 130,
+        "defense": 80,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 287,
+        "id": "Slakoth",
+        "types": ["Normal"],
+        "health": 60,
+        "attack": 60,
+        "defense": 60,
+        "specialAttack": 35,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 288,
+        "id": "Vigoroth",
+        "types": ["Normal"],
+        "health": 80,
+        "attack": 80,
+        "defense": 80,
+        "specialAttack": 55,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 289,
+        "id": "Slaking",
+        "types": ["Normal"],
+        "health": 150,
+        "attack": 160,
+        "defense": 100,
+        "specialAttack": 95,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 290,
+        "id": "Nincada",
+        "types": ["Bug", "Ground"],
+        "health": 31,
+        "attack": 45,
+        "defense": 90,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 291,
+        "id": "Ninjask",
+        "types": ["Bug", "Flying"],
+        "health": 61,
+        "attack": 90,
+        "defense": 45,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 292,
+        "id": "Shedinja",
+        "types": ["Bug", "Ghost"],
+        "health": 1,
+        "attack": 90,
+        "defense": 45,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 293,
+        "id": "Whismur",
+        "types": ["Normal"],
+        "health": 64,
+        "attack": 51,
+        "defense": 23,
+        "specialAttack": 51,
+        "specialDefense": 23,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 294,
+        "id": "Loudred",
+        "types": ["Normal"],
+        "health": 84,
+        "attack": 71,
+        "defense": 43,
+        "specialAttack": 71,
+        "specialDefense": 43,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 295,
+        "id": "Exploud",
+        "types": ["Normal"],
+        "health": 104,
+        "attack": 91,
+        "defense": 63,
+        "specialAttack": 91,
+        "specialDefense": 73,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 296,
+        "id": "Makuhita",
+        "types": ["Fighting"],
+        "health": 72,
+        "attack": 60,
+        "defense": 30,
+        "specialAttack": 20,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 297,
+        "id": "Hariyama",
+        "types": ["Fighting"],
+        "health": 144,
+        "attack": 120,
+        "defense": 60,
+        "specialAttack": 40,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 298,
+        "id": "Azurill",
+        "types": ["Normal", "Fairy"],
+        "health": 50,
+        "attack": 20,
+        "defense": 40,
+        "specialAttack": 20,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 299,
+        "id": "Nosepass",
+        "types": ["Rock"],
+        "health": 30,
+        "attack": 45,
+        "defense": 135,
+        "specialAttack": 45,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 300,
+        "id": "Skitty",
+        "types": ["Normal"],
+        "health": 50,
+        "attack": 45,
+        "defense": 45,
+        "specialAttack": 35,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 301,
+        "id": "Delcatty",
+        "types": ["Normal"],
+        "health": 70,
+        "attack": 65,
+        "defense": 65,
+        "specialAttack": 55,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 302,
+        "id": "Sableye",
+        "types": ["Dark", "Ghost"],
+        "health": 50,
+        "attack": 75,
+        "defense": 75,
+        "specialAttack": 65,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 303,
+        "id": "Mawile",
+        "types": ["Steel", "Fairy"],
+        "health": 50,
+        "attack": 85,
+        "defense": 85,
+        "specialAttack": 55,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 304,
+        "id": "Aron",
+        "types": ["Steel", "Rock"],
+        "health": 50,
+        "attack": 70,
+        "defense": 100,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 305,
+        "id": "Lairon",
+        "types": ["Steel", "Rock"],
+        "health": 60,
+        "attack": 90,
+        "defense": 140,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 306,
+        "id": "Aggron",
+        "types": ["Steel", "Rock"],
+        "health": 70,
+        "attack": 110,
+        "defense": 180,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 307,
+        "id": "Meditite",
+        "types": ["Fighting", "Psychic"],
+        "health": 30,
+        "attack": 40,
+        "defense": 55,
+        "specialAttack": 40,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 308,
+        "id": "Medicham",
+        "types": ["Fighting", "Psychic"],
+        "health": 60,
+        "attack": 60,
+        "defense": 75,
+        "specialAttack": 60,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 309,
+        "id": "Electrike",
+        "types": ["Electric"],
+        "health": 40,
+        "attack": 45,
+        "defense": 40,
+        "specialAttack": 65,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 310,
+        "id": "Manectric",
+        "types": ["Electric"],
+        "health": 70,
+        "attack": 75,
+        "defense": 60,
+        "specialAttack": 105,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 311,
+        "id": "Plusle",
+        "types": ["Electric"],
+        "health": 60,
+        "attack": 50,
+        "defense": 40,
+        "specialAttack": 85,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 312,
+        "id": "Minun",
+        "types": ["Electric"],
+        "health": 60,
+        "attack": 40,
+        "defense": 50,
+        "specialAttack": 75,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 313,
+        "id": "Volbeat",
+        "types": ["Bug"],
+        "health": 65,
+        "attack": 73,
+        "defense": 75,
+        "specialAttack": 47,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 314,
+        "id": "Illumise",
+        "types": ["Bug"],
+        "health": 65,
+        "attack": 47,
+        "defense": 75,
+        "specialAttack": 73,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 315,
+        "id": "Roselia",
+        "types": ["Grass", "Poison"],
+        "health": 50,
+        "attack": 60,
+        "defense": 45,
+        "specialAttack": 100,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 316,
+        "id": "Gulpin",
+        "types": ["Poison"],
+        "health": 70,
+        "attack": 43,
+        "defense": 53,
+        "specialAttack": 43,
+        "specialDefense": 53,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 317,
+        "id": "Swalot",
+        "types": ["Poison"],
+        "health": 100,
+        "attack": 73,
+        "defense": 83,
+        "specialAttack": 73,
+        "specialDefense": 83,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 318,
+        "id": "Carvanha",
+        "types": ["Water", "Dark"],
+        "health": 45,
+        "attack": 90,
+        "defense": 20,
+        "specialAttack": 65,
+        "specialDefense": 20,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 319,
+        "id": "Sharpedo",
+        "types": ["Water", "Dark"],
+        "health": 70,
+        "attack": 120,
+        "defense": 40,
+        "specialAttack": 95,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 320,
+        "id": "Wailmer",
+        "types": ["Water"],
+        "health": 130,
+        "attack": 70,
+        "defense": 35,
+        "specialAttack": 70,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 321,
+        "id": "Wailord",
+        "types": ["Water"],
+        "health": 170,
+        "attack": 90,
+        "defense": 45,
+        "specialAttack": 90,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 322,
+        "id": "Numel",
+        "types": ["Fire", "Ground"],
+        "health": 60,
+        "attack": 60,
+        "defense": 40,
+        "specialAttack": 65,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 323,
+        "id": "Camerupt",
+        "types": ["Fire", "Ground"],
+        "health": 70,
+        "attack": 100,
+        "defense": 70,
+        "specialAttack": 105,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 324,
+        "id": "Torkoal",
+        "types": ["Fire"],
+        "health": 70,
+        "attack": 85,
+        "defense": 140,
+        "specialAttack": 85,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 325,
+        "id": "Spoink",
+        "types": ["Psychic"],
+        "health": 60,
+        "attack": 25,
+        "defense": 35,
+        "specialAttack": 70,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 326,
+        "id": "Grumpig",
+        "types": ["Psychic"],
+        "health": 80,
+        "attack": 45,
+        "defense": 65,
+        "specialAttack": 90,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 327,
+        "id": "Spinda",
+        "types": ["Normal"],
+        "health": 60,
+        "attack": 60,
+        "defense": 60,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 328,
+        "id": "Trapinch",
+        "types": ["Ground"],
+        "health": 45,
+        "attack": 100,
+        "defense": 45,
+        "specialAttack": 45,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 329,
+        "id": "Vibrava",
+        "types": ["Ground", "Dragon"],
+        "health": 50,
+        "attack": 70,
+        "defense": 50,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 330,
+        "id": "Flygon",
+        "types": ["Ground", "Dragon"],
+        "health": 80,
+        "attack": 100,
+        "defense": 80,
+        "specialAttack": 80,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 331,
+        "id": "Cacnea",
+        "types": ["Grass"],
+        "health": 50,
+        "attack": 85,
+        "defense": 40,
+        "specialAttack": 85,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 332,
+        "id": "Cacturne",
+        "types": ["Grass", "Dark"],
+        "health": 70,
+        "attack": 115,
+        "defense": 60,
+        "specialAttack": 115,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 333,
+        "id": "Swablu",
+        "types": ["Normal", "Flying"],
+        "health": 45,
+        "attack": 40,
+        "defense": 60,
+        "specialAttack": 40,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 334,
+        "id": "Altaria",
+        "types": ["Dragon", "Flying"],
+        "health": 75,
+        "attack": 70,
+        "defense": 90,
+        "specialAttack": 70,
+        "specialDefense": 105,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 335,
+        "id": "Zangoose",
+        "types": ["Normal"],
+        "health": 73,
+        "attack": 115,
+        "defense": 60,
+        "specialAttack": 60,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 336,
+        "id": "Seviper",
+        "types": ["Poison"],
+        "health": 73,
+        "attack": 100,
+        "defense": 60,
+        "specialAttack": 100,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 337,
+        "id": "Lunatone",
+        "types": ["Rock", "Psychic"],
+        "health": 90,
+        "attack": 55,
+        "defense": 65,
+        "specialAttack": 95,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 338,
+        "id": "Solrock",
+        "types": ["Rock", "Psychic"],
+        "health": 90,
+        "attack": 95,
+        "defense": 85,
+        "specialAttack": 55,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 339,
+        "id": "Barboach",
+        "types": ["Water", "Ground"],
+        "health": 50,
+        "attack": 48,
+        "defense": 43,
+        "specialAttack": 46,
+        "specialDefense": 41,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 340,
+        "id": "Whiscash",
+        "types": ["Water", "Ground"],
+        "health": 110,
+        "attack": 78,
+        "defense": 73,
+        "specialAttack": 76,
+        "specialDefense": 71,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 341,
+        "id": "Corphish",
+        "types": ["Water"],
+        "health": 43,
+        "attack": 80,
+        "defense": 65,
+        "specialAttack": 50,
+        "specialDefense": 35,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 342,
+        "id": "Crawdaunt",
+        "types": ["Water", "Dark"],
+        "health": 63,
+        "attack": 120,
+        "defense": 85,
+        "specialAttack": 90,
+        "specialDefense": 5,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 343,
+        "id": "Baltoy",
+        "types": ["Ground", "Psychic"],
+        "health": 40,
+        "attack": 40,
+        "defense": 55,
+        "specialAttack": 40,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 344,
+        "id": "Claydol",
+        "types": ["Ground", "Psychic"],
+        "health": 60,
+        "attack": 70,
+        "defense": 105,
+        "specialAttack": 70,
+        "specialDefense": 120,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 345,
+        "id": "Lileep",
+        "types": ["Rock", "Grass"],
+        "health": 66,
+        "attack": 41,
+        "defense": 77,
+        "specialAttack": 61,
+        "specialDefense": 87,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 346,
+        "id": "Cradily",
+        "types": ["Rock", "Grass"],
+        "health": 86,
+        "attack": 81,
+        "defense": 97,
+        "specialAttack": 81,
+        "specialDefense": 107,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 347,
+        "id": "Anorith",
+        "types": ["Rock", "Bug"],
+        "health": 45,
+        "attack": 95,
+        "defense": 50,
+        "specialAttack": 40,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 348,
+        "id": "Armaldo",
+        "types": ["Rock", "Bug"],
+        "health": 75,
+        "attack": 125,
+        "defense": 100,
+        "specialAttack": 70,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 349,
+        "id": "Feebas",
+        "types": ["Water"],
+        "health": 20,
+        "attack": 15,
+        "defense": 20,
+        "specialAttack": 10,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 350,
+        "id": "Milotic",
+        "types": ["Water"],
+        "health": 95,
+        "attack": 60,
+        "defense": 79,
+        "specialAttack": 100,
+        "specialDefense": 125,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 351,
+        "id": "Castform",
+        "types": ["Normal"],
+        "health": 70,
+        "attack": 70,
+        "defense": 70,
+        "specialAttack": 70,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 352,
+        "id": "Kecleon",
+        "types": ["Normal"],
+        "health": 60,
+        "attack": 90,
+        "defense": 70,
+        "specialAttack": 60,
+        "specialDefense": 120,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 353,
+        "id": "Shuppet",
+        "types": ["Ghost"],
+        "health": 44,
+        "attack": 75,
+        "defense": 35,
+        "specialAttack": 63,
+        "specialDefense": 33,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 354,
+        "id": "Banette",
+        "types": ["Ghost"],
+        "health": 64,
+        "attack": 115,
+        "defense": 65,
+        "specialAttack": 83,
+        "specialDefense": 63,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 355,
+        "id": "Duskull",
+        "types": ["Ghost"],
+        "health": 20,
+        "attack": 40,
+        "defense": 90,
+        "specialAttack": 30,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 356,
+        "id": "Dusclops",
+        "types": ["Ghost"],
+        "health": 40,
+        "attack": 70,
+        "defense": 130,
+        "specialAttack": 60,
+        "specialDefense": 130,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 357,
+        "id": "Tropius",
+        "types": ["Grass", "Flying"],
+        "health": 99,
+        "attack": 68,
+        "defense": 83,
+        "specialAttack": 72,
+        "specialDefense": 87,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 358,
+        "id": "Chimecho",
+        "types": ["Psychic"],
+        "health": 75,
+        "attack": 50,
+        "defense": 80,
+        "specialAttack": 95,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 359,
+        "id": "Absol",
+        "types": ["Dark"],
+        "health": 65,
+        "attack": 130,
+        "defense": 60,
+        "specialAttack": 75,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 360,
+        "id": "Wynaut",
+        "types": ["Psychic"],
+        "health": 95,
+        "attack": 23,
+        "defense": 48,
+        "specialAttack": 23,
+        "specialDefense": 48,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 361,
+        "id": "Snorunt",
+        "types": ["Ice"],
+        "health": 50,
+        "attack": 50,
+        "defense": 50,
+        "specialAttack": 50,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 362,
+        "id": "Glalie",
+        "types": ["Ice"],
+        "health": 80,
+        "attack": 80,
+        "defense": 80,
+        "specialAttack": 80,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 363,
+        "id": "Spheal",
+        "types": ["Ice", "Water"],
+        "health": 70,
+        "attack": 40,
+        "defense": 50,
+        "specialAttack": 55,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 364,
+        "id": "Sealeo",
+        "types": ["Ice", "Water"],
+        "health": 90,
+        "attack": 60,
+        "defense": 70,
+        "specialAttack": 75,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 365,
+        "id": "Walrein",
+        "types": ["Ice", "Water"],
+        "health": 110,
+        "attack": 80,
+        "defense": 90,
+        "specialAttack": 95,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 366,
+        "id": "Clamperl",
+        "types": ["Water"],
+        "health": 35,
+        "attack": 64,
+        "defense": 85,
+        "specialAttack": 74,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 367,
+        "id": "Huntail",
+        "types": ["Water"],
+        "health": 55,
+        "attack": 104,
+        "defense": 105,
+        "specialAttack": 94,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 368,
+        "id": "Gorebyss",
+        "types": ["Water"],
+        "health": 55,
+        "attack": 84,
+        "defense": 105,
+        "specialAttack": 114,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 369,
+        "id": "Relicanth",
+        "types": ["Water", "Rock"],
+        "health": 100,
+        "attack": 90,
+        "defense": 130,
+        "specialAttack": 45,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 370,
+        "id": "Luvdisc",
+        "types": ["Water"],
+        "health": 43,
+        "attack": 30,
+        "defense": 55,
+        "specialAttack": 40,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 371,
+        "id": "Bagon",
+        "types": ["Dragon"],
+        "health": 45,
+        "attack": 75,
+        "defense": 60,
+        "specialAttack": 40,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 372,
+        "id": "Shelgon",
+        "types": ["Dragon"],
+        "health": 65,
+        "attack": 95,
+        "defense": 100,
+        "specialAttack": 60,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 373,
+        "id": "Salamence",
+        "types": ["Dragon", "Flying"],
+        "health": 95,
+        "attack": 135,
+        "defense": 80,
+        "specialAttack": 110,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 374,
+        "id": "Beldum",
+        "types": ["Steel", "Psychic"],
+        "health": 40,
+        "attack": 55,
+        "defense": 80,
+        "specialAttack": 35,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 375,
+        "id": "Metang",
+        "types": ["Steel", "Psychic"],
+        "health": 60,
+        "attack": 75,
+        "defense": 100,
+        "specialAttack": 55,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 376,
+        "id": "Metagross",
+        "types": ["Steel", "Psychic"],
+        "health": 80,
+        "attack": 135,
+        "defense": 130,
+        "specialAttack": 95,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 377,
+        "id": "Regirock",
+        "types": ["Rock"],
+        "health": 80,
+        "attack": 100,
+        "defense": 200,
+        "specialAttack": 50,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 378,
+        "id": "Regice",
+        "types": ["Ice"],
+        "health": 80,
+        "attack": 50,
+        "defense": 100,
+        "specialAttack": 100,
+        "specialDefense": 200,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 379,
+        "id": "Registeel",
+        "types": ["Steel"],
+        "health": 80,
+        "attack": 75,
+        "defense": 150,
+        "specialAttack": 75,
+        "specialDefense": 150,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 380,
+        "id": "Latias",
+        "types": ["Dragon", "Psychic"],
+        "health": 80,
+        "attack": 80,
+        "defense": 90,
+        "specialAttack": 110,
+        "specialDefense": 130,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 381,
+        "id": "Latios",
+        "types": ["Dragon", "Psychic"],
+        "health": 80,
+        "attack": 90,
+        "defense": 80,
+        "specialAttack": 130,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 382,
+        "id": "Kyogre",
+        "types": ["Water"],
+        "health": 100,
+        "attack": 100,
+        "defense": 90,
+        "specialAttack": 150,
+        "specialDefense": 140,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 383,
+        "id": "Groudon",
+        "types": ["Ground"],
+        "health": 100,
+        "attack": 150,
+        "defense": 140,
+        "specialAttack": 100,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 384,
+        "id": "Rayquaza",
+        "types": ["Dragon", "Flying"],
+        "health": 105,
+        "attack": 150,
+        "defense": 90,
+        "specialAttack": 150,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 385,
+        "id": "Jirachi",
+        "types": ["Steel", "Psychic"],
+        "health": 100,
+        "attack": 100,
+        "defense": 100,
+        "specialAttack": 100,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 386,
+        "id": "Deoxys-normal",
+        "types": ["Psychic"],
+        "health": 50,
+        "attack": 150,
+        "defense": 50,
+        "specialAttack": 150,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 387,
+        "id": "Turtwig",
+        "types": ["Grass"],
+        "health": 55,
+        "attack": 68,
+        "defense": 64,
+        "specialAttack": 45,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 388,
+        "id": "Grotle",
+        "types": ["Grass"],
+        "health": 75,
+        "attack": 89,
+        "defense": 85,
+        "specialAttack": 55,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 389,
+        "id": "Torterra",
+        "types": ["Grass", "Ground"],
+        "health": 95,
+        "attack": 109,
+        "defense": 105,
+        "specialAttack": 75,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 390,
+        "id": "Chimchar",
+        "types": ["Fire"],
+        "health": 44,
+        "attack": 58,
+        "defense": 44,
+        "specialAttack": 58,
+        "specialDefense": 44,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 391,
+        "id": "Monferno",
+        "types": ["Fire", "Fighting"],
+        "health": 64,
+        "attack": 78,
+        "defense": 52,
+        "specialAttack": 78,
+        "specialDefense": 52,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 392,
+        "id": "Infernape",
+        "types": ["Fire", "Fighting"],
+        "health": 76,
+        "attack": 104,
+        "defense": 71,
+        "specialAttack": 104,
+        "specialDefense": 71,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 393,
+        "id": "Piplup",
+        "types": ["Water"],
+        "health": 53,
+        "attack": 51,
+        "defense": 53,
+        "specialAttack": 61,
+        "specialDefense": 56,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 394,
+        "id": "Prinplup",
+        "types": ["Water"],
+        "health": 64,
+        "attack": 66,
+        "defense": 68,
+        "specialAttack": 81,
+        "specialDefense": 76,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 395,
+        "id": "Empoleon",
+        "types": ["Water", "Steel"],
+        "health": 84,
+        "attack": 86,
+        "defense": 88,
+        "specialAttack": 111,
+        "specialDefense": 101,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 396,
+        "id": "Starly",
+        "types": ["Normal", "Flying"],
+        "health": 40,
+        "attack": 55,
+        "defense": 30,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 397,
+        "id": "Staravia",
+        "types": ["Normal", "Flying"],
+        "health": 55,
+        "attack": 75,
+        "defense": 50,
+        "specialAttack": 40,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 398,
+        "id": "Staraptor",
+        "types": ["Normal", "Flying"],
+        "health": 85,
+        "attack": 120,
+        "defense": 70,
+        "specialAttack": 50,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 399,
+        "id": "Bidoof",
+        "types": ["Normal"],
+        "health": 59,
+        "attack": 45,
+        "defense": 40,
+        "specialAttack": 35,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 400,
+        "id": "Bibarel",
+        "types": ["Normal", "Water"],
+        "health": 79,
+        "attack": 85,
+        "defense": 60,
+        "specialAttack": 55,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 401,
+        "id": "Kricketot",
+        "types": ["Bug"],
+        "health": 37,
+        "attack": 25,
+        "defense": 41,
+        "specialAttack": 25,
+        "specialDefense": 41,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 402,
+        "id": "Kricketune",
+        "types": ["Bug"],
+        "health": 77,
+        "attack": 85,
+        "defense": 51,
+        "specialAttack": 55,
+        "specialDefense": 51,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 403,
+        "id": "Shinx",
+        "types": ["Electric"],
+        "health": 45,
+        "attack": 65,
+        "defense": 34,
+        "specialAttack": 40,
+        "specialDefense": 34,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 404,
+        "id": "Luxio",
+        "types": ["Electric"],
+        "health": 60,
+        "attack": 85,
+        "defense": 49,
+        "specialAttack": 60,
+        "specialDefense": 49,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 405,
+        "id": "Luxray",
+        "types": ["Electric"],
+        "health": 80,
+        "attack": 120,
+        "defense": 79,
+        "specialAttack": 95,
+        "specialDefense": 79,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 406,
+        "id": "Budew",
+        "types": ["Grass", "Poison"],
+        "health": 40,
+        "attack": 30,
+        "defense": 35,
+        "specialAttack": 50,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 407,
+        "id": "Roserade",
+        "types": ["Grass", "Poison"],
+        "health": 60,
+        "attack": 70,
+        "defense": 65,
+        "specialAttack": 125,
+        "specialDefense": 105,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 408,
+        "id": "Cranidos",
+        "types": ["Rock"],
+        "health": 67,
+        "attack": 125,
+        "defense": 40,
+        "specialAttack": 30,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 409,
+        "id": "Rampardos",
+        "types": ["Rock"],
+        "health": 97,
+        "attack": 165,
+        "defense": 60,
+        "specialAttack": 65,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 410,
+        "id": "Shieldon",
+        "types": ["Rock", "Steel"],
+        "health": 30,
+        "attack": 42,
+        "defense": 118,
+        "specialAttack": 42,
+        "specialDefense": 88,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 411,
+        "id": "Bastiodon",
+        "types": ["Rock", "Steel"],
+        "health": 60,
+        "attack": 52,
+        "defense": 168,
+        "specialAttack": 47,
+        "specialDefense": 138,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 412,
+        "id": "Burmy",
+        "types": ["Bug"],
+        "health": 40,
+        "attack": 29,
+        "defense": 45,
+        "specialAttack": 29,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 413,
+        "id": "Wormadam-plant",
+        "types": ["Bug", "Grass"],
+        "health": 60,
+        "attack": 59,
+        "defense": 85,
+        "specialAttack": 79,
+        "specialDefense": 105,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 414,
+        "id": "Mothim",
+        "types": ["Bug", "Flying"],
+        "health": 70,
+        "attack": 94,
+        "defense": 50,
+        "specialAttack": 94,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 415,
+        "id": "Combee",
+        "types": ["Bug", "Flying"],
+        "health": 30,
+        "attack": 30,
+        "defense": 42,
+        "specialAttack": 30,
+        "specialDefense": 42,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 416,
+        "id": "Vespiquen",
+        "types": ["Bug", "Flying"],
+        "health": 70,
+        "attack": 80,
+        "defense": 102,
+        "specialAttack": 80,
+        "specialDefense": 102,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 417,
+        "id": "Pachirisu",
+        "types": ["Electric"],
+        "health": 60,
+        "attack": 45,
+        "defense": 70,
+        "specialAttack": 45,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 418,
+        "id": "Buizel",
+        "types": ["Water"],
+        "health": 55,
+        "attack": 65,
+        "defense": 35,
+        "specialAttack": 60,
+        "specialDefense": 30,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 419,
+        "id": "Floatzel",
+        "types": ["Water"],
+        "health": 85,
+        "attack": 105,
+        "defense": 55,
+        "specialAttack": 85,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 420,
+        "id": "Cherubi",
+        "types": ["Grass"],
+        "health": 45,
+        "attack": 35,
+        "defense": 45,
+        "specialAttack": 62,
+        "specialDefense": 53,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 421,
+        "id": "Cherrim",
+        "types": ["Grass"],
+        "health": 70,
+        "attack": 60,
+        "defense": 70,
+        "specialAttack": 87,
+        "specialDefense": 78,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 422,
+        "id": "Shellos",
+        "types": ["Water"],
+        "health": 76,
+        "attack": 48,
+        "defense": 48,
+        "specialAttack": 57,
+        "specialDefense": 62,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 423,
+        "id": "Gastrodon",
+        "types": ["Water", "Ground"],
+        "health": 111,
+        "attack": 83,
+        "defense": 68,
+        "specialAttack": 92,
+        "specialDefense": 82,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 424,
+        "id": "Ambipom",
+        "types": ["Normal"],
+        "health": 75,
+        "attack": 100,
+        "defense": 66,
+        "specialAttack": 60,
+        "specialDefense": 66,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 425,
+        "id": "Drifloon",
+        "types": ["Ghost", "Flying"],
+        "health": 90,
+        "attack": 50,
+        "defense": 34,
+        "specialAttack": 60,
+        "specialDefense": 44,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 426,
+        "id": "Drifblim",
+        "types": ["Ghost", "Flying"],
+        "health": 150,
+        "attack": 80,
+        "defense": 44,
+        "specialAttack": 90,
+        "specialDefense": 54,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 427,
+        "id": "Buneary",
+        "types": ["Normal"],
+        "health": 55,
+        "attack": 66,
+        "defense": 44,
+        "specialAttack": 44,
+        "specialDefense": 56,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 428,
+        "id": "Lopunny",
+        "types": ["Normal"],
+        "health": 65,
+        "attack": 76,
+        "defense": 84,
+        "specialAttack": 54,
+        "specialDefense": 96,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 429,
+        "id": "Mismagius",
+        "types": ["Ghost"],
+        "health": 60,
+        "attack": 60,
+        "defense": 60,
+        "specialAttack": 105,
+        "specialDefense": 105,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 430,
+        "id": "Honchkrow",
+        "types": ["Dark", "Flying"],
+        "health": 100,
+        "attack": 125,
+        "defense": 52,
+        "specialAttack": 105,
+        "specialDefense": 52,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 431,
+        "id": "Glameow",
+        "types": ["Normal"],
+        "health": 49,
+        "attack": 55,
+        "defense": 42,
+        "specialAttack": 42,
+        "specialDefense": 37,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 432,
+        "id": "Purugly",
+        "types": ["Normal"],
+        "health": 71,
+        "attack": 82,
+        "defense": 64,
+        "specialAttack": 64,
+        "specialDefense": 59,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 433,
+        "id": "Chingling",
+        "types": ["Psychic"],
+        "health": 45,
+        "attack": 30,
+        "defense": 50,
+        "specialAttack": 65,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 434,
+        "id": "Stunky",
+        "types": ["Poison", "Dark"],
+        "health": 63,
+        "attack": 63,
+        "defense": 47,
+        "specialAttack": 41,
+        "specialDefense": 41,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 435,
+        "id": "Skuntank",
+        "types": ["Poison", "Dark"],
+        "health": 103,
+        "attack": 93,
+        "defense": 67,
+        "specialAttack": 71,
+        "specialDefense": 61,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 436,
+        "id": "Bronzor",
+        "types": ["Steel", "Psychic"],
+        "health": 57,
+        "attack": 24,
+        "defense": 86,
+        "specialAttack": 24,
+        "specialDefense": 86,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 437,
+        "id": "Bronzong",
+        "types": ["Steel", "Psychic"],
+        "health": 67,
+        "attack": 89,
+        "defense": 116,
+        "specialAttack": 79,
+        "specialDefense": 116,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 438,
+        "id": "Bonsly",
+        "types": ["Rock"],
+        "health": 50,
+        "attack": 80,
+        "defense": 95,
+        "specialAttack": 10,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 439,
+        "id": "Mime-jr",
+        "types": ["Psychic", "Fairy"],
+        "health": 20,
+        "attack": 25,
+        "defense": 45,
+        "specialAttack": 70,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 440,
+        "id": "Happiny",
+        "types": ["Normal"],
+        "health": 100,
+        "attack": 5,
+        "defense": 5,
+        "specialAttack": 15,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 441,
+        "id": "Chatot",
+        "types": ["Normal", "Flying"],
+        "health": 76,
+        "attack": 65,
+        "defense": 45,
+        "specialAttack": 92,
+        "specialDefense": 42,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 442,
+        "id": "Spiritomb",
+        "types": ["Ghost", "Dark"],
+        "health": 50,
+        "attack": 92,
+        "defense": 108,
+        "specialAttack": 92,
+        "specialDefense": 108,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 443,
+        "id": "Gible",
+        "types": ["Dragon", "Ground"],
+        "health": 58,
+        "attack": 70,
+        "defense": 45,
+        "specialAttack": 40,
+        "specialDefense": 45,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 444,
+        "id": "Gabite",
+        "types": ["Dragon", "Ground"],
+        "health": 68,
+        "attack": 90,
+        "defense": 65,
+        "specialAttack": 50,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 445,
+        "id": "Garchomp",
+        "types": ["Dragon", "Ground"],
+        "health": 108,
+        "attack": 130,
+        "defense": 95,
+        "specialAttack": 80,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 446,
+        "id": "Munchlax",
+        "types": ["Normal"],
+        "health": 135,
+        "attack": 85,
+        "defense": 40,
+        "specialAttack": 40,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 447,
+        "id": "Riolu",
+        "types": ["Fighting"],
+        "health": 40,
+        "attack": 70,
+        "defense": 40,
+        "specialAttack": 35,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 448,
+        "id": "Lucario",
+        "types": ["Fighting", "Steel"],
+        "health": 70,
+        "attack": 110,
+        "defense": 70,
+        "specialAttack": 115,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 449,
+        "id": "Hippopotas",
+        "types": ["Ground"],
+        "health": 68,
+        "attack": 72,
+        "defense": 78,
+        "specialAttack": 38,
+        "specialDefense": 42,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 450,
+        "id": "Hippowdon",
+        "types": ["Ground"],
+        "health": 108,
+        "attack": 112,
+        "defense": 118,
+        "specialAttack": 68,
+        "specialDefense": 72,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 451,
+        "id": "Skorupi",
+        "types": ["Poison", "Bug"],
+        "health": 40,
+        "attack": 50,
+        "defense": 90,
+        "specialAttack": 30,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 452,
+        "id": "Drapion",
+        "types": ["Poison", "Dark"],
+        "health": 70,
+        "attack": 90,
+        "defense": 110,
+        "specialAttack": 60,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 453,
+        "id": "Croagunk",
+        "types": ["Poison", "Fighting"],
+        "health": 48,
+        "attack": 61,
+        "defense": 40,
+        "specialAttack": 61,
+        "specialDefense": 40,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 454,
+        "id": "Toxicroak",
+        "types": ["Poison", "Fighting"],
+        "health": 83,
+        "attack": 106,
+        "defense": 65,
+        "specialAttack": 86,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 455,
+        "id": "Carnivine",
+        "types": ["Grass"],
+        "health": 74,
+        "attack": 100,
+        "defense": 72,
+        "specialAttack": 90,
+        "specialDefense": 72,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 456,
+        "id": "Finneon",
+        "types": ["Water"],
+        "health": 49,
+        "attack": 49,
+        "defense": 56,
+        "specialAttack": 49,
+        "specialDefense": 61,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 457,
+        "id": "Lumineon",
+        "types": ["Water"],
+        "health": 69,
+        "attack": 69,
+        "defense": 76,
+        "specialAttack": 69,
+        "specialDefense": 86,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 458,
+        "id": "Mantyke",
+        "types": ["Water", "Flying"],
+        "health": 45,
+        "attack": 20,
+        "defense": 50,
+        "specialAttack": 60,
+        "specialDefense": 120,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 459,
+        "id": "Snover",
+        "types": ["Grass", "Ice"],
+        "health": 60,
+        "attack": 62,
+        "defense": 50,
+        "specialAttack": 62,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 460,
+        "id": "Abomasnow",
+        "types": ["Grass", "Ice"],
+        "health": 90,
+        "attack": 92,
+        "defense": 75,
+        "specialAttack": 92,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 461,
+        "id": "Weavile",
+        "types": ["Dark", "Ice"],
+        "health": 70,
+        "attack": 120,
+        "defense": 65,
+        "specialAttack": 45,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 462,
+        "id": "Magnezone",
+        "types": ["Electric", "Steel"],
+        "health": 70,
+        "attack": 70,
+        "defense": 115,
+        "specialAttack": 130,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 463,
+        "id": "Lickilicky",
+        "types": ["Normal"],
+        "health": 110,
+        "attack": 85,
+        "defense": 95,
+        "specialAttack": 80,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 464,
+        "id": "Rhyperior",
+        "types": ["Ground", "Rock"],
+        "health": 115,
+        "attack": 140,
+        "defense": 130,
+        "specialAttack": 55,
+        "specialDefense": 55,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 465,
+        "id": "Tangrowth",
+        "types": ["Grass"],
+        "health": 100,
+        "attack": 100,
+        "defense": 125,
+        "specialAttack": 110,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 466,
+        "id": "Electivire",
+        "types": ["Electric"],
+        "health": 75,
+        "attack": 123,
+        "defense": 67,
+        "specialAttack": 95,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+
+    },
+
+{
+        "number": 467,
+        "id": "Magmortar",
+        "types": ["Fire"],
+        "health": 75,
+        "attack": 95,
+        "defense": 67,
+        "specialAttack": 125,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 468,
+        "id": "Togekiss",
+        "types": ["Fairy", "Flying"],
+        "health": 85,
+        "attack": 50,
+        "defense": 95,
+        "specialAttack": 120,
+        "specialDefense": 115,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 469,
+        "id": "Yanmega",
+        "types": ["Bug", "Flying"],
+        "health": 86,
+        "attack": 76,
+        "defense": 86,
+        "specialAttack": 116,
+        "specialDefense": 56,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 470,
+        "id": "Leafeon",
+        "types": ["Grass"],
+        "health": 65,
+        "attack": 110,
+        "defense": 130,
+        "specialAttack": 60,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 471,
+        "id": "Glaceon",
+        "types": ["Ice"],
+        "health": 65,
+        "attack": 60,
+        "defense": 110,
+        "specialAttack": 130,
+        "specialDefense": 95,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 472,
+        "id": "Gliscor",
+        "types": ["Ground", "Flying"],
+        "health": 75,
+        "attack": 95,
+        "defense": 125,
+        "specialAttack": 45,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 473,
+        "id": "Mamoswine",
+        "types": ["Ice", "Ground"],
+        "health": 110,
+        "attack": 130,
+        "defense": 80,
+        "specialAttack": 70,
+        "specialDefense": 60,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 474,
+        "id": "Porygon-Z",
+        "types": ["Normal"],
+        "health": 85,
+        "attack": 80,
+        "defense": 70,
+        "specialAttack": 135,
+        "specialDefense": 75,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 475,
+        "id": "Gallade",
+        "types": ["Psycho", "Fight"],
+        "health": 68,
+        "attack": 125,
+        "defense": 65,
+        "specialAttack": 65,
+        "specialDefense": 115,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 476,
+        "id": "Probopass",
+        "types": ["Rock", "Steel"],
+        "health": 60,
+        "attack": 55,
+        "defense": 145,
+        "specialAttack": 75,
+        "specialDefense": 150,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 477,
+        "id": "Dusknoir",
+        "types": ["Ghost"],
+        "health": 45,
+        "attack": 100,
+        "defense": 135,
+        "specialAttack": 65,
+        "specialDefense": 135,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 478,
+        "id": "Froslass",
+        "types": ["Ice", "Ghost"],
+        "health": 70,
+        "attack": 80,
+        "defense": 70,
+        "specialAttack": 80,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 479,
+        "id": "Rotom",
+        "types": ["Electr", "Ghost"],
+        "health": 50,
+        "attack": 50,
+        "defense": 77,
+        "specialAttack": 95,
+        "specialDefense": 77,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 480,
+        "id": "Uxie",
+        "types": ["Psycho"],
+        "health": 75,
+        "attack": 75,
+        "defense": 130,
+        "specialAttack": 75,
+        "specialDefense": 130,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 481,
+        "id": "Mesprit",
+        "types": ["Psycho"],
+        "health": 80,
+        "attack": 105,
+        "defense": 105,
+        "specialAttack": 105,
+        "specialDefense": 105,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 482,
+        "id": "Azelf",
+        "types": ["Psycho"],
+        "health": 75,
+        "attack": 125,
+        "defense": 70,
+        "specialAttack": 125,
+        "specialDefense": 70,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 483,
+        "id": "Dialga",
+        "types": ["Steel", "Dragon"],
+        "health": 100,
+        "attack": 120,
+        "defense": 120,
+        "specialAttack": 150,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+{
+        "number": 484,
+        "id": "Palkia",
+        "types": ["Water", "Dragon"],
+        "health": 90,
+        "attack": 120,
+        "defense": 100,
+        "specialAttack": 150,
+        "specialDefense": 120,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 485,
+        "id": "Heatran",
+        "types": ["Fire", "Steel"],
+        "health": 91,
+        "attack": 90,
+        "defense": 106,
+        "specialAttack": 130,
+        "specialDefense": 106,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 486,
+        "id": "Regigigas",
+        "types": ["Normal"],
+        "health": 110,
+        "attack": 160,
+        "defense": 110,
+        "specialAttack": 80,
+        "specialDefense": 110,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 487,
+        "id": "Giratina",
+        "types": ["Ghost", "Dragon"],
+        "health": 150,
+        "attack": 100,
+        "defense": 120,
+        "specialAttack": 100,
+        "specialDefense": 120,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 488,
+        "id": "Cresselia",
+        "types": ["Psycho"],
+        "health": 120,
+        "attack": 70,
+        "defense": 110,
+        "specialAttack": 75,
+        "specialDefense": 120,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 489,
+        "id": "Phione",
+        "types": ["Water"],
+        "health": 80,
+        "attack": 80,
+        "defense": 80,
+        "specialAttack": 80,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 490,
+        "id": "Manaphy",
+        "types": ["Water"],
+        "health": 100,
+        "attack": 100,
+        "defense": 100,
+        "specialAttack": 100,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 491,
+        "id": "Darkrai",
+        "types": ["Dark"],
+        "health": 70,
+        "attack": 90,
+        "defense": 90,
+        "specialAttack": 135,
+        "specialDefense": 90,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 492,
+        "id": "Shaymin",
+        "types": ["Grass"],
+        "health": 100,
+        "attack": 100,
+        "defense": 100,
+        "specialAttack": 100,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
+        
+    },
+
+{
+        "number": 493,
+        "id": "Arceus",
+        "types": ["Normal"],
+        "health": 120,
+        "attack": 120,
+        "defense": 120,
+        "specialAttack": 120,
+        "specialDefense": 120,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0
         
     }
+
+
+
+
+
+
+
 
 ]

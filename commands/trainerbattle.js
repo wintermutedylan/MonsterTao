@@ -90,7 +90,8 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             return;
         } else {
             //force swap
-            thread.send("this is where you would need to swap unit if I programed it");
+            pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, true); //set optional at the end to trigger a force swap
+            
         }
     } else if(p2current.currentHealth <= 0){
         let usableUnits = false;
@@ -105,7 +106,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             return;
         } else {
             //force the bot to swap to a random unit for now
-            thread.send("this is where the foe would need to swap unit if I programed it");
+            pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, true);//set optional at the end to trigger a force swap
         }
     }
     if(turn % 2 == 1){ //check if turn is odd so p1 goes
@@ -161,65 +162,141 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
     }
 
 }
-async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn){
-    let pokemonAlive = [];
-    for (let i = 0; i < p1party.length; i++){
-        if (p1party[i].currentHealth > 0 && p1party[i].id != p1current.id){
-            
-            pokemonAlive.push(p1party[i].id);
-            
+async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, forceSwape = false){
+    if(turn % 2 == 1){
+
+        
+        let pokemonAlive = [];
+        for (let i = 0; i < p1party.length; i++){
+            if (p1party[i].currentHealth > 0 && p1party[i].id != p1current.id){
+                
+                pokemonAlive.push(p1party[i].id);
+                
+            }
         }
-    }
-    thread.send(`What unit would you like to switch in: ${pokemonAlive.join(", ")} or type Cancel to go back(currently doesn't work)`);
-    const filter = (m) => {
-        let isPokemon = false;
-        for (let j = 0; j < pokemonAlive.length; j++){
-            if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase() || m.content.toLowerCase() === "cancel"){
-                isPokemon = true;
+        if (forceSwape){
+            thread.send(`What unit would you like to switch in: ${pokemonAlive.join(", ")}`);
+            const filter = (m) => {
+                let isPokemon = false;
+                for (let j = 0; j < pokemonAlive.length; j++){
+                    if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase()){
+                        isPokemon = true;
+                        break;
+                    }
+                }
+                return  m.author.id === author.id && (isPokemon);
+            }
+            const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+            var s;
+            
+            
+
+            collector.on('collect', message => {
+                s = message.content;
+                
+            });
+
+            collector.on('end', collected => {
+            
+                if (collected.size === 0) {
+                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+                    return
+                }
+                    
+                    for (let k = 0; k < p1party.length; k++){
+                        if (p1party[k].id.toLowerCase() == s.toLowerCase()){
+                            p1current = p1party[k];
+                            break;
+                        }
+                    }
+                    thread.send(`You have sent in ${p1current.id}`);
+                    turn++;
+
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+                
+                    
+                
+                
+            });
+
+        } else {
+
+            
+            thread.send(`What unit would you like to switch in: ${pokemonAlive.join(", ")} or type Cancel to go back`);
+            const filter = (m) => {
+                let isPokemon = false;
+                for (let j = 0; j < pokemonAlive.length; j++){
+                    if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase() || m.content.toLowerCase() === "cancel"){
+                        isPokemon = true;
+                        break;
+                    }
+                }
+                return  m.author.id === author.id && (isPokemon);
+            }
+            const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+            var s;
+            
+            
+
+            collector.on('collect', message => {
+                s = message.content;
+                
+            });
+
+            collector.on('end', collected => {
+            
+                if (collected.size === 0) {
+                        thread.send(`You took too long going back to battle select`);
+                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+                    return
+                }
+                if (s.toLowerCase() == "cancel"){
+                    thread.send(`You have cancelled and have been sent back to battle select`);
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                } else {
+                    let oldCurrent = p1current.id;
+                    for (let k = 0; k < p1party.length; k++){
+                        if (p1party[k].id.toLowerCase() == s.toLowerCase()){
+                            p1current = p1party[k];
+                            break;
+                        }
+                    }
+                    thread.send(`You have switched out ${oldCurrent} and sent in ${p1current.id}`);
+                    turn++;
+
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                }
+                
+                    
+                
+                
+            });
+        }
+    } else {
+        let pokemonAlive = [];
+        for (let i = 0; i < p2party.length; i++){
+            if (p2party[i].currentHealth > 0 && p2party[i].id != p2current.id){
+                
+                pokemonAlive.push(p2party[i].id);
+                
+            }
+        }
+        let unitToSwap = pokemonAlive[Math.floor(Math.random()*pokemonAlive.length)];
+        for (let k = 0; k < p2party.length; k++){
+            if (p2party[k].id.toLowerCase() == unitToSwap.id.toLowerCase()){
+                p2current = p2party[k];
                 break;
             }
         }
-        return  m.author.id === author.id && (isPokemon);
+        thread.send(`Your opponent has sent in ${p2current.id}`);
+        turn++;
+
+        battle(p1party, p2party, p1current, p2current, thread, author, turn);
+
     }
-    const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
-    var s;
-    
-    
-
-    collector.on('collect', message => {
-        s = message.content;
-        
-    });
-
-    collector.on('end', collected => {
-    
-        if (collected.size === 0) {
-                thread.send(`You took too long going back to battle select`);
-                battle(p1party, p2party, p1current, p2current, thread, author, turn);
-            
-            return
-        }
-        if (s.toLowerCase() == "cancel"){
-            thread.send(`You have cancelled and have been sent back to battle select`);
-            battle(p1party, p2party, p1current, p2current, thread, author, turn);
-        } else {
-            let oldCurrent = p1current.id;
-            for (let k = 0; k < p1party.length; k++){
-                if (p1party[k].id.toLowerCase() == s.toLowerCase()){
-                    p1current = p1party[k];
-                    break;
-                }
-            }
-            thread.send(`You have switched out ${oldCurrent} and sent in ${p1current.id}`);
-            turn++;
-
-            battle(p1party, p2party, p1current, p2current, thread, author, turn);
-        }
-        
-            
-        
-        
-    });
 
 }
 
@@ -314,35 +391,31 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
         if(turn % 2 == 1){ //p1 doing the dmg
             for (let j = 0; j < p2party.length; j++){
                 if (p2current.id === p2party[j].id){
-                    p2party[j].currentHealth = p2party[j].currentHealth - damage;
+                    p2party[j].currentHealth = p2party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current
                 }
             }
             //p2current.currentHealth = p2current.currentHealth - damage;
-            thread.send(`You did a total of ${damage} damage to your opponent\n----------------------------------`);
-            thread.send(`Your current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
+            thread.send(`You did a total of ${damage} damage to your opponent\n----------------------------------\nYour current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
         } else { //p2 doing the dmg
             for (let j = 0; j < p1party.length; j++){
                 if (p1current.id === p1party[j].id){
-                    p1party[j].currentHealth = p1party[j].currentHealth - damage;
+                    p1party[j].currentHealth = p1party[j].currentHealth - damage;//this does the dmg but some how it also updates the current
                 }
             }
             //p1current.currentHealth = p1current.currentHealth - damage;
-            thread.send(`Your opponent did ${damage} damage to you\n----------------------------------`);
-            thread.send(`Your current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
+            thread.send(`Your opponent did ${damage} damage to you\n----------------------------------\nYour current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
         }
         turn++;
         
         battle(p1party, p2party, p1current, p2current, thread, author, turn)
     } else {
         if(turn % 2 == 1){//p1 miss
-            thread.send(`Your move missed\n----------------------------------`);
             turn++;
-            thread.send(`Your current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
+            thread.send(`Your move missed\n----------------------------------\nYour current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
             battle(p1party, p2party, p1current, p2current, thread, author, turn)
         } else {//p2 miss
-            thread.send(`Your opponent missed\n----------------------------------`);
         turn++;
-        thread.send(`Your current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
+        thread.send(`Your opponent missed\n----------------------------------\nYour current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
         battle(p1party, p2party, p1current, p2current, thread, author, turn)
         }
         
