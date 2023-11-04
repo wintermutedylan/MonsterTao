@@ -18,7 +18,6 @@ module.exports = async (Discord, client, message) => {
                     userID: message.author.id,
                     coins: 0,
                     maids: [],
-                    currentUnit: "N/A",
                     currentParty: [],
                     badges: []
                     

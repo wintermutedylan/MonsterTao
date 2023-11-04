@@ -26,10 +26,10 @@ module.exports = {
         let baseDef = unit.defense;
         let baseSpecialDef = unit.specialDefense;
         let baseHP = unit.health;
-        //let playerData; 
-        //playerData = await playerModel.findOne({ userID: message.author.id});
-        //if (!playerData) return message.channel.send("You don't exist. Please try again.");
-        //var ID = message.author.id;
+        let playerData; 
+        playerData = await playerModel.findOne({ userID: message.author.id});
+        if (!playerData) return message.channel.send("You don't exist. Please try again.");
+        var ID = message.author.id;
         unit.attackIV = randomIntFromInterval(0, 15);
         unit.specialAttackIV = randomIntFromInterval(0, 15);
         unit.defenseIV = randomIntFromInterval(0, 15);
@@ -40,7 +40,7 @@ module.exports = {
         unit.defense = otherStatCalc(baseDef, unit.defenseIV, 5);
         unit.specialDefense = otherStatCalc(baseAtk, unit.specialDefenseIV, 5);
         unit.health = healthStatCalc(baseHP, unit.healthIV, 5);
-        //addUnit(unitName, ID);
+        addUnit(unit, ID, 5);
         message.channel.send(`The Level 5 ${unitName} has the following stats
 Base Attack: ${baseAtk}, Base Special Attack: ${baseSpecialAtk}, Base Defense: ${baseDef}, Base Special Attack: ${baseSpecialDef}, Base Health: ${baseHP}
 Attack IV: ${unit.attackIV}, Special Attack IV: ${unit.specialAttackIV}, Defense IV: ${unit.defenseIV}, Special Defense IV: ${unit.specialDefenseIV}, Health IV: ${unit.healthIV}
@@ -54,7 +54,7 @@ Total Attack: ${unit.attack}, Total Special Attack: ${unit.specialAttack}, Total
     }
 }
 
-async function addUnit(unitName, ID){
+async function addUnit(unit, ID, level){
     try {
         await playerModel.findOneAndUpdate(
             {
@@ -63,13 +63,23 @@ async function addUnit(unitName, ID){
             {
                 $push: {
                     maids: {
-                        "id": "Milim",
-                        "level": 5,
-                        "attack": 10,
-                        "defense": 10,
-                        "health": 25,
-                        "currentHealth": 25,
-                        "moves": ["Tackle", "Scratch"]
+                        "pokedexNumber": unit.number,
+                        "id": unit.id,
+                        "types": unit.types,
+                        "level": level,
+                        "health": unit.health,
+                        "attack": unit.attack,
+                        "defense": unit.defense,
+                        "specialAttack": unit.specialAttack,
+                        "specialDefense": unit.specialDefense,
+                        "moves": unit.moves,
+                        "currentHealth": unit.health,
+                        "healthIV": unit.healthIV,
+                        "attackIV": unit.attackIV,
+                        "defenseIV": unit.defenseIV,
+                        "specialAttackIV": unit.specialAttackIV,
+                        "specialDefenseIV": unit.specialDefenseIV,
+                        "statusConditions": [{"burned": false, "frozen": false, "paralysis": false, "poisoned": false, "asleep": false, "sleepTurns": 0, "sleepTurnsLeft": 0, "confusion": false, "confusionTurns": 0, "confusionTurnsLeft": 0}]
                     }
                 }
                 

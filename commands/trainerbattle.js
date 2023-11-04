@@ -499,8 +499,8 @@ async function snapshot(message, boss, thread){
     let playerData; 
     playerData = await playerModel.findOne({ userID: message.author.id});
 
-    let p1party = playerData.maids;
-    let p1current = playerData.maids[0];
+    let p1party = playerData.currentParty;
+    let p1current = playerData.currentParty[0];
     let p2party;
     let p2current;
     for (let i = 0; i < bosses.length; i++){
