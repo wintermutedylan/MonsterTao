@@ -110,6 +110,10 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
         }
     }
     if(turn % 2 == 1){ //check if turn is odd so p1 goes
+        if (turn == 1){
+            thread.send(`You have sent out ${p1current.id}`);
+        }
+        
         thread.send('What would you like to do: Attack, Item, Switch (you have 60 seconds to decide)');
 
 
@@ -354,7 +358,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
     let moveDetails;
     let damage;
     for (let i = 0; i < moveList.length; i++){
-        if (move.replace(" ", "-").toLowerCase() === moveList[i].move.toLowerCase()){
+        if (move.toLowerCase() === moveList[i].move.toLowerCase()){
             moveDetails = moveList[i];
             break;
         }
@@ -395,7 +399,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             }
             //p2current.currentHealth = p2current.currentHealth - damage;
-            thread.send(`You did a total of ${damage} damage to your opponent\n----------------------------------\nYour current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
+            thread.send(`You did a total of ${damage} damage to your opponent's ${p2current.id}\n----------------------------------\nYour ${p1current.id}'s health is: ${p1current.currentHealth}/${p1current.health}\nYour foes ${p2current.id}'s health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
         } else { //p2 doing the dmg
             for (let j = 0; j < p1party.length; j++){
                 if (p1current.id === p1party[j].id){
@@ -403,7 +407,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             }
             //p1current.currentHealth = p1current.currentHealth - damage;
-            thread.send(`Your opponent did ${damage} damage to you\n----------------------------------\nYour current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
+            thread.send(`Your opponent did ${damage} damage to your ${p1current.id}\n----------------------------------\nYour ${p1current.id}'s health is: ${p1current.currentHealth}/${p1current.health}\nYour foes ${p2current.id}'s health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
         }
         turn++;
         
@@ -411,11 +415,11 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
     } else {
         if(turn % 2 == 1){//p1 miss
             turn++;
-            thread.send(`Your move missed\n----------------------------------\nYour current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
+            thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: ${p1current.currentHealth}/${p1current.health}\nYour foes ${p2current.id}'s health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
             battle(p1party, p2party, p1current, p2current, thread, author, turn)
         } else {//p2 miss
         turn++;
-        thread.send(`Your opponent missed\n----------------------------------\nYour current unit health is: ${p1current.currentHealth}/${p1current.health}\nYour foes current unit health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
+        thread.send(`Your opponent missed\n----------------------------------\nYour ${p1current.id}'s health is: ${p1current.currentHealth}/${p1current.health}\nYour foes ${p2current.id}'s health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
         battle(p1party, p2party, p1current, p2current, thread, author, turn)
         }
         
@@ -443,6 +447,7 @@ function damageFormula(details, p1current, p2current, turn){
         for (let i = 0; i < typeList.length; i++){
             if (details.type == typeList[i].type){
                 for (let j = 0; j < p2Type.length; j++){
+                    
                     if(typeList[i].superEffective.includes(p2Type[j])){
                         weakness = weakness * 2;
                     } else if(typeList[i].notEffective.includes(p2Type[j])){
@@ -497,10 +502,19 @@ function randomIntFromInterval(min, max) { // min and max included
 
 async function snapshot(message, boss, thread){
     let playerData; 
+    let p1party = [];
+    
     playerData = await playerModel.findOne({ userID: message.author.id});
+    for(let j = 0; j < playerData.currentParty.length; j++){
+        for(let k = 0; k < playerData.maids.length; k++){
+            if (playerData.currentParty[j] == playerData.maids[k].pcID){
+                p1party.push(playerData.maids[k]);
+            }
+        }
+    }
+    let p1current = p1party[0];
 
-    let p1party = playerData.currentParty;
-    let p1current = playerData.currentParty[0];
+    
     let p2party;
     let p2current;
     for (let i = 0; i < bosses.length; i++){
