@@ -3,7 +3,7 @@ var maids = require("../units/maids.json");
 const playerModel = require("../models/playerSchema");
 
 module.exports = {
-    name: 'pc',
+    name: 'party',
     aliases: [],
     permissions: [],
     description: "Create user profile",
@@ -12,24 +12,26 @@ module.exports = {
         playerData = await playerModel.findOne({ userID: message.author.id});
         if (!playerData) return message.channel.send("You don't exist. Please try again.");
         var ID = message.author.id;
-        if (args.length > 1) {
-            return message.reply('Please only enter one number');
-        }
-        if (args.length === 0){
-            args.push('1');
-        }
-        var pageNumber = args[0];
-        var sorted = playerData.maids;
-        var sortedTotal = Math.floor(sorted.length/5) + 1;
         
-        pageNumber = Number(pageNumber) - 1; 
-        if (sorted.length > 5) sorted = sorted.slice(pageNumber * 5, pageNumber * 5 + 5);
+        
+        let sorted = [];
+        for (let i = 0; i < playerData.currentParty.length;i++){
+            for(let k = 0; k < playerData.maids.length; k++){
+                if(playerData.currentParty[i] == playerData.maids[k].pcID){
+                    sorted.push(playerData.maids[k]);
+                }
+            }
+        }
+        
+        
+        
+        
         
         
         const newEmbed = new Discord.MessageEmbed()
         .setColor('#E76AA3')
-        .setTitle("**PC**")
-        .setDescription(`__**Your PC**__`)
+        .setTitle("**Current Party**")
+        .setDescription(`__**Your Party**__`)
         
         for (let j = 0; j < sorted.length; j++){
             
@@ -39,8 +41,8 @@ module.exports = {
 
 
         }
-        pageNumber++;
-        newEmbed.setFooter(`Page # ${pageNumber}/${sortedTotal}`)
+        
+        
         message.channel.send({ embeds: [newEmbed] });
         
         
@@ -53,6 +55,3 @@ module.exports = {
         
     }
 }
-
-
-

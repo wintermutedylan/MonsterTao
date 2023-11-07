@@ -110,16 +110,3 @@ async function addMove(move, ID, location, message, unitName, pcid){
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
-function healthStatCalc(base, iv, level){
-    let top = ((base + iv) * 2) * level;
-    let bot = top / 100;
-    let total = bot + level + 10;
-    return Math.floor(total);
-}
-
-function otherStatCalc(base, iv, level){
-    let top = ((base + iv) * 2) * level;
-    let bot = top / 100;
-    let total = bot + 5;
-    return Math.floor(total);
-}
