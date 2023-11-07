@@ -399,7 +399,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             }
             //p2current.currentHealth = p2current.currentHealth - damage;
-            thread.send(`You did a total of ${damage} damage to your opponent's ${p2current.id}\n----------------------------------\nYour ${p1current.id}'s health is: ${p1current.currentHealth}/${p1current.health}\nYour foes ${p2current.id}'s health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
+            thread.send(`You did a total of **${damage}** damage to your opponent's ${p2current.id}\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nYour foes ${p2current.id}'s health is: **${p2current.currentHealth}/${p2current.health}**\nYour foe will now take action\n----------------------------------`);
         } else { //p2 doing the dmg
             for (let j = 0; j < p1party.length; j++){
                 if (p1current.id === p1party[j].id){
@@ -407,7 +407,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             }
             //p1current.currentHealth = p1current.currentHealth - damage;
-            thread.send(`Your opponent did ${damage} damage to your ${p1current.id}\n----------------------------------\nYour ${p1current.id}'s health is: ${p1current.currentHealth}/${p1current.health}\nYour foes ${p2current.id}'s health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
+            thread.send(`Your opponent did **${damage}** damage to your ${p1current.id}\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nYour foes ${p2current.id}'s health is: **${p2current.currentHealth}/${p2current.health}**\nIt is your turn to take action\n----------------------------------`);
         }
         turn++;
         
@@ -415,11 +415,11 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
     } else {
         if(turn % 2 == 1){//p1 miss
             turn++;
-            thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: ${p1current.currentHealth}/${p1current.health}\nYour foes ${p2current.id}'s health is: ${p2current.currentHealth}/${p2current.health}\nYour foe will now take action\n----------------------------------`);
+            thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nYour foes ${p2current.id}'s health is: **${p2current.currentHealth}/${p2current.health}**\nYour foe will now take action\n----------------------------------`);
             battle(p1party, p2party, p1current, p2current, thread, author, turn)
         } else {//p2 miss
         turn++;
-        thread.send(`Your opponent missed\n----------------------------------\nYour ${p1current.id}'s health is: ${p1current.currentHealth}/${p1current.health}\nYour foes ${p2current.id}'s health is: ${p2current.currentHealth}/${p2current.health}\nIt is your turn to take action\n----------------------------------`);
+        thread.send(`Your opponent missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nYour foes ${p2current.id}'s health is: **${p2current.currentHealth}/${p2current.health}**\nIt is your turn to take action\n----------------------------------`);
         battle(p1party, p2party, p1current, p2current, thread, author, turn)
         }
         
