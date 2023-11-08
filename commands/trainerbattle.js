@@ -395,7 +395,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
         if(turn % 2 == 1){ //p1 doing the dmg
             for (let j = 0; j < p2party.length; j++){
                 if (p2current.id === p2party[j].id){
-                    p2party[j].currentHealth = p2party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current
+                    p2party[j].currentHealth = p2party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
                 }
             }
             //p2current.currentHealth = p2current.currentHealth - damage;
@@ -403,7 +403,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
         } else { //p2 doing the dmg
             for (let j = 0; j < p1party.length; j++){
                 if (p1current.id === p1party[j].id){
-                    p1party[j].currentHealth = p1party[j].currentHealth - damage;//this does the dmg but some how it also updates the current
+                    p1party[j].currentHealth = p1party[j].currentHealth - damage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
                 }
             }
             //p1current.currentHealth = p1current.currentHealth - damage;
