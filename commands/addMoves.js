@@ -15,8 +15,8 @@ module.exports = {
         var moveName = args.join("-");
         var isMove = false;
         let move;
-        for (let i = 0; i < moves.length; i++){ //for loop to actually create the party.  then use the if statement below to make sure you actually own the unit. 
-            if (moveName === moves[i].move){ //tho you can just check if you own it here.  can use pc id for it instead should make it easier to set your party
+        for (let i = 0; i < moves.length; i++){ 
+            if (moveName === moves[i].move){ 
                 isMove = true;  
                 move = moves[i];
             }
