@@ -2,6 +2,7 @@
 const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
 var maids = require("../units/maids.json");
 var moves = require("../units/moves.json");
+var moveinfo = require("../units/moveinfo.json");
 const playerModel = require("../models/playerSchema");
 
 module.exports = {
@@ -28,11 +29,11 @@ module.exports = {
         let finalMove1;
         let finalMove2;
         for (let i = 0; i < moves.length; i++){ 
-            if (move2 === moves[i].move){
+            if (move2 === moves[i].move.toLowerCase()){
                 isMove2 = true;
                 finalMove2 = moves[i];
             }
-            if (move1 === moves[i].move){
+            if (move1 === moves[i].move.toLowerCase()){
                 isMove1 = true;
                 finalMove1 = moves[i];
             }
@@ -59,14 +60,25 @@ module.exports = {
         if (!havePokemon){
             return message.reply("An error has occured. either you entered the PC ID in wrong or you don't have the unit you thought you did.  please try again");
         }
-        if(finalMove2.learnedBy.includes(unitName.id) && pokemonMoves.includes(finalMove1.move)){ //this checks if your pokemon can learn the move and if it actually knows the first move you sent in
-            for(let i = 0; i < pokemonMoves.length; i++){ //this replaces the old move with the new move
-                if(finalMove1.move == pokemonMoves[i]){
-                    pokemonMoves[i] = finalMove2.move;
+        //REPLACE THIS WITH NEW CHECK FOR LEVEL AS WELL
+        //ONCE I UPDATE THE MOVE JSON
+        else if(finalMove2.learnedBy.includes(unitName.id) && pokemonMoves.includes(finalMove1.move)){ //this checks if your pokemon can learn the move and if it actually knows the first move you sent in
+            for(let a = 0; a < moveinfo.length; a++){
+                if(unitName.id.toLowerCase() == moveinfo[a].id){
+                    if((moveinfo[a].leveUpMoves.some(e => e.name == finalMove2.move.toLowerCase() && unitName.level >= e.level)) || (moveinfo[a].otherMoves.some(z => z.name == finalMove2.move.toLowerCase() && z.method == "tutor"))){ //makes sure you can teach the move 
+                        for(let i = 0; i < pokemonMoves.length; i++){ //this replaces the old move with the new move
+                            if(finalMove1.move == pokemonMoves[i]){
+                                pokemonMoves[i] = finalMove2.move;
+                            }
+                        }
+            
+                        replaceMove(pokemonMoves, ID, location, message, unitName.id, unitName.pcID, finalMove1.move, finalMove2.move) //send in the new array set it in the database
+                    } else {
+                        return message.reply(`Your ${unitName.id} is too low of level or the move you are try to teach is TM only. Level up your pokemon or use the useitem command to use a TM`);
+                    }
                 }
             }
-
-            replaceMove(pokemonMoves, ID, location, message, unitName.id, unitName.pcID, finalMove1.move, finalMove2.move) //send in the new array set it in the database
+            
         } else {
             return message.reply(`An error has occured.  Either your **${unitName.id}** can't learn **${finalMove2.move}** or doesn't know **${finalMove1.move}**. Please try again`);
         }

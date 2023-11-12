@@ -1,6 +1,7 @@
 const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
 var maids = require("../units/maids.json");
 var moves = require("../units/moves.json");
+var moveinfo = require("../units/moveinfo.json");
 const playerModel = require("../models/playerSchema");
 
 module.exports = {
@@ -15,12 +16,14 @@ module.exports = {
         var moveName = args.join("-");
         var isMove = false;
         let move;
+        
         for (let i = 0; i < moves.length; i++){ 
-            if (moveName === moves[i].move){ 
+            if (moveName === moves[i].move.toLowerCase()){ 
                 isMove = true;  
                 move = moves[i];
             }
         }
+        
         if (!isMove) return message.reply(`**${moveName}** is not a valid unit, Please enter a valid unit`); //change this to check if you have that unit. need to add ids to all units that you own to make it easier to set party
         
         let playerData; 
@@ -64,8 +67,20 @@ module.exports = {
                 
                 return
             }
+            //REPLACE THIS WITH NEW CHECK FOR LEVEL AS WELL
+            //ONCE I UPDATE THE MOVE JSON
+
             if (move.learnedBy.includes(unitName.id) && unitName.moves.length < 4){
-                addMove(move.move, ID, location, message, unitName.id, s);
+                for(let a = 0; a < moveinfo.length; a++){
+                    if(unitName.id.toLowerCase() == moveinfo[a].id){
+                        if((moveinfo[a].leveUpMoves.some(e => e.name == move.move.toLowerCase() && unitName.level >= e.level)) || (moveinfo[a].otherMoves.some(z => z.name == move.move.toLowerCase() && z.method == "tutor"))){
+                            addMove(move.move, ID, location, message, unitName.id, s);
+                        } else {
+                            return message.reply(`Your ${unitName.id} is too low of level or the move you are try to teach is TM only. Level up your pokemon or use the useitem command to use a TM`);
+                        }
+                    }
+                }
+                
                 
                 
                 
