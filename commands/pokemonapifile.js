@@ -27,7 +27,7 @@ module.exports = {
        
        try{
         (async () => {
-            
+            /*
             const growthArray = await P.getPokemonByName(searchArray);
             const JSON_FILE = "../monstertao/units/maids.json";
             const jsonData = fs.readFileSync(JSON_FILE);
@@ -40,13 +40,38 @@ module.exports = {
                     }
                 }
             }
+            */
+            
+            
+            const growthArray = await P.getLocationAreaByName("kanto-route-1-area");
+            
+            for(let i = 0; i < growthArray.pokemon_encounters.length; i++){
+                let encounters;
+                let earray = [];
+                let pokemonName = growthArray.pokemon_encounters[i].pokemon.name;
+                let isInRedBlue = false;
+                for(let j = 0; j < growthArray.pokemon_encounters[i].version_details.length; j++){
+                    
+                    if(growthArray.pokemon_encounters[i].version_details[j].version.name == "red" || growthArray.pokemon_encounters[i].version_details[j].version.name == "blue"){
+                        earray.push(growthArray.pokemon_encounters[i].version_details[j]);
+                        isInRedBlue = true;
+                        break;
+                    }
+                }
+                if(isInRedBlue){
+                    encounters = {
+                        name: pokemonName,
+                        encounter: earray
+                    }
+                    finalPokemonArray.push(encounters);
+                }
+            }
+            
             
             /*
-            const growthArray = await P.getGrowthRateByName(["fast","slow","medium","medium-slow","slow-then-very-fast","fast-then-very-slow"]);
-            const JSON_FILE = "../monstertao/units/maids.json";
-            const jsonData = fs.readFileSync(JSON_FILE);
-            let newData = JSON.parse(jsonData);
             for(let i = 0; i < growthArray.length; i++){
+                let newData;
+                /*
                 for(let a = 0; a < growthArray[i].pokemon_species.length; a++){
                     for(let j = 0; j < maids.length; j++){
                         if(growthArray[i].pokemon_species[a].name == maids[j].id.toLowerCase()){
@@ -63,12 +88,40 @@ module.exports = {
                     }   
                     
                 }
+                
+                if(growthArray[i].name == "slow-then-very-fast"){
+                    newData = {
+                        name: "Fluctuating",
+                        levelTable: growthArray[i].levels
+                    } 
+                } else if(growthArray[i].name == "fast-then-very-slow"){
+                    newData = {
+                        name: "Erratic",
+                        levelTable: growthArray[i].levels
+                    } 
+                } else if(growthArray[i].name == "medium"){
+                    newData = {
+                        name: "medium-fast",
+                        levelTable: growthArray[i].levels
+                    } 
+                } else {
+                    newData = {
+                        name: growthArray[i].name,
+                        levelTable: growthArray[i].levels
+                    }
+                }
+                
+               finalPokemonArray.push(newData);
             }
             */
+
+            
             
         
-        let data = JSON.stringify(newData);
-        fs.writeFile("../monstertao/units/maids.json", data, (error) => {
+        let data = JSON.stringify(finalPokemonArray);
+        console.log(data);
+        /*
+        fs.writeFile("../monstertao/units/exptable.json", data, (error) => {
             // throwing the error
             // in case of a writing problem
             if (error) {
@@ -80,6 +133,9 @@ module.exports = {
           
             console.log("data.json written correctly");
           });
+          */
+          
+          
           
           
            

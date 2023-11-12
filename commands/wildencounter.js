@@ -1,0 +1,1 @@
+//this is where you go to do a wild encounter
