@@ -16,6 +16,7 @@
     "discord.js": "^13.4.0",
     "dotenv": "^10.0.0",
     "fs": "^0.0.1-security",
+    "lucky-item": "^2.0.2",
     "mongoose": "^6.1.4",
     "pokeapi-js-wrapper": "^1.2.3"
   }

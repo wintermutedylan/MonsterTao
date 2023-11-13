@@ -1,5 +1,6 @@
 const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
 var maids = require("../units/maids.json");
+var expTable = require("../units/exptable.json");
 const playerModel = require("../models/playerSchema");
 
 module.exports = {
@@ -9,13 +10,15 @@ module.exports = {
     description: "adds a pokemon to your pc.  arguments it takes are the pokemon name then level in that order",
     async execute(client, message, cmd, args, Discord){
         
-    
+        
         let levelToSetUnit = Number(args.pop());
+        let exp = 1;
+        
         var unitName = args.join(" ");
         var isUnit = false;
         let unit;
         for (let i = 0; i < maids.length; i++){
-            if (unitName === maids[i].id){
+            if (unitName.toLowerCase() === maids[i].id.toLowerCase()){
                 isUnit = true;  
                 unit = maids[i];
             }
@@ -33,6 +36,16 @@ module.exports = {
         //send pc id into the addunit function to apply it to all the units.  
         //also if they have less than 6 pokemon or when adding the current pokemon and it will equal 6, set those to the current party.  
         //once you add the 7th pokemon just add it to the maids array and they can use the set party command to configure the party.
+        for(let e = 0; e < expTable.length; e++){
+            if(unit.growthRate == expTable[e].name){
+                for(let j = 0; j < expTable[e].levelTable.length; j++){
+                    if(levelToSetUnit == expTable[e].levelTable[j].level){
+                        exp = expTable[e].levelTable[j].experience;
+                        break;
+                    }
+                }
+            }
+        }
         let pcID = playerData.maids.length + 1;
         var ID = message.author.id;
         let currentPartyLength = playerData.currentParty.length;
@@ -49,7 +62,7 @@ module.exports = {
         unit.defense = otherStatCalc(baseDef, unit.defenseIV, levelToSetUnit);
         unit.specialDefense = otherStatCalc(baseSpecialDef, unit.specialDefenseIV, levelToSetUnit);
         unit.health = healthStatCalc(baseHP, unit.healthIV, levelToSetUnit);
-        addUnit(unit, ID, levelToSetUnit, pcID);
+        addUnit(unit, ID, levelToSetUnit, pcID, exp);
         message.channel.send(`The Level ${levelToSetUnit} ${unitName} has the following stats
 Attack IV: ${unit.attackIV}, Special Attack IV: ${unit.specialAttackIV}, Defense IV: ${unit.defenseIV}, Special Defense IV: ${unit.specialDefenseIV}, Health IV: ${unit.healthIV}
 Total Attack: ${unit.attack}, Total Special Attack: ${unit.specialAttack}, Total Defense: ${unit.defense}, Total Special Defense: ${unit.specialDefense}, Total Health: ${unit.health}`);
@@ -62,7 +75,7 @@ Total Attack: ${unit.attack}, Total Special Attack: ${unit.specialAttack}, Total
     }
 }
 
-async function addUnit(unit, ID, level, pcID){
+async function addUnit(unit, ID, level, pcID, exp){
     try {
         await playerModel.findOneAndUpdate(
             {
@@ -76,6 +89,8 @@ async function addUnit(unit, ID, level, pcID){
                         "id": unit.id,
                         "types": unit.types,
                         "level": level,
+                        "experience": exp,
+                        "growthRate": unit.growthRate,
                         "health": unit.health,
                         "attack": unit.attack,
                         "defense": unit.defense,
@@ -94,10 +109,9 @@ async function addUnit(unit, ID, level, pcID){
                         "poisoned": false, 
                         "asleep": false, 
                         "sleepTurns": 0, 
-                        "sleepTurnsLeft": 0, 
                         "confusion": false, 
-                        "confusionTurns": 0, 
-                        "confusionTurnsLeft": 0
+                        "confusionTurns": 0
+                        
                     }
                 }
                 
