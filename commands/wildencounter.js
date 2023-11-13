@@ -28,7 +28,19 @@ module.exports = {
             }
         }
 
-        console.log(lucky.itemBy(encounterArr, 'weight'));
+        let wildPokemon = lucky.itemBy(encounterArr, 'weight');
+        let unit;
+        let moves = [];
+        for(let w = 0; w < maids.length; w++){
+            if(wildPokemon.name == maids[w].id.toLowerCase()){
+                unit = maids[w];
+                break;
+            }
+        }
+        //create move array here with the moves it can learn at its current level.  if there are more than 4 moves take the highest level moves.  
+        //then create the pokemon with its ivs stats moves level using same format at pokemon in gym leader json
+        //then just use trainerbattle.js stuff to do the battling. need to make some changes because it is a wild pokemon.  need to add exp gain after winning
+
 
         
         
