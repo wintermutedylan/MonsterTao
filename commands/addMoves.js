@@ -24,7 +24,7 @@ module.exports = {
             }
         }
         
-        if (!isMove) return message.reply(`**${moveName}** is not a valid unit, Please enter a valid unit`); //change this to check if you have that unit. need to add ids to all units that you own to make it easier to set party
+        if (!isMove) return message.reply(`**${moveName}** is not a valid move, Please enter a valid move`); //change this to check if you have that unit. need to add ids to all units that you own to make it easier to set party
         
         let playerData; 
         playerData = await playerModel.findOne({ userID: message.author.id});

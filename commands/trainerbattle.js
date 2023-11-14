@@ -68,7 +68,7 @@ async function createBattleThread(message, boss){
     let threadName = `${message.author.username}'s battle against ${boss}`;
     const thread = await message.channel.threads.create({
         name: threadName,
-        autoArchiveDuration: 1440,
+        autoArchiveDuration: 60,
         reason: 'Boss battle thread',
     });
     message.channel.send(`you are now in a battle with ${boss} please move to the created thread ${channelMention(thread.id)}`);
@@ -515,14 +515,15 @@ async function snapshot(message, boss, thread){
     let p1current = p1party[0];
 
     
-    let p2party;
-    let p2current;
+    let p2party = [];
+    
     for (let i = 0; i < bosses.length; i++){
         if (boss === bosses[i].id){
             p2party = bosses[i].units;
-            p2current = bosses[i].units[0];
+            
         }
     }
+    let p2current = p2party[0];
     startBattle(p1party, p2party, p1current, p2current, thread, message.author);
 }
 async function startBattle(p1party, p2party, p1current, p2current, thread, author){
