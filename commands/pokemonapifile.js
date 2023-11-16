@@ -3,6 +3,7 @@
 const { userMention, memberNicknameMention, channelMention, roleMention } = require("@discordjs/builders");
 var maids = require("../units/maids.json");
 var moves = require("../units/moves.json");
+var temp = require("../units/tempfile.json");
 
 const Pokedex = require("pokeapi-js-wrapper")
 const customOptions = {cache: false, cacheImages: false}
@@ -26,12 +27,17 @@ module.exports = {
         //     }
             
         // }
+        let searchArray = [];
+        for(let s = 400; s < maids.length; s++){
+            searchArray.push(maids[s].id.toLowerCase());
+            
+        }
         
         
        
        try{
         (async () => {
-            finalPokemonArray = getlocations("kanto", 51);
+            //finalPokemonArray = getlocations("kanto", 51);
             
                 // const JSON_FILE = "../monstertao/units/regionlocations.json";
                 // const jsonData = fs.readFileSync(JSON_FILE);
@@ -39,7 +45,7 @@ module.exports = {
                 
                 
             
-            /*
+            
             const growthArray = await P.getPokemonByName(searchArray);
             const JSON_FILE = "../monstertao/units/maids.json"; //base experience
             const jsonData = fs.readFileSync(JSON_FILE);
@@ -48,11 +54,11 @@ module.exports = {
             for(let i = 0; i < growthArray.length; i++){
                 for(let j = 0; j < maids.length; j++){
                     if(growthArray[i].name == maids[j].id.toLowerCase()){
-                        newData[j]["baseEXP"] = growthArray[i].base_experience;
+                        newData[j]["evMap"] = {"hp": growthArray[i].stats[0].effort,"attack": growthArray[i].stats[1].effort,"defense": growthArray[i].stats[2].effort,"specialAttack": growthArray[i].stats[3].effort,"specialDefense": growthArray[i].stats[4].effort};
                     }
                 }
             }
-            */
+            
             
             
             // const growthArray = await P.getLocationAreaByName("kanto-route-1-area"); //main one to get encounters from location-areas
@@ -133,10 +139,10 @@ module.exports = {
             
         //let data = JSON.stringify(finalPokemonArray); //this is for writing to a new file
         //console.log(data);
-        //let data = JSON.stringify(newData); //this is for editing a json.  to add more to each array
+        let data = JSON.stringify(newData); //this is for editing a json.  to add more to each array
         //console.log(data);
-        /*
-        fs.writeFileSync("../monstertao/units/tempfile.json", data, (error) => {
+        
+        fs.writeFileSync("../monstertao/units/maids.json", data, (error) => {
             // throwing the error
             // in case of a writing problem
             if (error) {
@@ -148,7 +154,7 @@ module.exports = {
           
             console.log("data.json written correctly");
           });
-          */
+          
           
           
           

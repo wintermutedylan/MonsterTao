@@ -147,7 +147,8 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             }
         }
         if(!usableUnits){
-            thread.send("You have beaten the wild pokemon congrats you get nothing rn.  becuase I haven't programed it"); //this is where to do exp gain
+            //need to track how many pokemon have been used in the battle.  make an array that stores the pokemon in it. just need to do PCID.  then check if their current health is higher than 0.  after do exp stuffs, ev stuffs and store in db
+            thread.send("You have beaten the wild pokemon congrats you get nothing rn.  becuase I haven't programed it"); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
             return;
         } else {
             //force the bot to swap to a random unit for now
@@ -193,6 +194,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                     attack(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
                  
                 } else if (s.toLowerCase() == 'item'){
+                    //for items have then categorized as ball, heal, and 
                     thread.send("this is a placeholder this doesn't work rn");
                     
                  
@@ -583,6 +585,10 @@ function damageFormula(details, p1current, p2current, turn){
 
 
 async function snapshot(message, boss, thread, Discord){
+    //maybe push a attack, def, boosts array here.  this will have X items, status moves that lower or raise those stats,  accuracy.  will need to update accuracy calc after 
+    //for accuracy subtracted the evasion stage from the accuracy stage.  if that is higher than than +6 just use +6 from evasion.  and if its lower than -6 just use -6 from evasion. so if +2 accuracy and enemy has +1 evasion then its +1 total then grab 
+    //from array
+    //or just make one stage array in json.  then store the accuracy and evasion stages.  keep same formula then check json instead of having an array for both accuracy and evasion
     let playerData; 
     let p1party = [];
     

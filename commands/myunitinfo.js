@@ -36,7 +36,7 @@ module.exports = {
         
         
         
-        const newEmbed = new Discord.MessageEmbed() //show pokemon name, level, moves, stats, ivs
+        const newEmbed = new Discord.MessageEmbed() //show pokemon name, level, moves, stats, ivs, evs
         .setColor('#E76AA3')
         .setTitle("**Unit Info**")
         .setDescription(`__**${info.id}**__\nType: ${info.types}\nBase Attack: ${info.attack}\nBase Defense: ${info.defense}\nBase Special Attack: ${info.specialAttack}\nBase Special Defense: ${info.specialDefense}`)

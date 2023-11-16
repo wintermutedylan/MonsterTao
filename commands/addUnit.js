@@ -103,6 +103,13 @@ async function addUnit(unit, ID, level, pcID, exp){
                         "defenseIV": unit.defenseIV,
                         "specialAttackIV": unit.specialAttackIV,
                         "specialDefenseIV": unit.specialDefenseIV,
+                        "evMap": {
+                            "hp": 0,
+                            "attack": 0,
+                            "defense": 0,
+                            "specialAttack": 0,
+                            "specialDefense": 0
+                        },
                         "burned": false, 
                         "frozen": false, 
                         "paralysis": false, 

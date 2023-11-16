@@ -1,0 +1,2 @@
+//use this command to find all the routes you can use in a region
+//it will filter based on your current badge number.  need to manually do that.  can't think of a way to automate it.  can get HTC peeps to help I think
