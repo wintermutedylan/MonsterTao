@@ -1,1 +1,286 @@
-[{"number":1,"id":"Bulbasaur","types":["Grass","Poison"],"health":45,"attack":49,"defense":49,"specialAttack":65,"specialDefense":65,"moves":[],"healthIV":0,"attackIV":0,"defenseIV":0,"specialAttackIV":0,"specialDefenseIV":0,"growthRate":"medium-slow","baseEXP":64,"evMap":{"hp":0,"attack":0,"defense":0,"specialAttack":1,"specialDefense":0}},{"number":2,"id":"Ivysaur","types":["Grass","Poison"],"health":60,"attack":62,"defense":63,"specialAttack":80,"specialDefense":80,"moves":[],"healthIV":0,"attackIV":0,"defenseIV":0,"specialAttackIV":0,"specialDefenseIV":0,"growthRate":"medium-slow","baseEXP":142,"evMap":{"hp":0,"attack":0,"defense":0,"specialAttack":1,"specialDefense":1}},{"number":3,"id":"Venusaur","types":["Grass","Poison"],"health":80,"attack":82,"defense":83,"specialAttack":100,"specialDefense":100,"moves":[],"healthIV":0,"attackIV":0,"defenseIV":0,"specialAttackIV":0,"specialDefenseIV":0,"growthRate":"medium-slow","baseEXP":263,"evMap":{"hp":0,"attack":0,"defense":0,"specialAttack":2,"specialDefense":1}}]
+[
+    {
+        "number": 1,
+        "id": "Bulbasaur",
+        "types": [
+            "Grass",
+            "Poison"
+        ],
+        "health": 45,
+        "attack": 49,
+        "defense": 49,
+        "specialAttack": 65,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0,
+        "growthRate": "medium-slow",
+        "baseEXP": 64,
+        "evMap": {
+            "hp": 0,
+            "attack": 0,
+            "defense": 0,
+            "specialAttack": 1,
+            "specialDefense": 0
+        },
+        "evolutionDetails": {
+            "evolvesTo": "ivysaur",
+            "evolutionData": {
+                "gender": null,
+                "held_item": null,
+                "item": null,
+                "known_move": null,
+                "known_move_type": null,
+                "location": null,
+                "min_affection": null,
+                "min_beauty": null,
+                "min_happiness": null,
+                "min_level": 16,
+                "needs_overworld_rain": false,
+                "party_species": null,
+                "party_type": null,
+                "relative_physical_stats": null,
+                "time_of_day": "",
+                "trade_species": null,
+                "trigger": {
+                    "name": "level-up",
+                    "url": "https://pokeapi.co/api/v2/evolution-trigger/1/"
+                },
+                "turn_upside_down": false
+            },
+            "is_baby": false
+        }
+    },
+    {
+        "number": 2,
+        "id": "Ivysaur",
+        "types": [
+            "Grass",
+            "Poison"
+        ],
+        "health": 60,
+        "attack": 62,
+        "defense": 63,
+        "specialAttack": 80,
+        "specialDefense": 80,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0,
+        "growthRate": "medium-slow",
+        "baseEXP": 142,
+        "evMap": {
+            "hp": 0,
+            "attack": 0,
+            "defense": 0,
+            "specialAttack": 1,
+            "specialDefense": 1
+        },
+        "evolutionDetails": {
+            "evolvesTo": "venusaur",
+            "evolutionData": {
+                "gender": null,
+                "held_item": null,
+                "item": null,
+                "known_move": null,
+                "known_move_type": null,
+                "location": null,
+                "min_affection": null,
+                "min_beauty": null,
+                "min_happiness": null,
+                "min_level": 32,
+                "needs_overworld_rain": false,
+                "party_species": null,
+                "party_type": null,
+                "relative_physical_stats": null,
+                "time_of_day": "",
+                "trade_species": null,
+                "trigger": {
+                    "name": "level-up",
+                    "url": "https://pokeapi.co/api/v2/evolution-trigger/1/"
+                },
+                "turn_upside_down": false
+            },
+            "is_baby": false
+        }
+    },
+    {
+        "number": 3,
+        "id": "Venusaur",
+        "types": [
+            "Grass",
+            "Poison"
+        ],
+        "health": 80,
+        "attack": 82,
+        "defense": 83,
+        "specialAttack": 100,
+        "specialDefense": 100,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0,
+        "growthRate": "medium-slow",
+        "baseEXP": 263,
+        "evMap": {
+            "hp": 0,
+            "attack": 0,
+            "defense": 0,
+            "specialAttack": 2,
+            "specialDefense": 1
+        },
+        "evolutionDetails": {
+            "evolvesTo": "N/A",
+            "evolutionData": [],
+            "is_baby": false
+        }
+    },
+    {
+        "number": 4,
+        "id": "Charmander",
+        "types": [
+            "Fire"
+        ],
+        "health": 39,
+        "attack": 52,
+        "defense": 43,
+        "specialAttack": 60,
+        "specialDefense": 50,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0,
+        "growthRate": "medium-slow",
+        "baseEXP": 62,
+        "evMap": {
+            "hp": 0,
+            "attack": 0,
+            "defense": 0,
+            "specialAttack": 0,
+            "specialDefense": 0
+        },
+        "evolutionDetails": {
+            "evolvesTo": "charmeleon",
+            "evolutionData": {
+                "gender": null,
+                "held_item": null,
+                "item": null,
+                "known_move": null,
+                "known_move_type": null,
+                "location": null,
+                "min_affection": null,
+                "min_beauty": null,
+                "min_happiness": null,
+                "min_level": 16,
+                "needs_overworld_rain": false,
+                "party_species": null,
+                "party_type": null,
+                "relative_physical_stats": null,
+                "time_of_day": "",
+                "trade_species": null,
+                "trigger": {
+                    "name": "level-up",
+                    "url": "https://pokeapi.co/api/v2/evolution-trigger/1/"
+                },
+                "turn_upside_down": false
+            },
+            "is_baby": false
+        }
+    },
+    {
+        "number": 5,
+        "id": "Charmeleon",
+        "types": [
+            "Fire"
+        ],
+        "health": 58,
+        "attack": 64,
+        "defense": 58,
+        "specialAttack": 80,
+        "specialDefense": 65,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0,
+        "growthRate": "medium-slow",
+        "baseEXP": 142,
+        "evMap": {
+            "hp": 0,
+            "attack": 0,
+            "defense": 0,
+            "specialAttack": 1,
+            "specialDefense": 0
+        },
+        "evolutionDetails": {
+            "evolvesTo": "charizard",
+            "evolutionData": {
+                "gender": null,
+                "held_item": null,
+                "item": null,
+                "known_move": null,
+                "known_move_type": null,
+                "location": null,
+                "min_affection": null,
+                "min_beauty": null,
+                "min_happiness": null,
+                "min_level": 36,
+                "needs_overworld_rain": false,
+                "party_species": null,
+                "party_type": null,
+                "relative_physical_stats": null,
+                "time_of_day": "",
+                "trade_species": null,
+                "trigger": {
+                    "name": "level-up",
+                    "url": "https://pokeapi.co/api/v2/evolution-trigger/1/"
+                },
+                "turn_upside_down": false
+            },
+            "is_baby": false
+        }
+    },
+    {
+        "number": 6,
+        "id": "Charizard",
+        "types": [
+            "Fire",
+            "Flying"
+        ],
+        "health": 78,
+        "attack": 84,
+        "defense": 78,
+        "specialAttack": 109,
+        "specialDefense": 85,
+        "moves": [],
+        "healthIV": 0,
+        "attackIV": 0,
+        "defenseIV": 0,
+        "specialAttackIV": 0,
+        "specialDefenseIV": 0,
+        "growthRate": "medium-slow",
+        "baseEXP": 267,
+        "evMap": {
+            "hp": 0,
+            "attack": 0,
+            "defense": 0,
+            "specialAttack": 3,
+            "specialDefense": 0
+        },
+        "evolutionDetails": {
+            "evolvesTo": "N/A",
+            "evolutionData": [],
+            "is_baby": false
+        }
+    }
+]

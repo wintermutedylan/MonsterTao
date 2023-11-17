@@ -27,11 +27,14 @@ module.exports = {
         //     }
             
         // }
-        let searchArray = [];
-        for(let s = 400; s < maids.length; s++){
-            searchArray.push(maids[s].id.toLowerCase());
+        // let searchArray = [];
+        // for(let s = 200; s < 255; s++){
+        //     if(s != 251 || s != 226 || s != 238 || s != 222|| s != 225|| s != 227|| s != 231|| s != 210){
+        //         searchArray.push(s);
+        //     }
             
-        }
+            
+        // }
         
         
        
@@ -46,18 +49,18 @@ module.exports = {
                 
             
             
-            const growthArray = await P.getPokemonByName(searchArray);
+            const growthArray = await P.getEvolutionChainById(searchArray);
             const JSON_FILE = "../monstertao/units/maids.json"; //base experience
             const jsonData = fs.readFileSync(JSON_FILE);
-            let newData = JSON.parse(jsonData);
+            const newData = JSON.parse(jsonData);
             
-            for(let i = 0; i < growthArray.length; i++){
-                for(let j = 0; j < maids.length; j++){
-                    if(growthArray[i].name == maids[j].id.toLowerCase()){
-                        newData[j]["evMap"] = {"hp": growthArray[i].stats[0].effort,"attack": growthArray[i].stats[1].effort,"defense": growthArray[i].stats[2].effort,"specialAttack": growthArray[i].stats[3].effort,"specialDefense": growthArray[i].stats[4].effort};
-                    }
-                }
-            }
+            // for(let i = 0; i < growthArray.length; i++){
+            //     for(let j = 0; j < maids.length; j++){
+            //         if(growthArray[i].name == maids[j].id.toLowerCase()){
+            //             newData[j]["evMap"] = {"hp": growthArray[i].stats[0].effort,"attack": growthArray[i].stats[1].effort,"defense": growthArray[i].stats[2].effort,"specialAttack": growthArray[i].stats[3].effort,"specialDefense": growthArray[i].stats[4].effort};
+            //         }
+            //     }
+            // }
             
             
             
@@ -87,15 +90,68 @@ module.exports = {
             // }
             
             
-            
+            // for(let c = 0; c < maids.length; c++){
+            //     let det = {
+            //         evolvesTo: null,
+            //         evolutionData: null,
+            //         is_baby: false
+            //     }
+            //     newData[c]["evolutionDetails"] = det;
+            //     let data = JSON.stringify(newData);
+            //     fs.writeFileSync(JSON_FILE, data);
+            // }
             /*
             for(let i = 0; i < growthArray.length; i++){  // this is to get growth rates from api
-                let newData;
                 
-                for(let a = 0; a < growthArray[i].pokemon_species.length; a++){
-                    for(let j = 0; j < maids.length; j++){
-                        if(growthArray[i].pokemon_species[a].name == maids[j].id.toLowerCase()){
-                            if(growthArray[i].name == "slow-then-very-fast"){ 
+                    for(let k = 0; k < maids.length; k++){
+                        if(maids[k].id.toLowerCase() == growthArray[i].chain.species.name && growthArray[i].chain.evolves_to.length != 0){
+                            for(let j = 0; j < growthArray[i].chain.evolves_to.length; j++){
+                                let det = {
+                                    evolvesTo: growthArray[i].chain.evolves_to[j].species.name,
+                                    evolutionData: growthArray[i].chain.evolves_to[j].evolution_details[0],
+                                    is_baby: growthArray[i].chain.is_baby
+                                }
+                                newData[k]["evolutionDetails"] = det;
+                                let data = JSON.stringify(newData);
+                                fs.writeFileSync(JSON_FILE, data);
+                                
+                            }
+
+                            
+                        } else if(growthArray[i].chain.evolves_to.length != 0){
+                            for(let j = 0; j < growthArray[i].chain.evolves_to.length; j++){
+                                if(growthArray[i].chain.evolves_to[j].species.name == maids[k].id.toLowerCase() && growthArray[i].chain.evolves_to[j].evolves_to.length != 0){
+                                    for(let a = 0; a < growthArray[i].chain.evolves_to[j].evolves_to.length; a++){
+                                        let det = {
+                                            evolvesTo: growthArray[i].chain.evolves_to[j].evolves_to[a].species.name,
+                                            evolutionData: growthArray[i].chain.evolves_to[j].evolves_to[a].evolution_details[0],
+                                            is_baby: growthArray[i].chain.evolves_to[j].is_baby
+                                        }
+                                        newData[k]["evolutionDetails"] = det;
+                                        let data = JSON.stringify(newData);
+                                        fs.writeFileSync(JSON_FILE, data);
+                                        
+                                    }
+                                }
+
+                            }
+                            
+                        } else {
+                            //just put an empty thing here.  either null or idk since im doing a map ill think of something
+                            
+                        }
+                    }
+                      
+                    
+                
+               
+            }
+            */
+            
+            
+
+            /*
+            if(growthArray[i].name == "slow-then-very-fast"){ 
                                 newData[j]["growthRate"] = "Fluctuating";
                             } else if(growthArray[i].name == "fast-then-very-slow"){
                                 newData[j]["growthRate"] = "Erratic";
@@ -104,56 +160,29 @@ module.exports = {
                             } else {
                                 newData[j]["growthRate"] = growthArray[i].name;
                             }
-                        }
-                    }   
-                    
-                }
-                
-                if(growthArray[i].name == "slow-then-very-fast"){
-                    newData = {
-                        name: "Fluctuating",
-                        levelTable: growthArray[i].levels
-                    } 
-                } else if(growthArray[i].name == "fast-then-very-slow"){
-                    newData = {
-                        name: "Erratic",
-                        levelTable: growthArray[i].levels
-                    } 
-                } else if(growthArray[i].name == "medium"){
-                    newData = {
-                        name: "medium-fast",
-                        levelTable: growthArray[i].levels
-                    } 
-                } else {
-                    newData = {
-                        name: growthArray[i].name,
-                        levelTable: growthArray[i].levels
-                    }
-                }
-                
-               finalPokemonArray.push(newData);
-            }
             */
+            
 
             
             
         //let data = JSON.stringify(finalPokemonArray); //this is for writing to a new file
         //console.log(data);
-        let data = JSON.stringify(newData); //this is for editing a json.  to add more to each array
+        //let data = JSON.stringify(newData); //this is for editing a json.  to add more to each array
         //console.log(data);
+        //fs.writeFileSync(JSON_FILE, data)
         
-        fs.writeFileSync("../monstertao/units/maids.json", data, (error) => {
-            // throwing the error
-            // in case of a writing problem
-            if (error) {
-              // logging the error
-              console.error(error);
+        // fs.writeFileSync(JSON_FILE, data, (error) => {
+        //     // throwing the error
+        //     // in case of a writing problem
+        //     if (error) {
+        //       // logging the error
+        //       console.error(error);
           
-              throw error;
-            }
+        //       throw error;
+        //     }
           
-            console.log("data.json written correctly");
-          });
+        //     console.log("data.json written correctly");
+        //   });
           
           
           

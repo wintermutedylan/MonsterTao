@@ -29,6 +29,10 @@ module.exports = {
         let baseDef = unit.defense;
         let baseSpecialDef = unit.specialDefense;
         let baseHP = unit.health;
+        let attackNatureValue = 1;
+        let defenseNatureValue = 1;
+        let specialAttackNatureValue = 1;
+        let specialDefenseNatureValue = 1;
         let playerData; 
         playerData = await playerModel.findOne({ userID: message.author.id});
         if (!playerData) return message.channel.send("You don't exist. Please try again.");
@@ -90,19 +94,22 @@ async function addUnit(unit, ID, level, pcID, exp){
                         "types": unit.types,
                         "level": level,
                         "experience": exp,
+                        "happiness": 0,
                         "growthRate": unit.growthRate,
                         "health": unit.health,
                         "attack": unit.attack,
                         "defense": unit.defense,
                         "specialAttack": unit.specialAttack,
                         "specialDefense": unit.specialDefense,
-                        "moves": unit.moves,
                         "currentHealth": unit.health,
-                        "healthIV": unit.healthIV,
-                        "attackIV": unit.attackIV,
-                        "defenseIV": unit.defenseIV,
-                        "specialAttackIV": unit.specialAttackIV,
-                        "specialDefenseIV": unit.specialDefenseIV,
+                        "moves": unit.moves,
+                        "ivMap": {
+                            "healthIV": unit.healthIV,
+                            "attackIV": unit.attackIV,
+                            "defenseIV": unit.defenseIV,
+                            "specialAttackIV": unit.specialAttackIV,
+                            "specialDefenseIV": unit.specialDefenseIV
+                        },
                         "evMap": {
                             "hp": 0,
                             "attack": 0,
@@ -110,14 +117,16 @@ async function addUnit(unit, ID, level, pcID, exp){
                             "specialAttack": 0,
                             "specialDefense": 0
                         },
-                        "burned": false, 
-                        "frozen": false, 
-                        "paralysis": false, 
-                        "poisoned": false, 
-                        "asleep": false, 
-                        "sleepTurns": 0, 
-                        "confusion": false, 
-                        "confusionTurns": 0
+                        "statusMap": {
+                            "burned": false, 
+                            "frozen": false, 
+                            "paralysis": false, 
+                            "poisoned": false, 
+                            "asleep": false, 
+                            "sleepTurns": 0, 
+                            "confusion": false, 
+                            "confusionTurns": 0
+                        }
                         
                     }
                 }
@@ -153,10 +162,10 @@ function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 function healthStatCalc(base, iv, level){
-    let top = ((base + iv) * 2) * level;
-    let bot = top / 100;
+    let top = (2 * base + iv + Math.floor(0/4)) * level;
+    let bot = Math.floor(top / 100);
     let total = bot + level + 10;
-    return Math.floor(total);
+    return total;
 }
 
 function otherStatCalc(base, iv, level){

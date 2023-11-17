@@ -1,9 +1,36 @@
 require('dotenv').config();
+const fs = require("fs");
+const JSON_FILE = "../monstertao/units/friendship.json"; //base experience
+
 
 const playerModel = require("../../models/playerSchema");
 
 module.exports = async (Discord, client, message) => {
     const prefix = process.env.PREFIX;
+    if(!message.author.bot && !message.content.startsWith(prefix)){ //stores steps in json file locally.  then when you run the party command it will update mongo
+        try{
+        const jsonData = fs.readFileSync(JSON_FILE);
+        const newData = JSON.parse(jsonData);
+        let index = newData.findIndex( function(item) { return item.userID == message.author.id } )
+        
+        
+        if(index != -1){
+            
+            newData[index].steps += 1;
+            let data = JSON.stringify(newData);
+            fs.writeFileSync(JSON_FILE, data);
+        } else {
+            newData.push({userID: message.author.id, steps: 1});
+            let data = JSON.stringify(newData);
+            fs.writeFileSync(JSON_FILE, data);
+        }
+    } catch (error) {
+        // logging the error
+        console.error(error);
+      
+        throw error;
+      }
+    }
     if(!message.content.startsWith(prefix) || message.author.bot) return;
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();

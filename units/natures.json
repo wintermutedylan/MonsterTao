@@ -1,0 +1,129 @@
+[
+    {
+        "name": "Hardy",
+        "increase": "no-change",
+        "decrease": "no-change"
+    },
+    {
+        "name": "Lonely",
+        "increase": "attack",
+        "decrease": "defense"
+    },
+    {
+        "name": "Brave",
+        "increase": "attack",
+        "decrease": "no-change"
+    },
+    {
+        "name": "Adamant",
+        "increase": "attack",
+        "decrease": "special-attack"
+    },
+    {
+        "name": "Naughty",
+        "increase": "attack",
+        "decrease": "special-defense"
+    },
+    {
+        "name": "Bold",
+        "increase": "defense",
+        "decrease": "attack"
+    },
+    {
+        "name": "Docile",
+        "increase": "no-change",
+        "decrease": "no-change"
+    },
+    {
+        "name": "Relaxed",
+        "increase": "defense",
+        "decrease": "no-change"
+    },
+    {
+        "name": "Impish",
+        "increase": "defense",
+        "decrease": "special-attack"
+    },
+    {
+        "name": "Lax",
+        "increase": "defense",
+        "decrease": "special-defense"
+    },
+    {
+        "name": "Timid",
+        "increase": "no-change",
+        "decrease": "attack"
+    },
+    {
+        "name": "Hasty",
+        "increase": "no-change",
+        "decrease": "defense"
+    },
+    {
+        "name": "Serious",
+        "increase": "no-change",
+        "decrease": "no-change"
+    },
+    {
+        "name": "Jolly",
+        "increase": "no-change",
+        "decrease": "special-attack"
+    },
+    {
+        "name": "Naive",
+        "increase": "no-change",
+        "decrease": "special-defense"
+    },
+    {
+        "name": "Modest",
+        "increase": "special-attack",
+        "decrease": "attack"
+    },
+    {
+        "name": "Mild",
+        "increase": "special-attack",
+        "decrease": "defense"
+    },
+    {
+        "name": "Quiet",
+        "increase": "special-attack",
+        "decrease": "no-change"
+    },
+    {
+        "name": "Bashful",
+        "increase": "no-change",
+        "decrease": "no-change"
+    },
+    {
+        "name": "Rash",
+        "increase": "special-attack",
+        "decrease": "special-defense"
+    },
+    {
+        "name": "Calm",
+        "increase": "special-defense",
+        "decrease": "attack"
+    },
+    {
+        "name": "Gentle",
+        "increase": "special-defense",
+        "decrease": "defense"
+    },
+    {
+        "name": "Sassy",
+        "increase": "special-defense",
+        "decrease": "no-change"
+    },
+    {
+        "name": "Careful",
+        "increase": "special-defense",
+        "decrease": "special-attack"
+    },
+    {
+        "name": "Quirky",
+        "increase": "no-change",
+        "decrease": "no-change"
+    }
+    
+
+]
