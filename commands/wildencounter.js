@@ -4,6 +4,7 @@ var routeEncounters = require("../units/routes.json");
 var moveinfo = require("../units/moveinfo.json");
 var moveList = require("../units/moves.json");
 var typeList = require("../units/typechart.json");
+var natureTable = require("../units/natures.json");
 const lucky = require('lucky-item').default;
 const playerModel = require("../models/playerSchema");
 
@@ -51,16 +52,52 @@ module.exports = {
         let defenseIV = randomIntFromInterval(0, 15);
         let specialDefenseIV = randomIntFromInterval(0, 15);
         let healthIV = randomIntFromInterval(0, 15);
-        let hp = healthStatCalc(baseHP, healthIV, wildPokemon.level);
+        let hp = healthStatCalc(baseHP, unit.healthIV, 0, wildPokemon.level);
+        let attackNatureValue = 1;
+        let defenseNatureValue = 1;
+        let specialAttackNatureValue = 1;
+        let specialDefenseNatureValue = 1;
+        let pickedNature = natureTable[Math.floor(Math.random()*natureTable.length)];
+        switch(pickedNature.increase){ //switch statement to get the increased stat from the nature
+            case "attack":
+                attackNatureValue = 1.1;
+                break;
+            case "defense":
+                defenseNatureValue = 1.1;
+                break;
+            case "special-attack":
+                specialAttackNatureValue = 1.1;
+                break;
+            case "special-defense":
+                specialDefenseNatureValue = 1.1;
+                break;
+
+        }
+        switch(pickedNature.decrease){ //switch statement to get the decreased stat from the nature
+            case "attack":
+                attackNatureValue = 0.9;
+                break;
+            case "defense":
+                defenseNatureValue = 0.9;
+                break;
+            case "special-attack":
+                specialAttackNatureValue = 0.9;
+                break;
+            case "special-defense":
+                specialDefenseNatureValue = 0.9;
+                break;
+
+        }
         let finalPokemon = {
             id: unit.id,
             types: unit.types,
             level: wildPokemon.level,
+            nature: pickedNature.name,
             health: hp,
-            attack: otherStatCalc(baseAtk, attackIV, wildPokemon.level),
-            defense: otherStatCalc(baseDef, defenseIV, wildPokemon.level),
-            specialAttack: otherStatCalc(baseSpecialAtk, specialAttackIV, wildPokemon.level),
-            specialDefense: otherStatCalc(baseSpecialDef, specialDefenseIV, wildPokemon.level),
+            attack: otherStatCalc(baseAtk, attackIV, 0, wildPokemon.level, attackNatureValue),
+            defense: otherStatCalc(baseDef, defenseIV, 0, wildPokemon.level, defenseNatureValue),
+            specialAttack: otherStatCalc(baseSpecialAtk, specialAttackIV, 0, wildPokemon.level, specialAttackNatureValue),
+            specialDefense: otherStatCalc(baseSpecialDef, specialDefenseIV, 0, wildPokemon.level, specialDefenseNatureValue),
             currentHealth: hp,
             moves: moves,
             attackIV: attackIV,
@@ -68,7 +105,8 @@ module.exports = {
             defenseIV: defenseIV,
             specialDefenseIV: specialDefenseIV,
             healthIV: healthIV,
-            baseXP: unit.baseEXP
+            baseXP: unit.baseEXP,
+            evs: unit.evMap
         }
         createBattleThread(message, finalPokemon, Discord);
         
@@ -95,18 +133,18 @@ module.exports = {
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
-function healthStatCalc(base, iv, level){
-    let top = ((base + iv) * 2) * level;
-    let bot = top / 100;
+function healthStatCalc(base, iv, ev, level){
+    let top = (2 * base + iv + Math.floor(ev/4)) * level;
+    let bot = Math.floor(top / 100);
     let total = bot + level + 10;
-    return Math.floor(total);
+    return total;
 }
 
-function otherStatCalc(base, iv, level){
-    let top = ((base + iv) * 2) * level;
-    let bot = top / 100;
+function otherStatCalc(base, iv, ev, level, nature){
+    let top = (2 * base + iv + Math.floor(ev/4)) * level;
+    let bot = Math.floor(top / 100);
     let total = bot + 5;
-    return Math.floor(total);
+    return Math.floor(total * nature);
 }
 
 async function createBattleThread(message, boss, Discord){
@@ -147,7 +185,12 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             }
         }
         if(!usableUnits){
-            //need to track how many pokemon have been used in the battle.  make an array that stores the pokemon in it. just need to do PCID.  then check if their current health is higher than 0.  after do exp stuffs, ev stuffs and store in db
+            let used = 0;
+            for(let g = 0; g < p1party.length; g++){
+                if(p1party[g].usedInBattle){
+                    used++;
+                }
+            }
             thread.send("You have beaten the wild pokemon congrats you get nothing rn.  becuase I haven't programed it"); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
             return;
         } else {
@@ -263,6 +306,15 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
                     for (let k = 0; k < p1party.length; k++){
                         if (p1party[k].id.toLowerCase() == s.toLowerCase()){
                             p1current = p1party[k];
+                            p1party[k].usedInBattle = true;
+                            p1party[k].stages = {
+                                attack: 0,
+                                defense: 0,
+                                specialAttack: 0,
+                                specialDefense: 0,
+                                evasion: 0,
+                                accuracy: 0
+                            };
                             break;
                         }
                     }
@@ -284,12 +336,12 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
             const filter = (m) => {
                 let isPokemon = false;
                 for (let j = 0; j < pokemonAlive.length; j++){
-                    if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase() || m.content.toLowerCase() === "cancel"){
+                    if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase()){
                         isPokemon = true;
                         break;
                     }
                 }
-                return  m.author.id === author.id && (isPokemon);
+                return  m.author.id === author.id && (isPokemon || m.content.toLowerCase() === "cancel");
             }
             const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
             var s;
@@ -317,12 +369,21 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
                     for (let k = 0; k < p1party.length; k++){
                         if (p1party[k].id.toLowerCase() == s.toLowerCase()){
                             p1current = p1party[k];
+                            p1party[k].usedInBattle = true;
+                            p1party[k].stages = {
+                                attack: 0,
+                                defense: 0,
+                                specialAttack: 0,
+                                specialDefense: 0,
+                                evasion: 0,
+                                accuracy: 0
+                            };
                             break;
                         }
                     }
                     thread.send(`You have switched out ${oldCurrent} and sent in ${p1current.id}`);
                     turn++;
-
+                    
                     battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
                 }
                 
@@ -454,7 +515,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             const newEmbed = new Discord.MessageEmbed()
             .setColor('#E76AA3')
             .setAuthor(`Turn: ${turn}`)
-            .setTitle(`${p1current.id} used ${moveDetails.move} doing **${damage}** damage`)
+            .setTitle(`Your ${p1current.id} used ${moveDetails.move} doing **${damage}** damage`)
             .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
         
         
@@ -470,7 +531,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             const newEmbed = new Discord.MessageEmbed()
             .setColor('#E76AA3')
             .setAuthor(`Turn: ${turn}`)
-            .setTitle(`${p2current.id} used ${moveDetails.move} doing **${damage}** damage`)
+            .setTitle(`The wild ${p2current.id} used ${moveDetails.move} doing **${damage}** damage`)
             .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
         
         
@@ -485,7 +546,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             const newEmbed = new Discord.MessageEmbed()
             .setColor('#E76AA3')
             .setAuthor(`Turn: ${turn}`)
-            .setTitle(`${p1current.id} used ${moveDetails.move} but missed`)
+            .setTitle(`Your ${p1current.id} used ${moveDetails.move} but missed`)
             .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
         
         
@@ -497,7 +558,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             const newEmbed = new Discord.MessageEmbed()
             .setColor('#E76AA3')
             .setAuthor(`Turn: ${turn}`)
-            .setTitle(`${p2current.id} used ${moveDetails.move} but missed`)
+            .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but missed`)
             .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
         
         
@@ -519,7 +580,8 @@ function damageFormula(details, p1current, p2current, turn){
     for (let u = 0; u < maids.length; u++){
         if (p1current.id.toLowerCase() == maids[u].id.toLowerCase()){
             p1Type = maids[u].types;
-        } else if (p2current.id.toLowerCase() == maids[u].id.toLowerCase()){
+        } if (p2current.id.toLowerCase() == maids[u].id.toLowerCase()){
+            
             p2Type = maids[u].types;
         }
     }
@@ -553,6 +615,7 @@ function damageFormula(details, p1current, p2current, turn){
             
         return Math.floor(d);
     } else {
+        
         for(let f = 0; f < p2Type.length; f++){
             if (details.type == p2Type[f]){
                 stab = 1.5;
@@ -600,7 +663,19 @@ async function snapshot(message, boss, thread, Discord){
             }
         }
     }
+    for(let d = 0; d < p1party.length; d++){
+        p1party[d]["stages"] = {
+            attack: 0,
+            defense: 0,
+            specialAttack: 0,
+            specialDefense: 0,
+            evasion: 0,
+            accuracy: 0
+        };
+        p1party[d]["usedInBattle"] = false;
+    }
     let p1current = p1party[0];
+    p1party[0].usedInBattle = true;
 
     
     let p2party =[];

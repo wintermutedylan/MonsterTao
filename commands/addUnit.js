@@ -1,6 +1,7 @@
 const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
 var maids = require("../units/maids.json");
 var expTable = require("../units/exptable.json");
+var natureTable = require("../units/natures.json");
 const playerModel = require("../models/playerSchema");
 
 module.exports = {
@@ -33,6 +34,38 @@ module.exports = {
         let defenseNatureValue = 1;
         let specialAttackNatureValue = 1;
         let specialDefenseNatureValue = 1;
+        let pickedNature = natureTable[Math.floor(Math.random()*natureTable.length)];
+        switch(pickedNature.increase){ //switch statement to get the increased stat from the nature
+            case "attack":
+                attackNatureValue = 1.1;
+                break;
+            case "defense":
+                defenseNatureValue = 1.1;
+                break;
+            case "special-attack":
+                specialAttackNatureValue = 1.1;
+                break;
+            case "special-defense":
+                specialDefenseNatureValue = 1.1;
+                break;
+
+        }
+        switch(pickedNature.decrease){ //switch statement to get the decreased stat from the nature
+            case "attack":
+                attackNatureValue = 0.9;
+                break;
+            case "defense":
+                defenseNatureValue = 0.9;
+                break;
+            case "special-attack":
+                specialAttackNatureValue = 0.9;
+                break;
+            case "special-defense":
+                specialDefenseNatureValue = 0.9;
+                break;
+
+        }
+        //check the nature json here and update the values above.  random nature.  grab from json that matches name.  do switch for both increase and decrease
         let playerData; 
         playerData = await playerModel.findOne({ userID: message.author.id});
         if (!playerData) return message.channel.send("You don't exist. Please try again.");
@@ -61,13 +94,13 @@ module.exports = {
         unit.defenseIV = randomIntFromInterval(0, 15);
         unit.specialDefenseIV = randomIntFromInterval(0, 15);
         unit.healthIV = randomIntFromInterval(0, 15);
-        unit.attack = otherStatCalc(baseAtk, unit.attackIV, levelToSetUnit);
-        unit.specialAttack = otherStatCalc(baseSpecialAtk, unit.specialAttackIV, levelToSetUnit);
-        unit.defense = otherStatCalc(baseDef, unit.defenseIV, levelToSetUnit);
-        unit.specialDefense = otherStatCalc(baseSpecialDef, unit.specialDefenseIV, levelToSetUnit);
-        unit.health = healthStatCalc(baseHP, unit.healthIV, levelToSetUnit);
-        addUnit(unit, ID, levelToSetUnit, pcID, exp);
-        message.channel.send(`The Level ${levelToSetUnit} ${unitName} has the following stats
+        unit.attack = otherStatCalc(baseAtk, unit.attackIV, 0, levelToSetUnit, attackNatureValue);
+        unit.specialAttack = otherStatCalc(baseSpecialAtk, unit.specialAttackIV, 0, levelToSetUnit, specialAttackNatureValue);
+        unit.defense = otherStatCalc(baseDef, unit.defenseIV, 0, levelToSetUnit, defenseNatureValue);
+        unit.specialDefense = otherStatCalc(baseSpecialDef, unit.specialDefenseIV, 0, levelToSetUnit, specialDefenseNatureValue);
+        unit.health = healthStatCalc(baseHP, unit.healthIV, 0, levelToSetUnit);
+        addUnit(unit, ID, levelToSetUnit, pcID, exp, pickedNature.name);
+        message.channel.send(`The ${pickedNature.name} Level ${levelToSetUnit} ${unitName} has the following stats
 Attack IV: ${unit.attackIV}, Special Attack IV: ${unit.specialAttackIV}, Defense IV: ${unit.defenseIV}, Special Defense IV: ${unit.specialDefenseIV}, Health IV: ${unit.healthIV}
 Total Attack: ${unit.attack}, Total Special Attack: ${unit.specialAttack}, Total Defense: ${unit.defense}, Total Special Defense: ${unit.specialDefense}, Total Health: ${unit.health}`);
 
@@ -79,7 +112,7 @@ Total Attack: ${unit.attack}, Total Special Attack: ${unit.specialAttack}, Total
     }
 }
 
-async function addUnit(unit, ID, level, pcID, exp){
+async function addUnit(unit, ID, level, pcID, exp, nature){
     try {
         await playerModel.findOneAndUpdate(
             {
@@ -94,6 +127,7 @@ async function addUnit(unit, ID, level, pcID, exp){
                         "types": unit.types,
                         "level": level,
                         "experience": exp,
+                        "nature": nature,
                         "happiness": 0,
                         "growthRate": unit.growthRate,
                         "health": unit.health,
@@ -161,16 +195,16 @@ async function addToParty(pcID, ID){
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
-function healthStatCalc(base, iv, level){
-    let top = (2 * base + iv + Math.floor(0/4)) * level;
+function healthStatCalc(base, iv, ev, level){
+    let top = (2 * base + iv + Math.floor(ev/4)) * level;
     let bot = Math.floor(top / 100);
     let total = bot + level + 10;
     return total;
 }
 
-function otherStatCalc(base, iv, level){
-    let top = ((base + iv) * 2) * level;
-    let bot = top / 100;
+function otherStatCalc(base, iv, ev, level, nature){
+    let top = (2 * base + iv + Math.floor(ev/4)) * level;
+    let bot = Math.floor(top / 100);
     let total = bot + 5;
-    return Math.floor(total);
+    return Math.floor(total * nature);
 }

@@ -17,19 +17,33 @@ module.exports = {
     permissions: [],
     description: "Create user profile",
     async execute(client, message, cmd, args, Discord){
+        let x = {
+            test: "hello",
+            another: "test"
+        };
+        console.log(x);
+        x["usedInBattle"] = true;
+        x["stages"]  = {
+            attack: 0,
+            defense: 1,
+            specialAttack: 0,
+            specialDefense: 0,
+            evasion: 0,
+            accuracy: 0
+        };
+        console.log(x.stages.defense);
+        // let index = newData.findIndex( function(item) { return item.userID == message.author.id } )
         
-        let index = newData.findIndex( function(item) { return item.userID == message.author.id } )
-        
-        if(index != -1){
+        // if(index != -1){
             
-            newData[index].steps += 1;
-            let data = JSON.stringify(newData);
-            fs.writeFileSync(JSON_FILE, data);
-        } else {
-            newData.push({userID: message.author.id, steps: 1});
-            let data = JSON.stringify(newData);
-            fs.writeFileSync(JSON_FILE, data);
-        }
+        //     newData[index].steps += 1;
+        //     let data = JSON.stringify(newData);
+        //     fs.writeFileSync(JSON_FILE, data);
+        // } else {
+        //     newData.push({userID: message.author.id, steps: 1});
+        //     let data = JSON.stringify(newData);
+        //     fs.writeFileSync(JSON_FILE, data);
+        // }
         //console.log((stageInfo.find( function(item) { return item.id == "accuracy" } ).stageTable[0].value));
         //test if you can do maids[i]["someState"] = stat;  that would help so much in setting stage stuff in snapshot and switching
         // let move = args.join("-");
