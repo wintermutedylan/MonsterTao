@@ -4,7 +4,7 @@ var moves = require("../units/moves.json");
 var moveinfo = require("../units/moveinfo.json");
 const playerModel = require("../models/playerSchema");
 
-module.exports = {
+module.exports = { //make this a slash command where when you enter the pcid it iwll get all the moves you can learn at your level
     name: 'addmove',
     cooldown: 10,
     aliases: [],

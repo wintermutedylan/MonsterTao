@@ -4,7 +4,7 @@ const JSON_FILE = "../monstertao/units/friendship.json"; //base experience
 
 
 const playerModel = require("../../models/playerSchema");
-const { Collection } = require('mongoose');
+
 
 module.exports = async (Discord, client, message) => {
     const prefix = process.env.PREFIX;
@@ -63,9 +63,7 @@ module.exports = async (Discord, client, message) => {
     if (!command) {
         return message.channel.send("This command doesn't exist!");
     }
-    if(!client.cooldowns.has(command.name)){
-        client.cooldowns.set(command.name, new Discord.Collection());
-    }
+    
 
     const validPermissions = [
         "ADMINISTRATOR",
@@ -115,21 +113,7 @@ module.exports = async (Discord, client, message) => {
             return message.channel.send(`Missing Permissions: \`${invalidPerms}\``);
         }
     }
-    const now = Date.now();
-    const timestamps = client.cooldowns.get(command.name);
-    const defaultCooldownDuration = 3;
-    const cooldownAmount = (command.cooldown ?? defaultCooldownDuration) * 1000;
-
-    if(timestamps.has(message.author.id)){
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-
-        if(now < expirationTime){
-            const expiredTimestamp = Math.round(expirationTime / 1000);
-            return message.reply({ content: `Please wait, you are on a cooldown for \`${command.name}\`. You can use it again <t:${expiredTimestamp}:R>.`, ephemeral: true});
-        }
-    }
-    timestamps.set(message.author.id, now);
-    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    
 
 
     try {

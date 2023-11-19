@@ -12,4 +12,16 @@ module.exports = (client, Discord) =>{
             continue;
         }
     }
+    
+    const interaction_command_files = fs.readdirSync('./interactioncommands/').filter(file => file.endsWith('.js'));
+
+    for(const interactfile of interaction_command_files){
+        const interactcommand = require(`../interactioncommands/${interactfile}`);
+        if(interactcommand.data.name){
+            client.interactioncommands.set(interactcommand.data.name, interactcommand);
+
+        } else {
+            continue;
+        }
+    }
 }

@@ -1,24 +1,27 @@
 const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
+const { EmbedBuilder } = require('discord.js');
 var maids = require("../units/maids.json");
 var expTable = require("../units/exptable.json");
 const fs = require("fs");
 const JSON_FILE = "../monstertao/units/friendship.json"; //base experience
+const { SlashCommandBuilder } = require('discord.js');
 
 const playerModel = require("../models/playerSchema");
 
 module.exports = {
-    name: 'party',
+    
     cooldown: 10,
-    aliases: [],
-    permissions: [],
-    description: "Create user profile",
-    async execute(client, message, cmd, args, Discord){
+    data: new SlashCommandBuilder()
+		.setName('party')
+		.setDescription('This is a test command'),
+    
+    async execute(interaction){
         const jsonData = fs.readFileSync(JSON_FILE);
         const newData = JSON.parse(jsonData);
         let playerData; 
-        playerData = await playerModel.findOne({ userID: message.author.id});
-        if (!playerData) return message.channel.send("You don't exist. Please try again.");
-        var ID = message.author.id;
+        playerData = await playerModel.findOne({ userID: interaction.user.id});
+        if (!playerData) return interaction.reply("You don't exist. Please try again.");
+        var ID = interaction.user.id;
         
         
         let sorted = [];
@@ -34,7 +37,7 @@ module.exports = {
         let finalPoints = 0;
         
         try{
-            let index = newData.findIndex( function(item) { return item.userID == message.author.id } );
+            let index = newData.findIndex( function(item) { return item.userID == interaction.user.id } );
             
             
             if(index != -1){
@@ -77,7 +80,7 @@ module.exports = {
         
         
         
-        const newEmbed = new Discord.MessageEmbed()
+        const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')
         .setTitle("**Current Party**")
         .setDescription(`__**Your Party**__`)
@@ -99,7 +102,7 @@ module.exports = {
         }
         
         
-        message.channel.send({ embeds: [newEmbed] });
+        interaction.reply({ embeds: [newEmbed] });
         
         
         

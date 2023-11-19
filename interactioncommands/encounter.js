@@ -1,4 +1,5 @@
 const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
+const { ChannelType } = require('discord.js');
 var maids = require("../units/maids.json");
 var routeEncounters = require("../units/routes.json");
 var moveinfo = require("../units/moveinfo.json");
@@ -8,19 +9,60 @@ var natureTable = require("../units/natures.json");
 var expTable = require("../units/exptable.json");
 const lucky = require('lucky-item').default;
 const playerModel = require("../models/playerSchema");
+const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+
 
 module.exports = {
-    name: 'encounter',
     cooldown: 10,
-    aliases: [],
-    permissions: [],
-    description: "Create user profile",
-    async execute(client, message, cmd, args, Discord){
+	data: new SlashCommandBuilder()
+		.setName('encounter')
+		.setDescription('Encounters a wild Pokemon')
+		.addStringOption(option =>
+			option.setName('region')
+				.setDescription('Region to encounter a pokemon')
+                .setRequired(true)
+				.addChoices(
+                    { name: 'Kanto', value: 'kanto'},
+                    { name: 'Johto', value: 'johto'},
+                    { name: 'Hoenn', value: 'hoenn'},
+                    { name: 'Sinnoh', value: 'sinnoh'}
+                    ))
+        .addStringOption(option =>
+            option.setName('route')
+                .setDescription('Route to encounter a pokemon')
+                .setRequired(true)
+				.setAutocomplete(true)),
+    async autocomplete(interaction) {
+        const focusedOption = interaction.options.getFocused(true);
+		let choices;
+
+		if (focusedOption.name === 'route') {
+            
+            let routes = [];
+            for(let i = 0; i < routeEncounters.length; i++){
+                if(routeEncounters[i].region == interaction.options.getString('region').toLowerCase() && !routes.includes(routeEncounters[i].area)){
+                    routes.push(routeEncounters[i].area);
+                }
+            }
+            
+            choices = routes;
+            
+			
+		}
+
+		const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
+        
+		await interaction.respond(
+			filtered.slice(0, 25).map(choice => ({ name: choice, value: choice })),
+		);
+    },
+    async execute(interaction){
         let playerData; 
-        playerData = await playerModel.findOne({ userID: message.author.id});
-        if (!playerData) return message.channel.send("You don't exist. Please try again.");
-        var ID = message.author.id;
-        let route = "kanto-route-1-area";//use args here.  this is just a placeholder for testing
+        playerData = await playerModel.findOne({ userID: interaction.user.id});
+        if (!playerData) return interaction.reply("You don't exist. Please try again.");
+        var ID = interaction.user.id;
+        let route = interaction.options.getString('route');//use args here.  this is just a placeholder for testing
         let encounterArr = [];
         for(let i = 0; i < routeEncounters.length; i++){
             if(routeEncounters[i].area == route){
@@ -92,7 +134,7 @@ module.exports = {
                 accuracy: 0
             }
         }
-        createBattleThread(message, finalPokemon, Discord);
+        createBattleThread(interaction, finalPokemon);
         
 
         
@@ -169,19 +211,21 @@ function otherStatCalc(base, iv, ev, level, nature){
     return Math.floor(total * nature);
 }
 
-async function createBattleThread(message, boss, Discord){
-    let threadName = `${message.author.username}'s battle against a wild ${boss.id}`;
+async function createBattleThread(message, boss){
+    if(message.channel.isThread()) return message.reply("please use this command out of a thread");
+    let threadName = `${message.user.globalName}'s battle against a wild ${boss.id}`;
     const thread = await message.channel.threads.create({
         name: threadName,
         autoArchiveDuration: 60,
+        type: ChannelType.PrivateThread,
         reason: 'Wild battle thread',
     });
-    message.channel.send(`you are now in a battle a wild **${boss.id}** please move to the created thread ${channelMention(thread.id)}`);
-    await thread.members.add(message.author.id);
-    snapshot(message, boss, thread, Discord);
+    message.reply({ content: `you are now in a battle a wild **${boss.id}** please move to the created thread ${channelMention(thread.id)}`, ephemeral: true});
+    await thread.members.add(message.user.id);
+    snapshot(message, boss, thread);
 }
 
-async function battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord){
+async function battle(p1party, p2party, p1current, p2current, thread, author, turn){
     if(p1current.currentHealth <= 0){
         let usableUnits = false;
         for(let i = 0; i < p1party.length; i++){
@@ -191,11 +235,13 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             }
         }
         if(!usableUnits){
-            thread.send("Seems you are out of usable units.  you have died.  better luck next time");
+            thread.send("Seems you are out of usable units.  you have died.  better luck next time. The thread will be deleted in 15 seconds");
+            setTimeout(15000)
+            thread.delete();
             return;
         } else {
             //force swap
-            pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, Discord, true); //set optional at the end to trigger a force swap
+            pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, true); //set optional at the end to trigger a force swap
             
         }
     } else if(p2current.currentHealth <= 0){
@@ -231,7 +277,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                         let newXP = totalXP - unitExp.levelTable[c].experience;
                         if(newXP >= 0){
                             finalLevel = unitExp.levelTable[c].level;
-                            finalXP = newXP;
+                            //finalXP = newXP;
                         } else {
                             break;
                         }
@@ -359,12 +405,14 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                     
                 }
             }
-            const newEmbed = new Discord.MessageEmbed()
+            const newEmbed = new EmbedBuilder()
             .setColor('#E76AA3')
             .setTitle(`XP gain`)
             .setDescription(leveledUpString)
             thread.send({ embeds: [newEmbed] });
-            thread.send("You have beaten the wild pokemon congrats you get nothing rn.  becuase I haven't programed it"); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
+            thread.send(`You have defeated the wild ${p2current.id} congrats.  This thread will self-destruct in 15 seconds`); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
+            setTimeout(15000)
+            thread.delete();
             return;
         } else {
             //force the bot to swap to a random unit for now
@@ -407,7 +455,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             
                 if (s.toLowerCase() == 'attack'){
                     
-                    attack(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+                    attack(p1party, p2party, p1current, p2current, thread, author, turn);
                  
                 } else if (s.toLowerCase() == 'item'){
                     //for items have then categorized as ball, heal, and 
@@ -415,7 +463,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                     
                  
                 } else if (s.toLowerCase() == 'switch'){
-                    pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+                    pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn);
                     
                     
                  
@@ -427,14 +475,14 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
         thread.send(`The wild ${p2current.id} will now take action`);
         let move = p2current.moves[Math.floor(Math.random()*p2current.moves.length)];
         //thread.send(`**${p2current.id}** used ${move}`);
-        dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move, Discord);
+        dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move);
 
         
 
     }
 
 }
-async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, Discord, forceSwape = false){
+async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, forceSwape = false){
     if(turn % 2 == 1){
 
         
@@ -471,7 +519,7 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
             collector.on('end', collected => {
             
                 if (collected.size === 0) {
-                        battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
                     
                     return
                 }
@@ -494,7 +542,7 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
                     thread.send(`You have sent in ${p1current.id}`);
                     turn++;
 
-                    battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 
                 
                     
@@ -530,13 +578,13 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
             
                 if (collected.size === 0) {
                         thread.send(`You took too long going back to battle select`);
-                        battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
                     
                     return
                 }
                 if (s.toLowerCase() == "cancel"){
                     thread.send(`You have cancelled and have been sent back to battle select`);
-                    battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 } else {
                     let oldCurrent = p1current.id;
                     for (let k = 0; k < p1party.length; k++){
@@ -557,7 +605,7 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
                     thread.send(`You have switched out ${oldCurrent} and sent in ${p1current.id}`);
                     turn++;
                     
-                    battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 }
                 
                     
@@ -584,13 +632,13 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
         thread.send(`Your opponent has sent in ${p2current.id}`);
         turn++;
 
-        battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+        battle(p1party, p2party, p1current, p2current, thread, author, turn);
 
     }
 
 }
 
-async function attack(p1party, p2party, p1current, p2current, thread, author, turn, Discord){
+async function attack(p1party, p2party, p1current, p2current, thread, author, turn){
     let moves = p1current.moves;
     thread.send(`What attack would you like to use: ${moves.join(", ")}`);
 
@@ -619,18 +667,18 @@ async function attack(p1party, p2party, p1current, p2current, thread, author, tu
         
             if (collected.size === 0) {
                 
-                    battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 
                 return
             } if (s.toLowerCase() == "cancel"){
                 thread.send(`You have cancelled and have been sent back to battle select`);
-                battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
             } else {
                 
                 //thread.send(`You have selected the following move: ${s}`);
                 
     
-                dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, s, Discord)
+                dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, s)
             }
             
             
@@ -638,7 +686,7 @@ async function attack(p1party, p2party, p1current, p2current, thread, author, tu
         });
 
 }
-function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move, Discord){
+function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move){
 
     
     let moveDetails;
@@ -685,9 +733,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             }
             //p2current.currentHealth = p2current.currentHealth - damage;
-            const newEmbed = new Discord.MessageEmbed()
+            const newEmbed = new EmbedBuilder()
             .setColor('#E76AA3')
-            .setAuthor(`Turn: ${turn}`)
+            
             .setTitle(`Your ${p1current.id} used ${moveDetails.move} doing **${damage}** damage`)
             .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
         
@@ -701,9 +749,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             }
             //p1current.currentHealth = p1current.currentHealth - damage;
-            const newEmbed = new Discord.MessageEmbed()
+            const newEmbed = new EmbedBuilder()
             .setColor('#E76AA3')
-            .setAuthor(`Turn: ${turn}`)
+            
             .setTitle(`The wild ${p2current.id} used ${moveDetails.move} doing **${damage}** damage`)
             .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
         
@@ -713,12 +761,12 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
         }
         turn++;
         
-        battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord)
+        battle(p1party, p2party, p1current, p2current, thread, author, turn)
     } else {
         if(turn % 2 == 1){//p1 miss
-            const newEmbed = new Discord.MessageEmbed()
+            const newEmbed = new EmbedBuilder()
             .setColor('#E76AA3')
-            .setAuthor(`Turn: ${turn}`)
+            
             .setTitle(`Your ${p1current.id} used ${moveDetails.move} but missed`)
             .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
         
@@ -726,11 +774,11 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             thread.send({ embeds: [newEmbed] });
             turn++;
             //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
-            battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord)
+            battle(p1party, p2party, p1current, p2current, thread, author, turn)
         } else {//p2 miss
-            const newEmbed = new Discord.MessageEmbed()
+            const newEmbed = new EmbedBuilder()
             .setColor('#E76AA3')
-            .setAuthor(`Turn: ${turn}`)
+            
             .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but missed`)
             .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
         
@@ -738,7 +786,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             thread.send({ embeds: [newEmbed] });
             turn++;
             //thread.send(`The wild ${p2current.id} missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nIt is your turn to take action\n----------------------------------`);
-            battle(p1party, p2party, p1current, p2current, thread, author, turn, Discord)
+            battle(p1party, p2party, p1current, p2current, thread, author, turn)
         }
         
     }
@@ -820,7 +868,7 @@ function damageFormula(details, p1current, p2current, turn){
 }
 
 
-async function snapshot(message, boss, thread, Discord){
+async function snapshot(message, boss, thread){
     //maybe push a attack, def, boosts array here.  this will have X items, status moves that lower or raise those stats,  accuracy.  will need to update accuracy calc after 
     //for accuracy subtracted the evasion stage from the accuracy stage.  if that is higher than than +6 just use +6 from evasion.  and if its lower than -6 just use -6 from evasion. so if +2 accuracy and enemy has +1 evasion then its +1 total then grab 
     //from array
@@ -828,7 +876,7 @@ async function snapshot(message, boss, thread, Discord){
     let playerData; 
     let p1party = [];
     
-    playerData = await playerModel.findOne({ userID: message.author.id});
+    playerData = await playerModel.findOne({ userID: message.user.id});
     for(let j = 0; j < playerData.currentParty.length; j++){
         for(let k = 0; k < playerData.maids.length; k++){
             if (playerData.currentParty[j] == playerData.maids[k].pcID){
@@ -870,9 +918,9 @@ async function snapshot(message, boss, thread, Discord){
     thread.send(`A wild Level ${p2current.level} ${p2current.id} has appeared`)
         
     
-    startBattle(p1party, p2party, p1current, p2current, thread, message.author, Discord);
+    startBattle(p1party, p2party, p1current, p2current, thread, message.user);
 }
-async function startBattle(p1party, p2party, p1current, p2current, thread, author, Discord){
+async function startBattle(p1party, p2party, p1current, p2current, thread, author){
 
         thread.send('The battle will start in 2 minutes or if you type Start');
 
@@ -896,14 +944,14 @@ async function startBattle(p1party, p2party, p1current, p2current, thread, autho
                 
                 
                 
-                    battle(p1party, p2party, p1current, p2current, thread, author, 1, Discord);
+                    battle(p1party, p2party, p1current, p2current, thread, author, 1);
                 
                 return
             }
             
                 if (s.toLowerCase() == 'start'){
                     
-                    battle(p1party, p2party, p1current, p2current, thread, author, 1, Discord);
+                    battle(p1party, p2party, p1current, p2current, thread, author, 1);
                     
                     
                    
