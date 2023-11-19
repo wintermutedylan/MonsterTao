@@ -8,6 +8,7 @@ const playerModel = require("../models/playerSchema");
 
 module.exports = {
     name: 'party',
+    cooldown: 10,
     aliases: [],
     permissions: [],
     description: "Create user profile",
@@ -63,7 +64,9 @@ module.exports = {
 
         for(let h = 0; h < playerData.currentParty.length; h++){
             let unitIndex = playerData.maids.findIndex( function(item) { return item.pcID == playerData.currentParty[h] } );
-            updateHappiness(finalPoints, ID, unitIndex);
+            if(finalPoints > 0){
+                updateHappiness(finalPoints, ID, unitIndex);
+            }
         }
 
         

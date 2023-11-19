@@ -3,6 +3,7 @@ const playerModel = require("../models/playerSchema");
 const { userMention, memberNicknameMention, channelMention, roleMention } = require('@discordjs/builders');
 module.exports = {
     name: 'profile',
+    cooldown: 10,
     aliases: ['p','units'],
     permissions: [],
     description: "embeds",

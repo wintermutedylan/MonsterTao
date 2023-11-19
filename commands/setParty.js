@@ -4,6 +4,7 @@ const playerModel = require("../models/playerSchema");
 
 module.exports = {
     name: 'setparty',
+    cooldown: 10,
     aliases: [],
     permissions: [],
     description: "Create user profile",

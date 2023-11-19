@@ -6,6 +6,7 @@ const { userMention, memberNicknameMention, channelMention, roleMention  } = req
 const playerModel = require("../models/playerSchema");
 module.exports = {
     name: 'trainerbattle',
+    cooldown: 10,
     aliases: [],
     permissions: [],
     description: "embeds",

@@ -3,6 +3,7 @@ var maids = require("../units/maids.json");
 const playerModel = require("../models/playerSchema");
 module.exports = {
     name: 'createProfile',
+    cooldown: 10,
     aliases: ['register', 'create'],
     permissions: [],
     description: "Create user profile",

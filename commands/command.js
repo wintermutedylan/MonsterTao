@@ -1,5 +1,6 @@
 module.exports = {
     name: 'milim',
+    cooldown: 10,
     aliases: [],
     permissions: [],
     description: "embeds",

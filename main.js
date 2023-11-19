@@ -11,6 +11,7 @@ const fs = require('fs');
 
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
+client.cooldowns = new Discord.Collection();
 
 
 ['command_handler', 'event_handler'].forEach(handler => {

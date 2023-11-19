@@ -6,6 +6,7 @@ const playerModel = require("../models/playerSchema");
 
 module.exports = {
     name: 'myunitinfo',
+    cooldown: 10,
     aliases: [],
     permissions: [],
     description: "Create user profile",

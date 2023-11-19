@@ -5,15 +5,21 @@ var moveinfo = require("../units/moveinfo.json");
 var moveList = require("../units/moves.json");
 var typeList = require("../units/typechart.json");
 var natureTable = require("../units/natures.json");
+var expTable = require("../units/exptable.json");
 const lucky = require('lucky-item').default;
 const playerModel = require("../models/playerSchema");
 
 module.exports = {
     name: 'encounter',
+    cooldown: 10,
     aliases: [],
     permissions: [],
     description: "Create user profile",
     async execute(client, message, cmd, args, Discord){
+        let playerData; 
+        playerData = await playerModel.findOne({ userID: message.author.id});
+        if (!playerData) return message.channel.send("You don't exist. Please try again.");
+        var ID = message.author.id;
         let route = "kanto-route-1-area";//use args here.  this is just a placeholder for testing
         let encounterArr = [];
         for(let i = 0; i < routeEncounters.length; i++){
@@ -53,51 +59,21 @@ module.exports = {
         let specialDefenseIV = randomIntFromInterval(0, 15);
         let healthIV = randomIntFromInterval(0, 15);
         let hp = healthStatCalc(baseHP, unit.healthIV, 0, wildPokemon.level);
-        let attackNatureValue = 1;
-        let defenseNatureValue = 1;
-        let specialAttackNatureValue = 1;
-        let specialDefenseNatureValue = 1;
+        
+        
         let pickedNature = natureTable[Math.floor(Math.random()*natureTable.length)];
-        switch(pickedNature.increase){ //switch statement to get the increased stat from the nature
-            case "attack":
-                attackNatureValue = 1.1;
-                break;
-            case "defense":
-                defenseNatureValue = 1.1;
-                break;
-            case "special-attack":
-                specialAttackNatureValue = 1.1;
-                break;
-            case "special-defense":
-                specialDefenseNatureValue = 1.1;
-                break;
+        let natureValues = pickNatureValues(pickedNature); //sets the nature values map so its easier to find
 
-        }
-        switch(pickedNature.decrease){ //switch statement to get the decreased stat from the nature
-            case "attack":
-                attackNatureValue = 0.9;
-                break;
-            case "defense":
-                defenseNatureValue = 0.9;
-                break;
-            case "special-attack":
-                specialAttackNatureValue = 0.9;
-                break;
-            case "special-defense":
-                specialDefenseNatureValue = 0.9;
-                break;
-
-        }
         let finalPokemon = {
             id: unit.id,
             types: unit.types,
             level: wildPokemon.level,
             nature: pickedNature.name,
             health: hp,
-            attack: otherStatCalc(baseAtk, attackIV, 0, wildPokemon.level, attackNatureValue),
-            defense: otherStatCalc(baseDef, defenseIV, 0, wildPokemon.level, defenseNatureValue),
-            specialAttack: otherStatCalc(baseSpecialAtk, specialAttackIV, 0, wildPokemon.level, specialAttackNatureValue),
-            specialDefense: otherStatCalc(baseSpecialDef, specialDefenseIV, 0, wildPokemon.level, specialDefenseNatureValue),
+            attack: otherStatCalc(baseAtk, attackIV, 0, wildPokemon.level, natureValues.attackNatureValue),
+            defense: otherStatCalc(baseDef, defenseIV, 0, wildPokemon.level, natureValues.defenseNatureValue),
+            specialAttack: otherStatCalc(baseSpecialAtk, specialAttackIV, 0, wildPokemon.level, natureValues.specialAttackNatureValue),
+            specialDefense: otherStatCalc(baseSpecialDef, specialDefenseIV, 0, wildPokemon.level, natureValues.specialDefenseNatureValue),
             currentHealth: hp,
             moves: moves,
             attackIV: attackIV,
@@ -106,7 +82,15 @@ module.exports = {
             specialDefenseIV: specialDefenseIV,
             healthIV: healthIV,
             baseXP: unit.baseEXP,
-            evs: unit.evMap
+            evs: unit.evMap,
+            stages: {
+                attack: 0,
+                defense: 0,
+                specialAttack: 0,
+                specialDefense: 0,
+                evasion: 0,
+                accuracy: 0
+            }
         }
         createBattleThread(message, finalPokemon, Discord);
         
@@ -129,7 +113,45 @@ module.exports = {
         
     }
 }
+function pickNatureValues(nature){
+    let values= {
+        attackNatureValue: 1,
+        defenseNatureValue: 1,
+        specialAttackNatureValue: 1,
+        specialDefenseNatureValue: 1
+    };
+    switch(nature.increase){ //switch statement to get the increased stat from the nature
+        case "attack":
+            values.attackNatureValue = 1.1;
+            break;
+        case "defense":
+            values.defenseNatureValue = 1.1;
+            break;
+        case "special-attack":
+            values.specialAttackNatureValue = 1.1;
+            break;
+        case "special-defense":
+            values.specialDefenseNatureValue = 1.1;
+            break;
 
+    }
+    switch(nature.decrease){ //switch statement to get the decreased stat from the nature
+        case "attack":
+            values.attackNatureValue = 0.9;
+            break;
+        case "defense":
+            values.defenseNatureValue = 0.9;
+            break;
+        case "special-attack":
+            values.specialAttackNatureValue = 0.9;
+            break;
+        case "special-defense":
+            values.specialDefenseNatureValue = 0.9;
+            break;
+
+    }
+    return values;
+}
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
@@ -185,12 +207,163 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             }
         }
         if(!usableUnits){
-            let used = 0;
+            
+            let usedPCID = [];
+            let leveledUpString = "";
             for(let g = 0; g < p1party.length; g++){
-                if(p1party[g].usedInBattle){
-                    used++;
+                if(p1party[g].usedInBattle && p1party[g].currentHealth > 0){
+                    
+                    usedPCID.push(p1party[g]);
                 }
             }
+            let resultExp = Math.floor(((p2current.baseXP * p2current.level) / 7) * (1 / usedPCID.length)); //exp formula.  ((base * enemylevel)/7) * (1/number used in battle and alive) * (1 if wild, 1.5 if trainer)
+            
+            
+            for(let x = 0; x < usedPCID.length; x++){
+                let startLevel = usedPCID[x].level;
+                let totalXP = usedPCID[x].experience + resultExp;
+                let finalXP = totalXP;
+                let finalLevel = startLevel;
+                if(startLevel != 100){
+                    let unitExp = expTable.find(function(item) { return item.name == usedPCID[x].growthRate});
+                    
+                    for(let c = startLevel; c < unitExp.levelTable.length; c++){
+                        let newXP = totalXP - unitExp.levelTable[c].experience;
+                        if(newXP >= 0){
+                            finalLevel = unitExp.levelTable[c].level;
+                            finalXP = newXP;
+                        } else {
+                            break;
+                        }
+                    }
+                    let newEvs = {
+                        hp: usedPCID[x].evMap.hp,
+                        attack: usedPCID[x].evMap.attack,
+                        defense: usedPCID[x].evMap.defense,
+                        specialAttack: usedPCID[x].evMap.specialAttack,
+                        specialDefense: usedPCID[x].evMap.specialDefense
+                    };
+                    let evTotal = newEvs.hp + newEvs.attack + newEvs.defense + newEvs.specialAttack + newEvs.specialDefense;
+                    let wildEvs = p2current.evs.attack + p2current.evs.hp + p2current.evs.defense + p2current.evs.specialAttack + p2current.evs.specialDefense;
+                    while(evTotal < 425 && wildEvs > 0){
+                        if(p2current.evs.hp > 0 && newEvs.hp != 252){
+                            let oldHP = newEvs.hp;
+                            newEvs.hp += p2current.evs.hp;
+                            if(newEvs.hp > 252){
+                                evTotal += 252 - oldHP;
+                                newEvs.hp = 252;
+                                wildEvs -= p2current.evs.hp;
+                                p2current.evs.hp = 0;
+                            } else {
+                                evTotal += p2current.evs.hp;
+                                wildEvs -= p2current.evs.hp;
+                                p2current.evs.hp = 0;
+                            }
+                            
+                        }
+                        if(p2current.evs.attack > 0 && newEvs.attack != 252){
+                            let oldattack = newEvs.attack;
+                            newEvs.attack += p2current.evs.attack;
+                            if(newEvs.attack > 252){
+                                evTotal += 252 - oldattack;
+                                newEvs.attack = 252;
+                                wildEvs -= p2current.evs.attack;
+                                p2current.evs.attack = 0;
+                            } else {
+                                evTotal += p2current.evs.attack;
+                                wildEvs -= p2current.evs.attack;
+                                p2current.evs.attack = 0;
+                            }
+                            
+                        }
+                        if(p2current.evs.defense > 0 && newEvs.defense != 252){
+                            let olddefense = newEvs.defense;
+                            newEvs.defense += p2current.evs.defense;
+                            if(newEvs.defense > 252){
+                                evTotal += 252 - olddefense;
+                                newEvs.defense = 252;
+                                wildEvs -= p2current.evs.defense;
+                                p2current.evs.defense = 0;
+                            } else {
+                                evTotal += p2current.evs.defense;
+                                wildEvs -= p2current.evs.defense;
+                                p2current.evs.defense = 0;
+                            }
+                            
+                        }
+                        if(p2current.evs.specialAttack > 0 && newEvs.specialAttack != 252){
+                            let oldspecialAttack = newEvs.specialAttack;
+                            newEvs.specialAttack += p2current.evs.specialAttack;
+                            if(newEvs.specialAttack > 252){
+                                evTotal += 252 - oldspecialAttack;
+                                newEvs.specialAttack = 252;
+                                wildEvs -= p2current.evs.specialAttack;
+                                p2current.evs.specialAttack = 0;
+                            } else {
+                                evTotal += p2current.evs.specialAttack;
+                                wildEvs -= p2current.evs.specialAttack;
+                                p2current.evs.specialAttack = 0;
+                            }
+                            
+                        }
+                        if(p2current.evs.specialDefense > 0 && newEvs.specialDefense != 252){
+                            let oldspecialDefense = newEvs.specialDefense;
+                            newEvs.specialDefense += p2current.evs.specialDefense;
+                            if(newEvs.specialDefense > 252){
+                                evTotal += 252 - oldspecialDefense;
+                                newEvs.specialDefense = 252;
+                                wildEvs -= p2current.evs.specialDefense;
+                                p2current.evs.specialDefense = 0;
+                            } else {
+                                evTotal += p2current.evs.specialDefense;
+                                wildEvs -= p2current.evs.specialDefense;
+                                p2current.evs.specialDefense = 0;
+                            }
+                            
+                        }
+                        
+                        
+                        
+                    }
+                    
+                    let player; 
+                    player = await playerModel.findOne({ userID: author.id});
+                    let unitIndex = player.maids.findIndex( function(item) { return item.pcID == usedPCID[x].pcID } );
+                    let sMap = {
+                        burned: usedPCID[x].statusMap.burned,
+                        frozen: usedPCID[x].statusMap.frozen,
+                        paralysis: usedPCID[x].statusMap.paralysis,
+                        poisoned: usedPCID[x].statusMap.poisoned,
+                        asleep: usedPCID[x].statusMap.asleep,
+                        sleepTurns: usedPCID[x].statusMap.sleepTurns,
+                        confusion: usedPCID[x].statusMap.confusion,
+                        confusionTurns: usedPCID[x].statusMap.confusionTurns
+                    }
+                    if(finalLevel > startLevel){ //uses this if the pokemon levels up to calc new stats
+                        let unitBaseStats = maids.find(function(item2) { return item2.id.toLowerCase() == usedPCID[x].id.toLowerCase()});
+                        let natValues = pickNatureValues(usedPCID[x].nature);
+                        let newStats = {
+                            health: healthStatCalc(unitBaseStats.health, usedPCID[x].ivMap.healthIV, newEvs.hp, usedPCID[x].level),
+                            attack: otherStatCalc(unitBaseStats.attack, usedPCID[x].ivMap.attackIV, newEvs.attack, usedPCID[x].level, natValues.attackNatureValue),
+                            defense: otherStatCalc(unitBaseStats.defense, usedPCID[x].ivMap.defenseIV, newEvs.defense, usedPCID[x].level, natValues.defenseNatureValue),
+                            specialAttack: otherStatCalc(unitBaseStats.specialAttack, usedPCID[x].ivMap.specialAttackIV, newEvs.specialAttack, usedPCID[x].level, natValues.specialAttackNatureValue),
+                            specialDefense: otherStatCalc(unitBaseStats.specialDefense, usedPCID[x].ivMap.specialDefenseIV, newEvs.specialDefense, usedPCID[x].level, natValues.specialDefenseNatureValue)
+                        }
+                        setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, sMap, newStats);
+                        leveledUpString += `Your ${usedPCID[x].id} gained ${resultExp} XP and leveled up to level ${finalLevel}\n`;
+
+                    } else { //this is used if pokemon didnt level up
+                        setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, sMap);
+                        leveledUpString += `Your ${usedPCID[x].id} gained ${resultExp} XP\n`;
+                    }
+                    
+                }
+            }
+            const newEmbed = new Discord.MessageEmbed()
+            .setColor('#E76AA3')
+            .setTitle(`XP gain`)
+            .setDescription(leveledUpString)
+            thread.send({ embeds: [newEmbed] });
             thread.send("You have beaten the wild pokemon congrats you get nothing rn.  becuase I haven't programed it"); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
             return;
         } else {
@@ -425,12 +598,12 @@ async function attack(p1party, p2party, p1current, p2current, thread, author, tu
         const filter = (m) => {
             let isPokemonMove = false;
             for (let j = 0; j < moves.length; j++){
-                if (m.content.toLowerCase() === moves[j].toLowerCase() || m.content.toLowerCase() === "cancel"){
+                if (m.content.toLowerCase() === moves[j].toLowerCase()){
                     isPokemonMove = true;
                     break;
                 }
             }
-            return  m.author.id === author.id && (isPokemonMove);
+            return  m.author.id === author.id && (isPokemonMove || m.content.toLowerCase() === "cancel");
         }
         const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
         var s;
@@ -680,6 +853,18 @@ async function snapshot(message, boss, thread, Discord){
     
     let p2party =[];
     p2party.push(boss);
+    /* this is for gym battles and pvp to add stat stages to every pokemon in party
+    for(let f = 0; f < p2party.length; f++){
+        p2party[f]["stages"] = {
+            attack: 0,
+            defense: 0,
+            specialAttack: 0,
+            specialDefense: 0,
+            evasion: 0,
+            accuracy: 0
+        };
+    }
+    */
             
     let p2current = p2party[0];
     thread.send(`A wild Level ${p2current.level} ${p2current.id} has appeared`)
@@ -727,5 +912,55 @@ async function startBattle(p1party, p2party, p1current, p2current, thread, autho
             
             
         });
+
+}
+async function setExperienceAndLevel(finalLevel, finalXP, evMap, location, ID, status, stats = null){
+    if(stats == null){ //no new stats just evs and xp
+        try {
+            await playerModel.findOneAndUpdate(
+                {
+                    userID: ID
+                },
+                {
+                    $set: {
+                        ["maids." + location + ".level"]: finalLevel,
+                        ["maids." + location + ".experience"]: finalXP,
+                        ["maids." + location + ".evMap"]: evMap,
+                        ["maids." + location + ".statusMap"]: status
+                    }
+                    
+                }
+            );
+    
+        } catch(err){
+            console.log(err);
+        }
+    } else { //set the new stats, evs, level
+        try {
+            await playerModel.findOneAndUpdate(
+                {
+                    userID: ID
+                },
+                {
+                    $set: {
+                        ["maids." + location + ".level"]: finalLevel,
+                        ["maids." + location + ".experience"]: finalXP,
+                        ["maids." + location + ".evMap"]: evMap,
+                        ["maids." + location + ".health"]: stats.health,
+                        ["maids." + location + ".attack"]: stats.attack,
+                        ["maids." + location + ".defense"]: stats.defense,
+                        ["maids." + location + ".specialAttack"]: stats.specialAttack,
+                        ["maids." + location + ".specialDefense"]: stats.specialDefense,
+                        ["maids." + location + ".statusMap"]: status
+                    }
+                    
+                }
+            );
+    
+        } catch(err){
+            console.log(err);
+        }
+    }
+    
 
 }

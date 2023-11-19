@@ -13,6 +13,7 @@ const playerModel = require("../models/playerSchema");
 
 module.exports = {
     name: 'api',
+    cooldown: 10,
     aliases: [],
     permissions: ["ADMINISTRATOR"],
     description: "Create user profile",

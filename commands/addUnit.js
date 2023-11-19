@@ -6,6 +6,7 @@ const playerModel = require("../models/playerSchema");
 
 module.exports = {
     name: 'addunit',
+    cooldown: 10,
     aliases: [],
     permissions: [],
     description: "adds a pokemon to your pc.  arguments it takes are the pokemon name then level in that order",
@@ -35,36 +36,7 @@ module.exports = {
         let specialAttackNatureValue = 1;
         let specialDefenseNatureValue = 1;
         let pickedNature = natureTable[Math.floor(Math.random()*natureTable.length)];
-        switch(pickedNature.increase){ //switch statement to get the increased stat from the nature
-            case "attack":
-                attackNatureValue = 1.1;
-                break;
-            case "defense":
-                defenseNatureValue = 1.1;
-                break;
-            case "special-attack":
-                specialAttackNatureValue = 1.1;
-                break;
-            case "special-defense":
-                specialDefenseNatureValue = 1.1;
-                break;
-
-        }
-        switch(pickedNature.decrease){ //switch statement to get the decreased stat from the nature
-            case "attack":
-                attackNatureValue = 0.9;
-                break;
-            case "defense":
-                defenseNatureValue = 0.9;
-                break;
-            case "special-attack":
-                specialAttackNatureValue = 0.9;
-                break;
-            case "special-defense":
-                specialDefenseNatureValue = 0.9;
-                break;
-
-        }
+        let natureValues = pickNatureValues(pickedNature);
         //check the nature json here and update the values above.  random nature.  grab from json that matches name.  do switch for both increase and decrease
         let playerData; 
         playerData = await playerModel.findOne({ userID: message.author.id});
@@ -94,10 +66,10 @@ module.exports = {
         unit.defenseIV = randomIntFromInterval(0, 15);
         unit.specialDefenseIV = randomIntFromInterval(0, 15);
         unit.healthIV = randomIntFromInterval(0, 15);
-        unit.attack = otherStatCalc(baseAtk, unit.attackIV, 0, levelToSetUnit, attackNatureValue);
-        unit.specialAttack = otherStatCalc(baseSpecialAtk, unit.specialAttackIV, 0, levelToSetUnit, specialAttackNatureValue);
-        unit.defense = otherStatCalc(baseDef, unit.defenseIV, 0, levelToSetUnit, defenseNatureValue);
-        unit.specialDefense = otherStatCalc(baseSpecialDef, unit.specialDefenseIV, 0, levelToSetUnit, specialDefenseNatureValue);
+        unit.attack = otherStatCalc(baseAtk, unit.attackIV, 0, levelToSetUnit, natureValues.attackNatureValue);
+        unit.specialAttack = otherStatCalc(baseSpecialAtk, unit.specialAttackIV, 0, levelToSetUnit, natureValues.specialAttackNatureValue);
+        unit.defense = otherStatCalc(baseDef, unit.defenseIV, 0, levelToSetUnit, natureValues.defenseNatureValue);
+        unit.specialDefense = otherStatCalc(baseSpecialDef, unit.specialDefenseIV, 0, levelToSetUnit, natureValues.specialDefenseNatureValue);
         unit.health = healthStatCalc(baseHP, unit.healthIV, 0, levelToSetUnit);
         addUnit(unit, ID, levelToSetUnit, pcID, exp, pickedNature.name);
         message.channel.send(`The ${pickedNature.name} Level ${levelToSetUnit} ${unitName} has the following stats
@@ -110,6 +82,45 @@ Total Attack: ${unit.attack}, Total Special Attack: ${unit.specialAttack}, Total
 
         
     }
+}
+function pickNatureValues(nature){
+    let values= {
+        attackNatureValue: 1,
+        defenseNatureValue: 1,
+        specialAttackNatureValue: 1,
+        specialDefenseNatureValue: 1
+    };
+    switch(nature.increase){ //switch statement to get the increased stat from the nature
+        case "attack":
+            values.attackNatureValue = 1.1;
+            break;
+        case "defense":
+            values.defenseNatureValue = 1.1;
+            break;
+        case "special-attack":
+            values.specialAttackNatureValue = 1.1;
+            break;
+        case "special-defense":
+            values.specialDefenseNatureValue = 1.1;
+            break;
+
+    }
+    switch(nature.decrease){ //switch statement to get the decreased stat from the nature
+        case "attack":
+            values.attackNatureValue = 0.9;
+            break;
+        case "defense":
+            values.defenseNatureValue = 0.9;
+            break;
+        case "special-attack":
+            values.specialAttackNatureValue = 0.9;
+            break;
+        case "special-defense":
+            values.specialDefenseNatureValue = 0.9;
+            break;
+
+    }
+    return values;
 }
 
 async function addUnit(unit, ID, level, pcID, exp, nature){
