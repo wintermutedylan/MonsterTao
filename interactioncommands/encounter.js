@@ -6,6 +6,7 @@ var moveList = require("../units/moves.json");
 var typeList = require("../units/typechart.json");
 var natureTable = require("../units/natures.json");
 var expTable = require("../units/exptable.json");
+var stageCalcs = require("../units/stages.json");
 const lucky = require('lucky-item').default;
 const playerModel = require("../models/playerSchema");
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ChannelType, ComponentType, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -128,7 +129,7 @@ module.exports = {
                 defense: 0,
                 specialAttack: 0,
                 specialDefense: 0,
-                evasion: 0,
+                evasion: 6,
                 accuracy: 0
             }
         }
@@ -647,7 +648,8 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
         let unitToSwap = pokemonAlive[Math.floor(Math.random()*pokemonAlive.length)];
         for (let k = 0; k < p2party.length; k++){
             if (p2party[k].id.toLowerCase() == unitToSwap.id.toLowerCase()){
-                p2current = p2party[k];
+                p2current = p2party[k]; //do stages here for trainer battle
+                console.log("need to do stages for trainer battle at line 652");
                 break;
             }
         }
@@ -720,8 +722,29 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
         }
     }
     //check accuracy here.  if it misses don't do the switch statement
+    let accuracyModified;
+    
+    if(turn % 2 == 1){//p1 accuracy and evasion check
+        let combined = p1current.stages.accuracy - p2current.stages.evasion;
+        if(combined < -6){
+            combined = -6;
+        } else if(combined > 6){
+            combined = 6;
+        }
+        let accuracyStages = stageCalcs[0].stageTable.find(function(item) { return item.stage == combined});
+        accuracyModified = moveDetails.accuracy * accuracyStages.value;
+    } else { //p2 accuracy and evasion check
+        let combined = p2current.stages.accuracy - p1current.stages.evasion;
+        if(combined < -6){
+            combined = -6;
+        } else if(combined > 6){
+            combined = 6;
+        }
+        let accuracyStages = stageCalcs[0].stageTable.find(function(item) { return item.stage == combined});
+        accuracyModified = moveDetails.accuracy * accuracyStages.value;
+    }
     let accuracyCheck = Math.random() * 100;
-    if (accuracyCheck < moveDetails.accuracy){
+    if (accuracyCheck < accuracyModified){
         switch(moveDetails.move){
             case "Double-slap":
                 let amountCheck = Math.random() * 100;
@@ -849,11 +872,14 @@ function damageFormula(details, p1current, p2current, turn){
             }
         }
         let d;
-        
+        let attackModifier = stageCalcs[1].stageTable.find(function(item) { return item.stage == p1current.stages.attack});
+        let defenseModifier = stageCalcs[1].stageTable.find(function(item) { return item.stage == p2current.stages.defense});
+        let specialAttackModifier = stageCalcs[1].stageTable.find(function(item) { return item.stage == p1current.stages.specialAttack});
+        let specialDefenseModifier = stageCalcs[1].stageTable.find(function(item) { return item.stage == p2current.stages.specialDefense});
         if (details.damageClass === "Physical"){
-            d = ((((2 * p1current.level / 5 + 2) * p1current.attack * details.power / p2current.defense) / 50) + 2) * stab * weakness * randomNumber / 100;
+            d = ((((2 * p1current.level / 5 + 2) * (p1current.attack * attackModifier.value) * details.power / (p2current.defense * defenseModifier.value)) / 50) + 2) * stab * weakness * randomNumber / 100;
         } else if (details.damageClass === "Special"){
-            d = ((((2 * p1current.level / 5 + 2) * p1current.specialAttack * details.power / p2current.specialDefense) / 50) + 2) * stab * weakness * randomNumber / 100;
+            d = ((((2 * p1current.level / 5 + 2) * (p1current.specialAttack * specialAttackModifier.value)* details.power / (p2current.specialDefense * specialDefenseModifier.value)) / 50) + 2) * stab * weakness * randomNumber / 100;
         }
             
         return Math.floor(d);
@@ -878,10 +904,14 @@ function damageFormula(details, p1current, p2current, turn){
             }
         }
         let d;
+        let attackModifier = stageCalcs[1].stageTable.find(function(item) { return item.stage == p2current.stages.attack});
+        let defenseModifier = stageCalcs[1].stageTable.find(function(item) { return item.stage == p1current.stages.defense});
+        let specialAttackModifier = stageCalcs[1].stageTable.find(function(item) { return item.stage == p2current.stages.specialAttack});
+        let specialDefenseModifier = stageCalcs[1].stageTable.find(function(item) { return item.stage == p1current.stages.specialDefense});
         if (details.damageClass === "Physical"){
-            d = ((((2 * p2current.level / 5 + 2) * p2current.attack * details.power / p1current.defense) / 50) + 2) * stab * weakness * randomNumber / 100;
+            d = ((((2 * p2current.level / 5 + 2) * (p2current.attack * attackModifier.value) * details.power / (p1current.defense * defenseModifier.value)) / 50) + 2) * stab * weakness * randomNumber / 100;
         } else if (details.damageClass === "Special"){
-            d = ((((2 * p2current.level / 5 + 2) * p2current.specialAttack * details.power / p1current.specialDefense) / 50) + 2) * stab * weakness * randomNumber / 100;
+            d = ((((2 * p2current.level / 5 + 2) * (p2current.specialAttack * specialAttackModifier.value) * details.power / (p1current.specialDefense * specialDefenseModifier.value)) / 50) + 2) * stab * weakness * randomNumber / 100;
         }
             
         return Math.floor(d);
@@ -913,7 +943,7 @@ async function snapshot(message, boss, thread){
             specialAttack: 0,
             specialDefense: 0,
             evasion: 0,
-            accuracy: 0
+            accuracy: -6
         };
         p1party[d]["usedInBattle"] = false;
     }

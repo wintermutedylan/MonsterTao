@@ -16,7 +16,6 @@ module.exports = {
        
         var totalCoins = playerData.coins;
        
-   
         
         const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')

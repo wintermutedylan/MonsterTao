@@ -66,7 +66,9 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         
     },
     async execute(interaction){
-        
+        if( moveinfo.findIndex(function(item) { return item.id == interaction.options.getString('move').toLowerCase()}) == -1){
+            return interaction.reply(`${interaction.options.getString('move')} is not a valid move to learn`);
+        }
         let playerData; 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
         if (!playerData) return message.channel.send("You don't exist. Please try again.");

@@ -73,13 +73,9 @@ module.exports = {
             let maybeMoves = movesCanLearn.leveUpMoves.filter(m => pokemonStuff.level >= m.level);
 
             for(let h = 0; h < pokemonStuff.moves.length; h++){
-                for(let g = 0; g < maybeMoves.length; g++){
-                    if(pokemonStuff.moves[h].toLowerCase() != maybeMoves[g].name.toLowerCase()){
-                        moveChoices.push(maybeMoves[g]);
-                    }
-                }
+                maybeMoves = maybeMoves.filter(m => m.name != pokemonStuff.moves[h].toLowerCase());
             }
-            const movefiltered = moveChoices.filter(choice => choice.name.includes(focusedOption.value));
+            const movefiltered = maybeMoves.filter(choice => choice.name.includes(focusedOption.value));
         
             await interaction.respond(
                 movefiltered.slice(0, 25).map(choice => ({ name: choice.name, value: choice.name })),
@@ -89,12 +85,40 @@ module.exports = {
         
     },
     async execute(interaction){
+        if( moveinfo.findIndex(function(item) { return item.id == interaction.options.getString('forgetmove').toLowerCase()}) == -1){
+            return interaction.reply(`${interaction.options.getString('forgetmove')} is not a valid move to forget`);
+        } else if( moveinfo.findIndex(function(item) { return item.id == interaction.options.getString('learnmove').toLowerCase()}) == -1){
+            return interaction.reply(`${interaction.options.getString('learnmove')} is not a valid move to learn`);
+        }
         let playerData; 
-        playerData = await playerModel.findOne({ userID: message.author.id});
+        playerData = await playerModel.findOne({ userID: interaction.user.id});
         if (!playerData) return message.channel.send("You don't exist. Please try again.");
-        var ID = message.author.id;
+        var ID = interaction.user.id;
         
-        interaction.reply(`Your pokemon ${interaction.options.getString('pokemon')} forgot ${interaction.options.getString('forgetmove')} and learned ${interaction.options.getString('learnmove')}`);
+        let pokemonStuff = playerData.maids.find(function(expItem) { return expItem.pcID == Number(interaction.options.getString('pokemon'))});
+        let moveArray = pokemonStuff.moves;
+        let forgetMoveIndex = moveArray.findIndex(function(item) { return item.toLowerCase() == interaction.options.getString('forgetmove').toLowerCase()});
+        let str = interaction.options.getString('learnmove');
+        let modStr = str[0].toUpperCase() + str.slice(1);
+        moveArray[forgetMoveIndex] = modStr;
+        try {
+            await playerModel.findOneAndUpdate(
+                {
+                    userID: ID
+                },
+                {
+                    $set: {
+                        ["maids." + pokemonIndex + ".moves"]: moveArray
+                    }
+                    
+                }
+            );
+    
+        } catch(err){
+            console.log(err);
+        }
+        interaction.reply(`Your ${pokemonStuff.id} with PC ID of ${pokemonStuff.pcID} learned ${interaction.options.getString('move')}`);
+
         
         
         
