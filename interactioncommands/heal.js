@@ -24,15 +24,26 @@ module.exports = {
 
         for(let i = 0; i < playerData.currentParty.length; i++){
             let location = playerData.maids.findIndex(function(item) { return item.pcID == playerData.currentParty[i]});
-            updateCurrentHealth(playerData.maids[location].health, ID, location);
+            let sMap = {
+                burned: false,
+                frozen: false,
+                paralysis: false,
+                poisoned: false,
+                asleep: false,
+                sleepTurns: 0,
+                confusion: false,
+                confusionTurns: 0
+            }
+            updateCurrentHealth(playerData.maids[location].health, ID, location, sMap);
         }
+        
 
         interaction.reply("Your Party is now full health.  Good luck out there");
         
         
     }
 }
-async function updateCurrentHealth(points, ID, location){
+async function updateCurrentHealth(points, ID, location, status){
     try {
         await playerModel.findOneAndUpdate(
             {
@@ -40,7 +51,8 @@ async function updateCurrentHealth(points, ID, location){
             },
             {
                 $set: {
-                    ["maids." + location + ".currentHealth"]: points
+                    ["maids." + location + ".currentHealth"]: points,
+                    ["maids." + location + ".statusMap"]: status
                 }
                 
             }

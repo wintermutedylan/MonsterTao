@@ -78,7 +78,8 @@ module.exports = {
         
         
         
-        
+        let status = [];
+
         
         const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')
@@ -89,12 +90,18 @@ module.exports = {
             if(sorted[j].level != 100){
                 let unitExp = expTable.find(function(item) { return item.name == sorted[j].growthRate});
                 let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == sorted[j].level + 1});
+                for(let [key, value] of sorted[j].statusMap){
+                    if(key != 'sleepTurns' && key != 'confusionTurns'){
+                        if(value) status.push(key);
+                    }
+                }
+                console.log(status);
                 newEmbed.addFields(
-                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: ${sorted[j].experience}/${expToNextLevel.experience}\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nAttack: ${sorted[j].attack}, Special Attack: ${sorted[j].specialAttack}\nDefense: ${sorted[j].defense}, Special Defense: ${sorted[j].specialDefense}\nType: ${sorted[j].types.join(", ")}\nMoves: ${sorted[j].moves.join(", ")}`}
+                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: ${sorted[j].experience}/${expToNextLevel.experience}\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nType: ${sorted[j].types.join(", ")}\nStatus: \nMoves: ${sorted[j].moves.join(", ")}`}
                 )
             } else {
                 newEmbed.addFields(
-                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: Max Level\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nAttack: ${sorted[j].attack}, Special Attack: ${sorted[j].specialAttack}\nDefense: ${sorted[j].defense}, Special Defense: ${sorted[j].specialDefense}\nType: ${sorted[j].types.join(", ")}\nMoves: ${sorted[j].moves.join(", ")}`}
+                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: Max Level\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nType: ${sorted[j].types.join(", ")}\nMoves: ${sorted[j].moves.join(", ")}`}
                 )
             }
 
