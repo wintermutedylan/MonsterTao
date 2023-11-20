@@ -8,7 +8,7 @@ module.exports = {
     permissions: [],
     description: "Create user profile",
     async execute(client, message, cmd, args, Discord){
-        
+        //this will be the start command.  to start and get your start pokemon
 
         message.channel.send(`${userMention(message.author.id)} Profile created.`);
    

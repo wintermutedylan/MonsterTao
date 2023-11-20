@@ -1,5 +1,6 @@
-const { Client, MessageEmbed, CommandInteraction } = require('discord.js');
 
+const { Client, MessageEmbed, CommandInteraction } = require('discord.js');
+const fs = require("fs");
 require('dotenv').config();
 //const { CommandInteraction } = require("discord.js");
 /**
@@ -9,8 +10,29 @@ require('dotenv').config();
  * @param {CommandInteraction} interaction 
  * @returns 
  */
+const playerModel = require("../../models/playerSchema");
+
+
 module.exports = async (Discord, client, interaction) => {
     const command = interaction.client.interactioncommands.get(interaction.commandName);
+    let playerData;
+
+        try {
+            playerData = await playerModel.findOne({ userID: interaction.user.id });
+            if (!playerData){
+                let player = await playerModel.create({
+                    userID: interaction.user.id,
+                    coins: 0,
+                    maids: [],
+                    currentParty: [],
+                    badges: []
+                    
+                });
+                player.save();
+            }
+        } catch(err){
+            console.log(err);
+        }
     
 
     if (interaction.isChatInputCommand()) {
@@ -53,7 +75,9 @@ module.exports = async (Discord, client, interaction) => {
 		}
 
 		try {
-			await command.autocomplete(interaction);
+            
+			    await command.autocomplete(interaction);
+            
 		} catch (error) {
 			console.error(error);
 		}

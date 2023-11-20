@@ -1,5 +1,4 @@
 const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
-const { ChannelType } = require('discord.js');
 var maids = require("../units/maids.json");
 var routeEncounters = require("../units/routes.json");
 var moveinfo = require("../units/moveinfo.json");
@@ -9,8 +8,7 @@ var natureTable = require("../units/natures.json");
 var expTable = require("../units/exptable.json");
 const lucky = require('lucky-item').default;
 const playerModel = require("../models/playerSchema");
-const { EmbedBuilder } = require('discord.js');
-const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ChannelType, ComponentType, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 
 module.exports = {
@@ -51,7 +49,7 @@ module.exports = {
 			
 		}
 
-		const filtered = choices.filter(choice => choice.startsWith(focusedOption.value));
+		const filtered = choices.filter(choice => choice.includes(focusedOption.value));
         
 		await interaction.respond(
 			filtered.slice(0, 25).map(choice => ({ name: choice, value: choice })),
@@ -235,9 +233,21 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             }
         }
         if(!usableUnits){
+            let player1; 
+            player1 = await playerModel.findOne({ userID: author.id});
+            for(let un = 0; un < p1party.length; un++){
+                let unIndex = player1.maids.findIndex( function(item) { return item.pcID == p1party[un].pcID } )
+                if(unIndex != -1){
+                    setCurrentHealth(unIndex, p1party[un].currentHealth, author.id);
+                }
+                
+            }
             thread.send("Seems you are out of usable units.  you have died.  better luck next time. The thread will be deleted in 15 seconds");
             setTimeout(15000)
-            thread.delete();
+            setTimeout(() => {
+                thread.delete();
+              }, "15000");
+            
             return;
         } else {
             //force swap
@@ -397,6 +407,8 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                         }
                         setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, sMap, newStats);
                         leveledUpString += `Your ${usedPCID[x].id} gained ${resultExp} XP and leveled up to level ${finalLevel}\n`;
+                        let leveledPokemon = p1party.findIndex(function(item) { return item.pcID == usedPCID[x].pcID });
+                        p1party[leveledPokemon].currentHealth += (newStats.health - usedPCID[x].health);
 
                     } else { //this is used if pokemon didnt level up
                         setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, sMap);
@@ -405,14 +417,24 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                     
                 }
             }
+            let player1; 
+            player1 = await playerModel.findOne({ userID: author.id});
+            for(let un = 0; un < p1party.length; un++){
+                let unIndex = player1.maids.findIndex( function(item) { return item.pcID == p1party[un].pcID } )
+                if(unIndex != -1){
+                    setCurrentHealth(unIndex, p1party[un].currentHealth, author.id);
+                }
+                
+            }
             const newEmbed = new EmbedBuilder()
             .setColor('#E76AA3')
             .setTitle(`XP gain`)
             .setDescription(leveledUpString)
             thread.send({ embeds: [newEmbed] });
             thread.send(`You have defeated the wild ${p2current.id} congrats.  This thread will self-destruct in 15 seconds`); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
-            setTimeout(15000)
-            thread.delete();
+            setTimeout(() => {
+                thread.delete();
+              }, "15000");
             return;
         } else {
             //force the bot to swap to a random unit for now
@@ -1011,4 +1033,24 @@ async function setExperienceAndLevel(finalLevel, finalXP, evMap, location, ID, s
     }
     
 
+}
+async function setCurrentHealth(location, currenthealth, ID){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $set: {
+                    ["maids." + location + ".currentHealth"]: currenthealth,
+                    
+                }
+                
+            }
+            
+        );
+
+    } catch(err){
+        console.log(err);
+    }
 }

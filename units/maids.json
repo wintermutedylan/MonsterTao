@@ -1577,7 +1577,7 @@
         "number": 35,
         "id": "Clefairy",
         "types": [
-            "Fairy"
+            "Normal"
         ],
         "health": 70,
         "attack": 45,
@@ -1634,7 +1634,7 @@
         "number": 36,
         "id": "Clefable",
         "types": [
-            "Fairy"
+            "Normal"
         ],
         "health": 95,
         "attack": 70,
@@ -1755,8 +1755,7 @@
         "number": 39,
         "id": "Jigglypuff",
         "types": [
-            "Normal",
-            "Fairy"
+            "Normal"
         ],
         "health": 115,
         "attack": 45,
@@ -1813,8 +1812,7 @@
         "number": 40,
         "id": "Wigglytuff",
         "types": [
-            "Normal",
-            "Fairy"
+            "Normal"
         ],
         "health": 140,
         "attack": 70,
@@ -5616,8 +5614,7 @@
         "number": 122,
         "id": "Mr-mime",
         "types": [
-            "Psychic",
-            "Fairy"
+            "Psychic"
         ],
         "health": 40,
         "attack": 45,
@@ -7792,7 +7789,7 @@
         "number": 173,
         "id": "Cleffa",
         "types": [
-            "Fairy"
+            "Normal"
         ],
         "health": 50,
         "attack": 25,
@@ -7846,8 +7843,7 @@
         "number": 174,
         "id": "Igglybuff",
         "types": [
-            "Normal",
-            "Fairy"
+            "Normal"
         ],
         "health": 90,
         "attack": 30,
@@ -7901,7 +7897,7 @@
         "number": 175,
         "id": "Togepi",
         "types": [
-            "Fairy"
+            "Normal"
         ],
         "health": 35,
         "attack": 20,
@@ -7955,7 +7951,7 @@
         "number": 176,
         "id": "Togetic",
         "types": [
-            "Fairy",
+            "Normal",
             "Flying"
         ],
         "health": 55,
@@ -8273,8 +8269,7 @@
         "number": 183,
         "id": "Marill",
         "types": [
-            "Water",
-            "Fairy"
+            "Water"
         ],
         "health": 70,
         "attack": 20,
@@ -8328,8 +8323,7 @@
         "number": 184,
         "id": "Azumarill",
         "types": [
-            "Water",
-            "Fairy"
+            "Water"
         ],
         "health": 100,
         "attack": 50,
@@ -9429,7 +9423,7 @@
         "number": 209,
         "id": "Snubbull",
         "types": [
-            "Fairy"
+            "Normal"
         ],
         "health": 60,
         "attack": 80,
@@ -9483,7 +9477,7 @@
         "number": 210,
         "id": "Granbull",
         "types": [
-            "Fairy"
+            "Normal"
         ],
         "health": 90,
         "attack": 120,
@@ -12598,8 +12592,7 @@
         "number": 280,
         "id": "Ralts",
         "types": [
-            "Psychic",
-            "Fairy"
+            "Psychic"
         ],
         "health": 28,
         "attack": 25,
@@ -12653,8 +12646,7 @@
         "number": 281,
         "id": "Kirlia",
         "types": [
-            "Psychic",
-            "Fairy"
+            "Psychic"
         ],
         "health": 38,
         "attack": 35,
@@ -12677,21 +12669,18 @@
             "specialDefense": 0
         },
         "evolutionDetails": {
-            "evolvesTo": "gallade",
+            "evolvesTo": "gardevoir",
             "evolutionData": {
-                "gender": 2,
+                "gender": null,
                 "held_item": null,
-                "item": {
-                    "name": "dawn-stone",
-                    "url": "https://pokeapi.co/api/v2/item/109/"
-                },
+                "item": null,
                 "known_move": null,
                 "known_move_type": null,
                 "location": null,
                 "min_affection": null,
                 "min_beauty": null,
                 "min_happiness": null,
-                "min_level": null,
+                "min_level": 30,
                 "needs_overworld_rain": false,
                 "party_species": null,
                 "party_type": null,
@@ -12699,8 +12688,8 @@
                 "time_of_day": "",
                 "trade_species": null,
                 "trigger": {
-                    "name": "use-item",
-                    "url": "https://pokeapi.co/api/v2/evolution-trigger/3/"
+                    "name": "level-up",
+                    "url": "https://pokeapi.co/api/v2/evolution-trigger/1/"
                 },
                 "turn_upside_down": false
             },
@@ -12711,8 +12700,7 @@
         "number": 282,
         "id": "Gardevoir",
         "types": [
-            "Psychic",
-            "Fairy"
+            "Psychic"
         ],
         "health": 68,
         "attack": 65,
@@ -13406,8 +13394,7 @@
         "number": 298,
         "id": "Azurill",
         "types": [
-            "Normal",
-            "Fairy"
+            "Normal"
         ],
         "health": 50,
         "attack": 20,
@@ -13640,8 +13627,7 @@
         "number": 303,
         "id": "Mawile",
         "types": [
-            "Steel",
-            "Fairy"
+            "Steel"
         ],
         "health": 50,
         "attack": 85,
@@ -19465,8 +19451,7 @@
         "number": 439,
         "id": "Mime-jr",
         "types": [
-            "Psychic",
-            "Fairy"
+            "Psychic"
         ],
         "health": 20,
         "attack": 25,
@@ -20683,7 +20668,7 @@
         "number": 468,
         "id": "Togekiss",
         "types": [
-            "Fairy",
+            "Normal",
             "Flying"
         ],
         "health": 85,

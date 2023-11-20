@@ -13,7 +13,7 @@ module.exports = {
     cooldown: 10,
     data: new SlashCommandBuilder()
 		.setName('party')
-		.setDescription('This is a test command'),
+		.setDescription('This will show your current party in an embed'),
     
     async execute(interaction){
         const jsonData = fs.readFileSync(JSON_FILE);
@@ -90,11 +90,11 @@ module.exports = {
                 let unitExp = expTable.find(function(item) { return item.name == sorted[j].growthRate});
                 let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == sorted[j].level + 1});
                 newEmbed.addFields(
-                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: ${sorted[j].experience}/${expToNextLevel.experience}\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nAttack: ${sorted[j].attack}, Special Attack: ${sorted[j].specialAttack}\nDefense: ${sorted[j].defense}, Special Defense: ${sorted[j].specialDefense}\nHappiness: ${sorted[j].happiness + finalPoints}\nMoves: ${sorted[j].moves.join(", ")}`}
+                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: ${sorted[j].experience}/${expToNextLevel.experience}\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nAttack: ${sorted[j].attack}, Special Attack: ${sorted[j].specialAttack}\nDefense: ${sorted[j].defense}, Special Defense: ${sorted[j].specialDefense}\nType: ${sorted[j].types.join(", ")}\nMoves: ${sorted[j].moves.join(", ")}`}
                 )
             } else {
                 newEmbed.addFields(
-                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: Max Level\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nAttack: ${sorted[j].attack}, Special Attack: ${sorted[j].specialAttack}\nDefense: ${sorted[j].defense}, Special Defense: ${sorted[j].specialDefense}\nHappiness: ${sorted[j].happiness + finalPoints}\nMoves: ${sorted[j].moves.join(", ")}`}
+                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: Max Level\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nAttack: ${sorted[j].attack}, Special Attack: ${sorted[j].specialAttack}\nDefense: ${sorted[j].defense}, Special Defense: ${sorted[j].specialDefense}\nType: ${sorted[j].types.join(", ")}\nMoves: ${sorted[j].moves.join(", ")}`}
                 )
             }
 
