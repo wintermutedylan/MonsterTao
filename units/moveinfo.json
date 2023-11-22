@@ -13269,10 +13269,7 @@
     {
         "id": "abra",
         "leveUpMoves": [
-            {
-                "name": "teleport",
-                "level": 1
-            }
+            
         ],
         "otherMoves": [
             {
@@ -13504,10 +13501,7 @@
                 "name": "psychic",
                 "level": 40
             },
-            {
-                "name": "teleport",
-                "level": 1
-            },
+            
             {
                 "name": "recover",
                 "level": 30
@@ -13771,10 +13765,7 @@
                 "name": "psychic",
                 "level": 40
             },
-            {
-                "name": "teleport",
-                "level": 1
-            },
+            
             {
                 "name": "recover",
                 "level": 30
@@ -23427,10 +23418,7 @@
                 "name": "thunder-punch",
                 "level": 31
             },
-            {
-                "name": "counter",
-                "level": 51
-            },
+            
             {
                 "name": "agility",
                 "level": 6
@@ -40254,10 +40242,7 @@
                 "name": "psychic",
                 "level": 47
             },
-            {
-                "name": "teleport",
-                "level": 9
-            },
+            
             {
                 "name": "night-shade",
                 "level": 6
@@ -40517,10 +40502,7 @@
                 "name": "psychic",
                 "level": 59
             },
-            {
-                "name": "teleport",
-                "level": 9
-            },
+            
             {
                 "name": "night-shade",
                 "level": 6
@@ -45710,10 +45692,7 @@
     {
         "id": "wobbuffet",
         "leveUpMoves": [
-            {
-                "name": "counter",
-                "level": 1
-            },
+            
             {
                 "name": "destiny-bond",
                 "level": 1
@@ -48538,10 +48517,7 @@
                 "name": "leer",
                 "level": 1
             },
-            {
-                "name": "counter",
-                "level": 25
-            },
+            
             {
                 "name": "reversal",
                 "level": 43
@@ -53620,10 +53596,7 @@
                 "name": "rolling-kick",
                 "level": 1
             },
-            {
-                "name": "counter",
-                "level": 28
-            },
+            
             {
                 "name": "agility",
                 "level": 37
@@ -63342,10 +63315,7 @@
                 "name": "hypnosis",
                 "level": 43
             },
-            {
-                "name": "teleport",
-                "level": 12
-            },
+            
             {
                 "name": "double-team",
                 "level": 10
@@ -63605,10 +63575,7 @@
                 "name": "hypnosis",
                 "level": 50
             },
-            {
-                "name": "teleport",
-                "level": 1
-            },
+            
             {
                 "name": "double-team",
                 "level": 1
@@ -63868,10 +63835,7 @@
                 "name": "hypnosis",
                 "level": 60
             },
-            {
-                "name": "teleport",
-                "level": 1
-            },
+            
             {
                 "name": "double-team",
                 "level": 1
@@ -64714,10 +64678,7 @@
                 "name": "tackle",
                 "level": 1
             },
-            {
-                "name": "counter",
-                "level": 25
-            },
+            
             {
                 "name": "absorb",
                 "level": 1
@@ -64973,10 +64934,7 @@
                 "name": "scratch",
                 "level": 1
             },
-            {
-                "name": "counter",
-                "level": 37
-            },
+            
             {
                 "name": "amnesia",
                 "level": 25
@@ -65208,10 +65166,7 @@
                 "name": "scratch",
                 "level": 1
             },
-            {
-                "name": "counter",
-                "level": 37
-            },
+            
             {
                 "name": "focus-energy",
                 "level": 1
@@ -65464,10 +65419,7 @@
                 "name": "scratch",
                 "level": 1
             },
-            {
-                "name": "counter",
-                "level": 37
-            },
+            
             {
                 "name": "amnesia",
                 "level": 25
@@ -78718,10 +78670,7 @@
                 "name": "confusion",
                 "level": 1
             },
-            {
-                "name": "teleport",
-                "level": 1
-            },
+            
             {
                 "name": "harden",
                 "level": 1
@@ -82656,10 +82605,7 @@
     {
         "id": "wynaut",
         "leveUpMoves": [
-            {
-                "name": "counter",
-                "level": 15
-            },
+            
             {
                 "name": "splash",
                 "level": 1
@@ -88631,10 +88577,7 @@
                 "name": "psychic",
                 "level": 41
             },
-            {
-                "name": "teleport",
-                "level": 17
-            },
+            
             {
                 "name": "night-shade",
                 "level": 9
@@ -88970,10 +88913,7 @@
                 "name": "psychic",
                 "level": 41
             },
-            {
-                "name": "teleport",
-                "level": 17
-            },
+            
             {
                 "name": "night-shade",
                 "level": 9
@@ -89281,18 +89221,12 @@
                 "name": "leer",
                 "level": 1
             },
-            {
-                "name": "counter",
-                "level": 97
-            },
+            
             {
                 "name": "psychic",
                 "level": 41
             },
-            {
-                "name": "teleport",
-                "level": 17
-            },
+            
             {
                 "name": "night-shade",
                 "level": 9
@@ -103177,10 +103111,7 @@
     {
         "id": "riolu",
         "leveUpMoves": [
-            {
-                "name": "counter",
-                "level": 6
-            },
+            
             {
                 "name": "quick-attack",
                 "level": 1
@@ -103409,10 +103340,7 @@
                 "name": "swords-dance",
                 "level": 33
             },
-            {
-                "name": "counter",
-                "level": 6
-            },
+            
             {
                 "name": "quick-attack",
                 "level": 1
@@ -110221,10 +110149,7 @@
                 "name": "confusion",
                 "level": 1
             },
-            {
-                "name": "teleport",
-                "level": 1
-            },
+            
             {
                 "name": "double-team",
                 "level": 1
