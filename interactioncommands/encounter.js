@@ -129,8 +129,18 @@ module.exports = {
                 defense: 0,
                 specialAttack: 0,
                 specialDefense: 0,
-                evasion: 6,
+                evasion: 0,
                 accuracy: 0
+            },
+            statusMap: {
+                burned: false,
+                frozen: false,
+                paralysis: false,
+                poisoned: false,
+                asleep: false,
+                sleepTurns: 0,
+                confusion: false,
+                confusionTurns: 0
             }
         }
         createBattleThread(interaction, finalPokemon);
@@ -225,7 +235,35 @@ async function createBattleThread(message, boss){
 }
 
 async function battle(p1party, p2party, p1current, p2current, thread, author, turn){
+    if(turn % 2 == 0){
+        if(p1current.statusMap.burned || p1current.statusMap.poisoned){
+            for (let j = 0; j < p1party.length; j++){
+                if (p1current.id === p1party[j].id){
+                    p1party[j].currentHealth -= Math.floor(p1party[j].currentHealth/8);//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    if(p1current.statusMap.burned){
+                        thread.send(`Your ${p1party[j].id} took ${Math.floor(p1party[j].currentHealth/8)} burn damage`);
+                    } else {
+                        thread.send(`Your ${p1party[j].id} took ${Math.floor(p1party[j].currentHealth/8)} poison damage`);
+                    }
+                    
+                }
+            }
+        } if(p2current.statusMap.burned || p2current.statusMap.poisoned){
+            for (let j = 0; j < p2party.length; j++){
+                if (p2current.id === p2party[j].id){
+                    p2party[j].currentHealth -= Math.floor(p2party[j].currentHealth/8);//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    if(p2current.statusMap.burned){
+                        thread.send(`The wild ${p2party[j].id} took ${Math.floor(p2party[j].currentHealth/8)} burn damage`);
+                    } else {
+                        thread.send(`The wild ${p2party[j].id} took ${Math.floor(p2party[j].currentHealth/8)} poison damage`);
+                    }
+                    
+                }
+            }
+        }
+    }
     if(p1current.currentHealth <= 0){
+        thread.send(`Your ${p1current.id} has fainted.`);
         let usableUnits = false;
         for(let i = 0; i < p1party.length; i++){
             if (p1party[i].currentHealth > 0){
@@ -256,6 +294,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             
         }
     } else if(p2current.currentHealth <= 0){
+        thread.send(`The wild ${p2current.id} has fainted.`);
         let usableUnits = false;
         for(let i = 0; i < p2party.length; i++){
             if (p2party[i].currentHealth > 0){
@@ -443,12 +482,14 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             thread.send("it should never get to this point. since there is only 1 wild pokemon.  contact admin if this happens");
         }
     }
+    
     if(turn % 2 == 1){ //check if turn is odd so p1 goes
         if (turn == 1){
             thread.send(`You have sent out ${p1current.id}`);
         } else {
             thread.send(`It is your turn to take action`)
         }
+        
         
         
         thread.send('What would you like to do: Attack, Item, Switch (you have 60 seconds to decide)');
@@ -471,7 +512,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
         
             if (collected.size === 0) {
                 
-                    //battle(p1party, p2party, p1current, p2current, thread, author, 1);
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 
                 return
             }
@@ -714,7 +755,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
 
     
     let moveDetails;
-    let damage;
+    let damage = 0;
     for (let i = 0; i < moveList.length; i++){
         if (move.toLowerCase() === moveList[i].move.toLowerCase()){
             moveDetails = moveList[i];
@@ -723,8 +764,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
     }
     //check accuracy here.  if it misses don't do the switch statement
     let accuracyModified;
-    
-    if(turn % 2 == 1){//p1 accuracy and evasion check
+    if(turn % 2 == 1 && moveDetails.accuracy != "None"){//p1 accuracy and evasion check
         let combined = p1current.stages.accuracy - p2current.stages.evasion;
         if(combined < -6){
             combined = -6;
@@ -733,7 +773,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
         }
         let accuracyStages = stageCalcs[0].stageTable.find(function(item) { return item.stage == combined});
         accuracyModified = moveDetails.accuracy * accuracyStages.value;
-    } else { //p2 accuracy and evasion check
+    } else if(turn % 2 == 0 && moveDetails.accuracy != "None"){ //p2 accuracy and evasion check
         let combined = p2current.stages.accuracy - p1current.stages.evasion;
         if(combined < -6){
             combined = -6;
@@ -744,10 +784,217 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
         accuracyModified = moveDetails.accuracy * accuracyStages.value;
     }
     let accuracyCheck = Math.random() * 100;
-    if (accuracyCheck < accuracyModified){
+    let missed = false;
+    let status = [];
+    if(turn % 2 == 1){
+        
+        for(var key in p1current.statusMap) {
+            if(key != 'sleepTurns' && key != 'confusionTurns'){
+                if(p1current.statusMap[key]) status.push(key);
+                
+            }
+        }
+        
+
+    } else {
+        for(var key in p2current.statusMap) {
+            if(key != 'sleepTurns' && key != 'confusionTurns'){
+                if(p2current.statusMap[key]) status.push(key);
+                
+            }
+        }
+        
+    }
+    if(status.includes("frozen")){
+        let stillFrozenCheck = Math.round(Math.random() * 100);
+        if (stillFrozenCheck < 20){   
+            if(turn % 2 == 1){
+                p1current.statusMap.frozen = false;
+            } else {
+                p2current.statusMap.frozen = false;
+            }
+            missed = false;  
+        } else {
+            missed = true;
+        }
+                    
+    } else if(status.includes("paralysis")){
+        let stillParalysisCheck = Math.round(Math.random() * 100);
+        if (stillParalysisCheck < 25){   
+            
+            missed = true;  
+        } else {
+            missed = false;
+        }
+
+    } else if(status.includes("sleep")){
+        if(turn % 2 == 1 ){
+            if(p1current.statusMap.sleepTurns != 0){
+                p1current.statusMap.sleepTurns -= 1;
+                missed = true;
+            } else {
+                thread.send(`Your ${p1current.id} woke up`);
+                missed = false;
+            }
+            
+        } else {
+            if(p2current.statusMap.sleepTurns != 0){
+                p2current.statusMap.sleepTurns -= 1;
+                missed = true;
+            } else {
+                thread.send(`The wild ${p2current.id} woke up`);
+                missed = false;
+            }
+            
+        }
+        
+    } else if(status.includes("confusion")){
+        if(turn % 2 == 1 ){
+            if(p1current.statusMap.confusionTurns != 0){
+                p1current.statusMap.confusionTurns -= 1;
+                let hurtItselfCheck = Math.round(Math.random() * 100);
+                if (hurtItselfCheck < 50){
+                    missed = true;
+                } else {
+                    missed = false;
+                }
+                
+            } else {
+                thread.send(`Your ${p1current.id} snapped out of confusion`);
+                missed = false;
+            }
+            
+        } else {
+            if(p2current.statusMap.confusionTurns != 0){
+                p2current.statusMap.confusionTurns -= 1;
+                let hurtItselfCheck = Math.round(Math.random() * 100);
+                if (hurtItselfCheck < 50){
+                    missed = true;
+                } else {
+                    missed = false;
+                }
+                
+            } else {
+                thread.send(`The wild ${p2current.id} snapped out of confusion`);
+                missed = false;
+            }
+            
+        }
+    }
+    if(moveDetails.accuracy == "None") {
+        let stageQuote = "";
+        switch(moveDetails.move){
+            case "Swords-dance":
+                if(turn % 2 == 1){
+                    p1current.stages.attack += 2;
+                    if(p1current.stages.attack > 6){
+                        p1current.stages.attack = 6;
+                        stageQuote += `Your ${p1current.id}'s Attack won't go higher!\n`;
+                    } else {
+                        stageQuote += `Your ${p1current.id}'s Attack sharply rose!\n`;
+                    }
+                    break;
+                } else {
+                    p2current.stages.attack += 2;
+                    if(p2current.stages.attack > 6){
+                        p2current.stages.attack = 6;
+                        stageQuote += `The wild ${p2current.id}'s Attack won't go higher!\n`;
+                    } else {
+                        stageQuote += `The wild ${p2current.id}'s Attack sharply rose!\n`;
+                    }
+                    break;
+                }
+            
+
+        }
+        if(turn % 2 == 1){
+            let statusArray = getStatus(p1current, p2current);
+            
+            //p2current.currentHealth = p2current.currentHealth - damage;
+            const newEmbed = new EmbedBuilder()
+            .setColor('#E76AA3')
+            
+            .setTitle(`Your ${p1current.id} used ${moveDetails.move}`)
+            .setDescription(`${stageQuote}\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+        
+        
+            thread.send({ embeds: [newEmbed] });
+        } else {
+            let statusArray = getStatus(p1current, p2current);
+            
+            //p2current.currentHealth = p2current.currentHealth - damage;
+            const newEmbed = new EmbedBuilder()
+            .setColor('#E76AA3')
+            
+            .setTitle(`The wild ${p2current.id} used ${moveDetails.move}`)
+            .setDescription(`${stageQuote}\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+        
+        
+            thread.send({ embeds: [newEmbed] });
+        }
+        turn++;
+        battle(p1party, p2party, p1current, p2current, thread, author, turn);
+
+    } else if(moveDetails.move == "Guillotine" || moveDetails.move == "Fissure" || moveDetails.move == "Horn-drill" || moveDetails.move == "Sheer-cold"){
+        let hitChance = 30;
+        if(turn % 2 == 1){
+            thread.send(`Your ${p1current.id} used ${moveDetails.move}`);
+            if(p1current.level < p2current.level){
+                hitChance = 0;
+            } else {
+                hitChance = p1current.level - p2current.level + 30;
+            }
+        } else {
+            thread.send(`The wild ${p2current.id} used ${moveDetails.move}`);
+            if(p2current.level < p1current.level){
+                hitChance = 0;
+            } else {
+                hitChance = p2current.level - p1current.level + 30;
+            }
+        }
+        
+
+        
+        if(Math.round(accuracyCheck) < hitChance){
+            if(turn % 2 == 1){
+                for (let j = 0; j < p2party.length; j++){
+                    if (p2current.id === p2party[j].id){
+                        p2party[j].currentHealth -= p2party[j].currentHealth;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                thread.send(`Its a one-hit KO!`);
+                turn++;
+        
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else {
+                for (let j = 0; j < p1party.length; j++){
+                    if (p1current.id === p1party[j].id){
+                        p1party[j].currentHealth -= p1party[j].currentHealth;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                thread.send(`Its a one-hit KO!`);
+                turn++;
+        
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            }
+        } else {
+            thread.send("But missed");
+            turn++;
+        
+            battle(p1party, p2party, p1current, p2current, thread, author, turn);
+
+        }
+        
+    } else if (Math.round(accuracyCheck) < Math.round(accuracyModified) && !missed){
+        let stageQuote = "";
         switch(moveDetails.move){
             case "Double-slap":
-                let amountCheck = Math.random() * 100;
+            case "Comment-punch":
+            case "Bind":
+            case "Fury-attack":
+            case "Wrap":
+            case "Pin-missile":
+                let amountCheck = Math.round(Math.random() * 100);
                 let amount;
                 if (amountCheck < 35){ // this is 2 slaps
                     amount = 2;
@@ -761,9 +1008,383 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 for (let a = 0; a < amount; a++){
                     damage += damageFormula(moveDetails, p1current, p2current, turn);
                 }
-                thread.send(`Double slap hit ${amount} times.`);
+                thread.send(`${moveDetails.move} hit ${amount} times.`);
                 
                 break;
+            case "Pay-day":
+                let coins = 5 * p1current.level;
+                damage = damageFormula(moveDetails, p1current, p2current, turn);
+                if(damage == 0){
+                    coins = 0;
+                }
+                addCoins(coins, author.id);
+                thread.send(`You picked up ${coins} coins`);
+                break;
+            case "Ember":
+            case "Fire-punch":
+            case "Flamethrower":
+                let isBurned = nonVolitileCheck(p1current, p2current, turn, 10, "Fire");
+                if(isBurned && turn % 2 == 1){
+                    p2current.statusMap.burned = true;
+                    thread.send(`The wild ${p2current.id} has been burned.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else if(isBurned && turn % 2 == 0){
+                    p1current.statusMap.burned = true;
+                    thread.send(`Your ${p1current.id} has been burned.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else {
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                }
+            case "Ice-punch":
+            case "Ice-beam":
+            case "Blizzard":
+                let isFrozen = nonVolitileCheck(p1current, p2current, turn, 10, "Ice");
+                if(isFrozen && turn % 2 == 1){
+                    p2current.statusMap.frozen = true;
+                    thread.send(`The wild ${p2current.id} has been frozen.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else if(isFrozen && turn % 2 == 0){
+                    p1current.statusMap.frozen = true;
+                    thread.send(`Your ${p1current.id} has been frozen.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else {
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                }
+            case "Thunder-punch":
+                let isParalysis = nonVolitileCheck(p1current, p2current, turn, 10, "Electric");
+                if(isParalysis && turn % 2 == 1){
+                    p2current.statusMap.paralysis = true;
+                    thread.send(`The wild ${p2current.id} has been paralyzed.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else if(isParalysis && turn % 2 == 0){
+                    p1current.statusMap.paralysis = true;
+                    thread.send(`Your ${p1current.id} has been paralyzed.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else {
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                }
+            case "Double-kick":
+                for (let a = 0; a < 2; a++){
+                    damage += damageFormula(moveDetails, p1current, p2current, turn);
+                }
+                thread.send(`${moveDetails.move} hit 2 times.`);
+                break;
+            case "Sand-attack":
+                
+
+                if(turn % 2 == 1){
+                    
+                    p2current.stages.accuracy -= 1;
+                    if(p2current.stages.accuracy < -6){
+                        p2current.stages.accuracy = -6;
+                        stageQuote += `The wild ${p2current.id}'s Accuracy won't go lower\n`;
+                    } else{
+                        stageQuote += `The wild ${p2current.id}'s Accuracy fell\n`;
+                    }
+                    break;
+                } else {
+                    
+                    p1current.stages.accuracy -= 1;
+                    if(p1current.stages.accuracy < -6){
+                        p1current.stages.accuracy = -6;
+                        stageQuote += `Your ${p1current.id}'s Accuracy won't go lower\n`;
+                    } else{
+                        stageQuote += `Your ${p1current.id}'s Accuracy fell\n`;
+                    }
+                    
+                    break;
+                    
+                }
+            case "Body-slam":
+                let bodyCheck = nonVolitileCheck(p1current, p2current, turn, 30, "Electric");
+                if(bodyCheck && turn % 2 == 1){
+                    p2current.statusMap.paralysis = true;
+                    thread.send(`The wild ${p2current.id} has been paralyzed.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else if(bodyCheck && turn % 2 == 0){
+                    p1current.statusMap.paralysis = true;
+                    thread.send(`Your ${p1current.id} has been paralyzed.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else {
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                }
+            case "Take-down":
+            case "Double-edge":
+                damage = damageFormula(moveDetails, p1current, p2current, turn);
+                let selfDamage = Math.floor(damage/4)
+                if(turn % 2 == 1){
+                    for (let j = 0; j < p1party.length; j++){
+                        if (p1current.id === p1party[j].id){
+                            p1party[j].currentHealth = p1party[j].currentHealth - selfDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                        }
+                    }
+                    thread.send(`Your ${p1current.id} took ${selfDamage} recoil damage`);
+                    break;
+                } else {
+                    for (let j = 0; j < p1party.length; j++){
+                        if (p2current.id === p2party[j].id){
+                            p2party[j].currentHealth = p2party[j].currentHealth - selfDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                        }
+                    }
+                    thread.send(`The wild ${p2current.id} took ${selfDamage} recoil damage`);
+                    break;
+                }
+            case "Thrash":
+                for(let mv = 0; mv < 3; mv++){
+                    damage += damageFormula(moveDetails, p1current, p2current, turn);
+                }
+                if(turn % 2 == 1){
+                    p1current.statusMap.confusion = true;
+                    p1current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
+                    thread.send(`Your ${p1current.id} hit 3 times and is now confused`);
+                    break;
+                } else {
+                    p2current.statusMap.confusion = true;
+                    p2current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
+                    thread.send(`The wild ${p2current.id} hit 3 times and is now confused`);
+                    break;
+                }
+            case "Leer":
+            case "Tail-whip":
+                if(turn % 2 == 1){
+                    
+                    p2current.stages.defense -= 1;
+                    if(p2current.stages.defense < -6){
+                        p2current.stages.defense = -6;
+                        stageQuote += `The wild ${p2current.id}'s Defense won't go lower\n`;
+                    } else{
+                        stageQuote += `The wild ${p2current.id}'s Defense fell\n`;
+                    }
+                    break;
+                } else {
+                    
+                    p1current.stages.defense -= 1;
+                    if(p1current.stages.defense < -6){
+                        p1current.stages.defense = -6;
+                        stageQuote += `Your ${p1current.id}'s Defense won't go lower\n`;
+                    } else{
+                        stageQuote += `Your ${p1current.id}'s Defense fell\n`;
+                    }
+                    
+                    break;
+                    
+                }
+            case "Poison-sting":
+                let isPoisoned = nonVolitileCheck(p1current, p2current, turn, 30, "none");
+                if(isPoisoned && turn % 2 == 1){
+                    p2current.statusMap.poisoned = true;
+                    thread.send(`The wild ${p2current.id} has been poisoned.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else if(isPoisoned && turn % 2 == 0){
+                    p1current.statusMap.poisoned = true;
+                    thread.send(`Your ${p1current.id} has been poisoned.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else {
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                }
+            case "Twineedle":
+                let Poisoned = nonVolitileCheck(p1current, p2current, turn, 30, "none");
+                if(Poisoned && turn % 2 == 1){
+                    p2current.statusMap.poisoned = true;
+                    thread.send(`The wild ${p2current.id} has been poisoned.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn) + damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else if(Poisoned && turn % 2 == 0){
+                    p1current.statusMap.poisoned = true;
+                    thread.send(`Your ${p1current.id} has been poisoned.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn) + damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else {
+                    damage = damageFormula(moveDetails, p1current, p2current, turn) + damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                }
+            case "Growl":
+                if(turn % 2 == 1){
+                    
+                    p2current.stages.attack -= 1;
+                    if(p2current.stages.attack < -6){
+                        p2current.stages.attack = -6;
+                        stageQuote += `The wild ${p2current.id}'s Attack won't go lower\n`;
+                    } else{
+                        stageQuote += `The wild ${p2current.id}'s Attack fell\n`;
+                    }
+                    break;
+                } else {
+                    
+                    p1current.stages.attack -= 1;
+                    if(p1current.stages.attack < -6){
+                        p1current.stages.attack = -6;
+                        stageQuote += `Your ${p1current.id}'s Attack won't go lower\n`;
+                    } else{
+                        stageQuote += `Your ${p1current.id}'s Attack fell\n`;
+                    }
+                    
+                    break;
+                    
+                }
+            case "Sing":
+                if(turn % 2 == 1){
+                    if(p2current.statusMap.sleep == false){
+                        p2current.statusMap.sleep = true;
+                        p2current.statusMap.sleepTurns = randomIntFromInterval(1, 5);
+                    
+                    
+                        stageQuote += `The wild ${p2current.id} is now asleep\n`;
+                    } else {
+                        stageQuote += `The wild ${p2current.id} is already asleep\n`;
+                    }
+                    
+                    break;
+                } else {
+                    
+                    if(p1current.statusMap.sleep == false){
+                        p1current.statusMap.sleep = true;
+                        p1current.statusMap.sleepTurns = randomIntFromInterval(1, 5);
+                    
+                    
+                        stageQuote += `Your ${p1current.id} is now asleep\n`;
+                    } else {
+                        stageQuote += `Your ${p1current.id} is already asleep\n`;
+                    }
+                    break;
+                    
+                }
+            case "Supersonic":
+                if(turn % 2 == 1){
+                    if(p2current.statusMap.confusion == false){
+                        p2current.statusMap.confusion = true;
+                        p2current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
+                    
+                    
+                        stageQuote += `The wild ${p2current.id} is now confused\n`;
+                    } else {
+                        stageQuote += `The wild ${p2current.id} is already confused\n`;
+                    }
+                    
+                    break;
+                } else {
+                    
+                    if(p1current.statusMap.confusion == false){
+                        p1current.statusMap.confusion = true;
+                        p1current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
+                    
+                    
+                        stageQuote += `Your ${p1current.id} is now confused\n`;
+                    } else {
+                        stageQuote += `Your ${p1current.id} is already confused\n`;
+                    }
+                    break;
+                    
+                }
+            case "Sonic-boom":
+                if(turn % 2 == 1){
+                    if(p2current.types.includes("Ghost")){
+                        damage = 0;
+                    } else {
+                        damage = 20;
+                    }
+                    break;
+                } else {
+                    if(p1current.types.includes("Ghost")){
+                        damage = 0;
+                    } else {
+                        damage = 20;
+                    }
+                    break;
+                }
+            case "Acid":
+                let acidCheck = Math.round(Math.random() * 100);
+                
+                if(turn % 2 == 1){
+                    if(acidCheck < 10){
+                        p2current.stages.defense -= 1;
+                        if(p2current.stages.defense < -6){
+                            p2current.stages.defense = -6;
+                            stageQuote += `The wild ${p2current.id}'s Defense won't go lower\n`;
+                        } else{
+                            stageQuote += `The wild ${p2current.id}'s Defense fell\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                } else {
+                    if(acidCheck < 10){
+                    p1current.stages.defense -= 1;
+                    if(p1current.stages.defense < -6){
+                        p1current.stages.defense = -6;
+                        stageQuote += `Your ${p1current.id}'s Defense won't go lower\n`;
+                    } else{
+                        stageQuote += `Your ${p1current.id}'s Defense fell\n`;
+                    }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                    
+                }
+            case "Psybeam":
+                let psybeamCheck = Math.round(Math.random() * 100);
+                
+                if(turn % 2 == 1){
+                    if(psybeamCheck < 10){
+                        if(p2current.statusMap.confusion == false){
+                            p2current.statusMap.confusion = true;
+                            p2current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
+                        
+                        
+                            stageQuote += `The wild ${p2current.id} is now confused\n`;
+                        } else {
+                            stageQuote += `The wild ${p2current.id} is already confused\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                } else {
+                    if(psybeamCheck < 10){
+                        if(p1current.statusMap.confusion == false){
+                            p1current.statusMap.confusion = true;
+                            p1current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
+                        
+                        
+                            stageQuote += `Your ${p1current.id} is now confused\n`;
+                        } else {
+                            stageQuote += `Your ${p1current.id} is already confused\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                    
+                }
+                
+                
+
+
             default:
                 damage = damageFormula(moveDetails, p1current, p2current, turn);
         }
@@ -772,69 +1393,354 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
         
         
         if(turn % 2 == 1){ //p1 doing the dmg
-            for (let j = 0; j < p2party.length; j++){
-                if (p2current.id === p2party[j].id){
-                    p2party[j].currentHealth = p2party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
-                }
-            }
-            //p2current.currentHealth = p2current.currentHealth - damage;
-            const newEmbed = new EmbedBuilder()
-            .setColor('#E76AA3')
+            let statusArray = getStatus(p1current, p2current);
+            if(stageQuote != "" && damage == 0){
+                
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} used ${moveDetails.move}`)
+                .setDescription(`${stageQuote}\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
-            .setTitle(`Your ${p1current.id} used ${moveDetails.move} doing **${damage}** damage`)
-            .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
-        
-        
-            thread.send({ embeds: [newEmbed] });
-            //thread.send(`You did a total of **${damage}** damage to the wild ${p2current.id}\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+            
+                thread.send({ embeds: [newEmbed] });
+            } else if(stageQuote != "" && damage != 0){
+                for (let j = 0; j < p2party.length; j++){
+                    if (p2current.id === p2party[j].id){
+                        p2party[j].currentHealth = p2party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} used ${moveDetails.move} doing **${damage}** damage`)
+                .setDescription(`${stageQuote}\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+            } else {
+                for (let j = 0; j < p2party.length; j++){
+                    if (p2current.id === p2party[j].id){
+                        p2party[j].currentHealth = p2party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} used ${moveDetails.move} doing **${damage}** damage`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+            }
+            
         } else { //p2 doing the dmg
-            for (let j = 0; j < p1party.length; j++){
-                if (p1current.id === p1party[j].id){
-                    p1party[j].currentHealth = p1party[j].currentHealth - damage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
-                }
-            }
-            //p1current.currentHealth = p1current.currentHealth - damage;
-            const newEmbed = new EmbedBuilder()
-            .setColor('#E76AA3')
+            let statusArray = getStatus(p1current, p2current);
+            if(stageQuote != "" && damage == 0){
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`The wild ${p2current.id} used ${moveDetails.move}`)
+                .setDescription(`${stageQuote}\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
-            .setTitle(`The wild ${p2current.id} used ${moveDetails.move} doing **${damage}** damage`)
-            .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
-        
-        
-            thread.send({ embeds: [newEmbed] });
-            //thread.send(`The wild ${p2current.id} did **${damage}** damage to your ${p1current.id}\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nIt is your turn to take action\n----------------------------------`);
+            
+                thread.send({ embeds: [newEmbed] });
+            } else if(stageQuote != "" && damage != 0){
+                for (let j = 0; j < p2party.length; j++){
+                    if (p2current.id === p2party[j].id){
+                        p2party[j].currentHealth = p2party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} used ${moveDetails.move} doing **${damage}** damage`)
+                .setDescription(`${stageQuote}\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+            } else {
+                for (let j = 0; j < p1party.length; j++){
+                    if (p1current.id === p1party[j].id){
+                        p1party[j].currentHealth = p1party[j].currentHealth - damage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} doing **${damage}** damage`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+            }
+            
         }
         turn++;
         
-        battle(p1party, p2party, p1current, p2current, thread, author, turn)
+        battle(p1party, p2party, p1current, p2current, thread, author, turn);
     } else {
+        
         if(turn % 2 == 1){//p1 miss
-            const newEmbed = new EmbedBuilder()
-            .setColor('#E76AA3')
+            let statusArray = getStatus(p1current, p2current);
+            if(moveDetails == "Jump-kick" && !missed){
+                let crashDamage = Math.floor(damageFormula(moveDetails, p1current, p2current, turn)/2);
+                for (let j = 0; j < p1party.length; j++){
+                    if (p1current.id === p1party[j].id){
+                        p1party[j].currentHealth = p1party[j].currentHealth - crashDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} used ${moveDetails.move} but crashed and did ${crashDamage} dmg to itself`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
-            .setTitle(`Your ${p1current.id} used ${moveDetails.move} but missed`)
-            .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
-        
-        
-            thread.send({ embeds: [newEmbed] });
-            turn++;
-            //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
-            battle(p1party, p2party, p1current, p2current, thread, author, turn)
-        } else {//p2 miss
-            const newEmbed = new EmbedBuilder()
-            .setColor('#E76AA3')
             
-            .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but missed`)
-            .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**`)
-        
-        
-            thread.send({ embeds: [newEmbed] });
-            turn++;
-            //thread.send(`The wild ${p2current.id} missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nIt is your turn to take action\n----------------------------------`);
-            battle(p1party, p2party, p1current, p2current, thread, author, turn)
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            }
+            if(status.includes("frozen") && missed){
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} used ${moveDetails.move} but is frozen solid`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else if(status.includes("paralysis") && missed){
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} used ${moveDetails.move} but is paralyzed`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else if(status.includes("sleep") && missed){
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} used ${moveDetails.move} but is asleep`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            }  else if(status.includes("confusion") && missed){
+                let randomConfusionNumber = randomIntFromInterval(85, 100);
+                let confusionDamage = ((((2 * p1current.level / 5 + 2) * (p1current.attack) * 40 / (p1current.defense)) / 50) + 2) * 1 * 1 * randomConfusionNumber / 100;
+                for (let j = 0; j < p1party.length; j++){
+                    if (p1current.id === p1party[j].id){
+                        p1party[j].currentHealth = p1party[j].currentHealth - confusionDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} hurt itself in its confusion doing ${confusionDamage} dmg`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else {
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`Your ${p1current.id} used ${moveDetails.move} but missed`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            }
+        } else {
+            let statusArray = getStatus(p1current, p2current);
+            if(moveDetails.move == "Jump-kick" && !missed){
+                let crashDamage = Math.floor(damageFormula(moveDetails, p1current, p2current, turn)/2);
+                for (let j = 0; j < p2party.length; j++){
+                    if (p2current.id === p2party[j].id){
+                        p2party[j].currentHealth = p2party[j].currentHealth - crashDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but crashed and did ${crashDamage} dmg to itself`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            }
+            else if(status.includes("frozen") && missed){
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but is frozen solid`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else if(status.includes("paralysis") && missed){
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but is paralyzed`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else if(status.includes("sleep") && missed){
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but is asleep`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            }  else if(status.includes("confusion") && missed){
+                let randomConfusionNumber = randomIntFromInterval(85, 100);
+                let confusionDamage = ((((2 * p2current.level / 5 + 2) * (p2current.attack) * 40 / (p2current.defense)) / 50) + 2) * 1 * 1 * randomConfusionNumber / 100;
+                for (let j = 0; j < p2party.length; j++){
+                    if (p2current.id === p2party[j].id){
+                        p2party[j].currentHealth = p2party[j].currentHealth - confusionDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    }
+                }
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`The wild ${p2current.id} hurt itself in its confusion doing ${confusionDamage} dmg`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`Your move missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nThe wild ${p2current.id} will now take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            }else {//p2 miss
+                
+                const newEmbed = new EmbedBuilder()
+                .setColor('#E76AA3')
+                
+                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but missed`)
+                .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+            
+                thread.send({ embeds: [newEmbed] });
+                turn++;
+                //thread.send(`The wild ${p2current.id} missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nIt is your turn to take action\n----------------------------------`);
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            }
         }
         
     }
+}
+function getStatus(p1current, p2current){
+    let results = [];
+    let p1status = [];
+    let p2status = [];
+    for(var key in p1current.statusMap) {
+        if(key != 'sleepTurns' && key != 'confusionTurns'){
+            if(p1current.statusMap[key]) p1status.push(key);
+            
+        }
+    }
+    if(p1status.length == 0) p1status.push("none");
+    results.push(p1status);
+    for(var key in p2current.statusMap) {
+        if(key != 'sleepTurns' && key != 'confusionTurns'){
+            if(p2current.statusMap[key]) p2status.push(key);
+            
+        }
+    }
+    if(p2status.length == 0) p2status.push("none");
+    results.push(p2status);
+    return results;
+}
+function nonVolitileCheck(p1current, p2current, turn, chance, immuneType){
+    let results = false;
+    let p1type = maids.find(function(item) { return item.id.toLowerCase() == p1current.id.toLowerCase()}).types;
+    let p2type = maids.find(function(item) { return item.id.toLowerCase() == p2current.id.toLowerCase()}).types;
+    if(turn % 2 == 1){ //p1 attacking p2
+        let p2status = [];
+        for(var key in p2current.statusMap) {
+            if(key != 'sleepTurns' && key != 'confusionTurns' && key != 'confusion'){
+                if(p2current.statusMap[key]) p2status.push(key);
+                
+            }
+        }
+        if(p2type.includes(immuneType) || p2status.length > 0){
+            results = false;
+        } else {
+            let amountCheck = Math.round(Math.random() * 100);
+            
+            if (amountCheck < chance){ 
+                results = true;
+            } else {
+                results = false;
+            }
+        }
+    } else { //p2 attacking p1
+        let p1status = [];
+        for(var key in p1current.statusMap) {
+            if(key != 'sleepTurns' && key != 'confusionTurns' && key != 'confusion'){
+                if(p1current.statusMap[key]) p1status.push(key);
+                
+            }
+        }
+        if(p1type.includes(immuneType) || p1status.length > 0){
+            results = false;
+        } else {
+            let amountCheck = Math.round(Math.random() * 100);
+            
+            if (amountCheck < chance){ 
+                results = true;
+            } else {
+                results = false;
+            }
+        }
+    }
+    return results;
 }
 function damageFormula(details, p1current, p2current, turn){
     if(details.power == "None") return 0;
@@ -881,8 +1787,11 @@ function damageFormula(details, p1current, p2current, turn){
         } else if (details.damageClass === "Special"){
             d = ((((2 * p1current.level / 5 + 2) * (p1current.specialAttack * specialAttackModifier.value)* details.power / (p2current.specialDefense * specialDefenseModifier.value)) / 50) + 2) * stab * weakness * randomNumber / 100;
         }
-            
-        return Math.floor(d);
+        if(p1current.statusMap.burned){
+            return Math.floor(d / 2);
+        } else{    
+            return Math.floor(d);
+        }
     } else {
         
         for(let f = 0; f < p2Type.length; f++){
@@ -914,7 +1823,11 @@ function damageFormula(details, p1current, p2current, turn){
             d = ((((2 * p2current.level / 5 + 2) * (p2current.specialAttack * specialAttackModifier.value) * details.power / (p1current.specialDefense * specialDefenseModifier.value)) / 50) + 2) * stab * weakness * randomNumber / 100;
         }
             
-        return Math.floor(d);
+        if(p2current.statusMap.burned){
+            return Math.floor(d / 2);
+        } else{    
+            return Math.floor(d);
+        }
 
     }
 }
@@ -943,7 +1856,7 @@ async function snapshot(message, boss, thread){
             specialAttack: 0,
             specialDefense: 0,
             evasion: 0,
-            accuracy: -6
+            accuracy: 0
         };
         p1party[d]["usedInBattle"] = false;
     }
@@ -1073,6 +1986,26 @@ async function setCurrentHealth(location, currenthealth, ID){
             {
                 $set: {
                     ["maids." + location + ".currentHealth"]: currenthealth,
+                    
+                }
+                
+            }
+            
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+async function addCoins(amount, ID){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $inc: {
+                    coins: amount,
                     
                 }
                 

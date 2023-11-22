@@ -92,7 +92,7 @@ module.exports = {
                 let unitExp = expTable.find(function(item) { return item.name == sorted[j].growthRate});
                 let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == sorted[j].level + 1});
                 for(var key in sorted[j].statusMap) {
-                    if(key != 'sleepTurns' && key != 'confusionTurns'){
+                    if(key != 'sleepTurns' && key != 'confusionTurns' && key != 'confusion'){
                         if(sorted[j].statusMap[key]) status.push(key);
                         
                     }

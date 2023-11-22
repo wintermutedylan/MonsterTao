@@ -2,14 +2,7 @@
 const { Client, MessageEmbed, CommandInteraction } = require('discord.js');
 const fs = require("fs");
 require('dotenv').config();
-//const { CommandInteraction } = require("discord.js");
-/**
- * 
- * 
- * @param {Client} client 
- * @param {CommandInteraction} interaction 
- * @returns 
- */
+
 const playerModel = require("../../models/playerSchema");
 
 

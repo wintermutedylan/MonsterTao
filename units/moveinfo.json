@@ -470,10 +470,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -1147,10 +1144,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -1892,10 +1886,7 @@
                 "name": "ice-punch",
                 "method": "tutor"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -2151,10 +2142,7 @@
                 "name": "gust",
                 "level": 16
             },
-            {
-                "name": "whirlwind",
-                "level": 22
-            },
+            
             {
                 "name": "supersonic",
                 "level": 18
@@ -2642,10 +2630,7 @@
                 "name": "wing-attack",
                 "level": 33
             },
-            {
-                "name": "whirlwind",
-                "level": 17
-            },
+            
             {
                 "name": "sand-attack",
                 "level": 5
@@ -2837,10 +2822,7 @@
                 "name": "wing-attack",
                 "level": 37
             },
-            {
-                "name": "whirlwind",
-                "level": 17
-            },
+            
             {
                 "name": "sand-attack",
                 "level": 1
@@ -3032,10 +3014,7 @@
                 "name": "wing-attack",
                 "level": 38
             },
-            {
-                "name": "whirlwind",
-                "level": 17
-            },
+            
             {
                 "name": "sand-attack",
                 "level": 1
@@ -3528,10 +3507,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "ice-beam",
                 "method": "machine"
@@ -5933,10 +5909,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -6658,10 +6631,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -7557,10 +7527,7 @@
                 "name": "tail-whip",
                 "level": 4
             },
-            {
-                "name": "roar",
-                "level": 7
-            },
+            
             {
                 "name": "ember",
                 "level": 1
@@ -7615,10 +7582,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -7778,10 +7742,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -11031,10 +10992,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -12336,10 +12294,7 @@
                 "name": "bite",
                 "level": 1
             },
-            {
-                "name": "roar",
-                "level": 1
-            },
+            
             {
                 "name": "ember",
                 "level": 6
@@ -12386,10 +12341,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -12527,10 +12479,7 @@
                 "name": "bite",
                 "level": 1
             },
-            {
-                "name": "roar",
-                "level": 1
-            },
+            
             {
                 "name": "extreme-speed",
                 "level": 39
@@ -12549,10 +12498,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -16296,10 +16242,7 @@
                 "name": "thunder-punch",
                 "method": "tutor"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -20665,10 +20608,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "strength",
                 "method": "machine"
@@ -22050,7 +21990,6 @@
             }
         ]
     },
-    
     {
         "id": "electrode",
         "leveUpMoves": [
@@ -24474,10 +24413,7 @@
                 "name": "swords-dance",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -24761,10 +24697,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -25658,10 +25591,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -28987,10 +28917,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -29216,10 +29143,7 @@
                 "name": "sing",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 4
-            },
+            
             {
                 "name": "water-gun",
                 "level": 1
@@ -29266,10 +29190,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -29682,10 +29603,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -29913,10 +29831,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -30136,10 +30051,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -31500,10 +31412,7 @@
                 "name": "bite",
                 "level": 1
             },
-            {
-                "name": "roar",
-                "level": 9
-            },
+            
             {
                 "name": "supersonic",
                 "level": 1
@@ -31558,10 +31467,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -32074,10 +31980,7 @@
                 "name": "gust",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 8
-            },
+            
             {
                 "name": "ice-beam",
                 "level": 43
@@ -32132,10 +32035,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "ice-beam",
                 "method": "machine"
@@ -32367,10 +32267,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -32606,10 +32503,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -33311,10 +33205,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -33588,10 +33479,7 @@
                 "name": "disable",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 43
-            },
+            
             {
                 "name": "confusion",
                 "level": 1
@@ -34045,10 +33933,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -35464,10 +35349,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -35675,10 +35557,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -36181,10 +36060,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -36440,10 +36316,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -44096,10 +43969,7 @@
                 "name": "tail-whip",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 43
-            },
+            
             {
                 "name": "water-gun",
                 "level": 1
@@ -44311,10 +44181,7 @@
                 "name": "tail-whip",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 48
-            },
+           
             {
                 "name": "water-gun",
                 "level": 1
@@ -45830,7 +45697,6 @@
             }
         ]
     },
-    
     {
         "id": "unown",
         "leveUpMoves": [
@@ -46146,10 +46012,6 @@
                 "level": 45
             },
             {
-                "name": "bide",
-                "level": 20
-            },
-            {
                 "name": "self-destruct",
                 "level": 6
             },
@@ -46347,10 +46209,6 @@
             {
                 "name": "double-edge",
                 "level": 55
-            },
-            {
-                "name": "bide",
-                "level": 20
             },
             {
                 "name": "self-destruct",
@@ -47215,10 +47073,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -47440,10 +47295,7 @@
                 "name": "bite",
                 "level": 7
             },
-            {
-                "name": "roar",
-                "level": 25
-            },
+            
             {
                 "name": "rage",
                 "level": 31
@@ -47494,10 +47346,7 @@
                 "name": "thunder-punch",
                 "method": "tutor"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -47703,10 +47552,7 @@
                 "name": "bite",
                 "level": 7
             },
-            {
-                "name": "roar",
-                "level": 27
-            },
+            
             {
                 "name": "rage",
                 "level": 35
@@ -47757,10 +47603,7 @@
                 "name": "thunder-punch",
                 "method": "tutor"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -48486,10 +48329,6 @@
             },
             {
                 "name": "withdraw",
-                "level": 1
-            },
-            {
-                "name": "bide",
                 "level": 1
             },
             {
@@ -49275,10 +49114,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "strength",
                 "method": "machine"
@@ -49534,10 +49370,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -50177,10 +50010,7 @@
                 "name": "take-down",
                 "level": 32
             },
-            {
-                "name": "mist",
-                "level": 40
-            },
+            
             {
                 "name": "blizzard",
                 "level": 44
@@ -50227,10 +50057,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "ice-beam",
                 "method": "machine"
@@ -50392,10 +50219,7 @@
                 "name": "take-down",
                 "level": 32
             },
-            {
-                "name": "mist",
-                "level": 48
-            },
+            
             {
                 "name": "blizzard",
                 "level": 56
@@ -50450,10 +50274,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "ice-beam",
                 "method": "machine"
@@ -51832,10 +51653,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "toxic",
                 "method": "machine"
@@ -52025,10 +51843,7 @@
                 "name": "bite",
                 "level": 17
             },
-            {
-                "name": "roar",
-                "level": 14
-            },
+            
             {
                 "name": "ember",
                 "level": 1
@@ -52075,10 +51890,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -52256,10 +52068,7 @@
                 "name": "bite",
                 "level": 17
             },
-            {
-                "name": "roar",
-                "level": 14
-            },
+            
             {
                 "name": "ember",
                 "level": 1
@@ -52310,10 +52119,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -52760,10 +52566,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "strength",
                 "method": "machine"
@@ -52975,10 +52778,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -53457,10 +53257,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "solar-beam",
                 "method": "machine"
@@ -54716,10 +54513,6 @@
                 "level": 5
             },
             {
-                "name": "bide",
-                "level": 15
-            },
-            {
                 "name": "rollout",
                 "level": 19
             },
@@ -55321,10 +55114,7 @@
                 "name": "bite",
                 "level": 1
             },
-            {
-                "name": "roar",
-                "level": 15
-            },
+            
             {
                 "name": "thunder-shock",
                 "level": 8
@@ -55375,10 +55165,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -55560,10 +55347,7 @@
                 "name": "bite",
                 "level": 1
             },
-            {
-                "name": "roar",
-                "level": 15
-            },
+            
             {
                 "name": "ember",
                 "level": 8
@@ -55610,10 +55394,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -55791,10 +55572,7 @@
                 "name": "bite",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 36
-            },
+            
             {
                 "name": "hydro-pump",
                 "level": 71
@@ -55841,10 +55619,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -56554,10 +56329,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -56831,10 +56603,7 @@
                 "name": "gust",
                 "level": 15
             },
-            {
-                "name": "whirlwind",
-                "level": 1
-            },
+            
             {
                 "name": "hydro-pump",
                 "level": 29
@@ -56893,10 +56662,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -57174,10 +56940,7 @@
                 "name": "gust",
                 "level": 15
             },
-            {
-                "name": "whirlwind",
-                "level": 1
-            },
+            
             {
                 "name": "recover",
                 "level": 23
@@ -57236,10 +56999,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -58332,10 +58092,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -59077,10 +58834,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -59315,10 +59069,6 @@
                 "level": 42
             },
             {
-                "name": "bide",
-                "level": 15
-            },
-            {
                 "name": "protect",
                 "level": 37
             },
@@ -59524,10 +59274,6 @@
             {
                 "name": "earthquake",
                 "level": 46
-            },
-            {
-                "name": "bide",
-                "level": 15
             },
             {
                 "name": "protect",
@@ -59761,10 +59507,6 @@
                 "level": 52
             },
             {
-                "name": "bide",
-                "level": 15
-            },
-            {
                 "name": "protect",
                 "level": 46
             },
@@ -59802,10 +59544,7 @@
                 "name": "ice-punch",
                 "method": "tutor"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -60035,10 +59774,7 @@
                 "name": "bite",
                 "level": 13
             },
-            {
-                "name": "roar",
-                "level": 21
-            },
+            
             {
                 "name": "scary-face",
                 "level": 33
@@ -60077,10 +59813,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "dig",
                 "method": "machine"
@@ -60238,10 +59971,7 @@
                 "name": "bite",
                 "level": 1
             },
-            {
-                "name": "roar",
-                "level": 22
-            },
+            
             {
                 "name": "thief",
                 "level": 57
@@ -60280,10 +60010,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -60742,10 +60469,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -60993,10 +60717,7 @@
                 "name": "gust",
                 "level": 13
             },
-            {
-                "name": "whirlwind",
-                "level": 27
-            },
+            
             {
                 "name": "absorb",
                 "level": 1
@@ -61207,10 +60928,7 @@
                 "name": "gust",
                 "level": 13
             },
-            {
-                "name": "whirlwind",
-                "level": 27
-            },
+            
             {
                 "name": "psybeam",
                 "level": 24
@@ -61410,10 +61128,7 @@
                 "name": "growl",
                 "level": 3
             },
-            {
-                "name": "mist",
-                "level": 11
-            },
+            
             {
                 "name": "bubble-beam",
                 "level": 25
@@ -62092,10 +61807,6 @@
                 "level": 3
             },
             {
-                "name": "bide",
-                "level": 1
-            },
-            {
                 "name": "explosion",
                 "level": 43
             },
@@ -62497,10 +62208,7 @@
     {
         "id": "shiftry",
         "leveUpMoves": [
-            {
-                "name": "whirlwind",
-                "level": 1
-            },
+            
             {
                 "name": "razor-leaf",
                 "level": 1
@@ -63162,10 +62870,7 @@
                 "name": "supersonic",
                 "level": 6
             },
-            {
-                "name": "mist",
-                "level": 16
-            },
+            
             {
                 "name": "water-gun",
                 "level": 1
@@ -63377,10 +63082,7 @@
                 "name": "supersonic",
                 "level": 6
             },
-            {
-                "name": "mist",
-                "level": 16
-            },
+            
             {
                 "name": "water-gun",
                 "level": 1
@@ -64433,10 +64135,7 @@
     {
         "id": "surskit",
         "leveUpMoves": [
-            {
-                "name": "mist",
-                "level": 37
-            },
+            
             {
                 "name": "bubble-beam",
                 "level": 25
@@ -64608,10 +64307,7 @@
                 "name": "gust",
                 "level": 22
             },
-            {
-                "name": "whirlwind",
-                "level": 54
-            },
+            
             {
                 "name": "stun-spore",
                 "level": 33
@@ -65566,10 +65262,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -65837,10 +65530,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -66659,10 +66349,7 @@
                 "name": "stomp",
                 "level": 25
             },
-            {
-                "name": "roar",
-                "level": 35
-            },
+            
             {
                 "name": "supersonic",
                 "level": 21
@@ -66709,10 +66396,7 @@
                 "name": "thunder-punch",
                 "method": "tutor"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -66862,10 +66546,7 @@
                 "name": "bite",
                 "level": 20
             },
-            {
-                "name": "roar",
-                "level": 43
-            },
+            
             {
                 "name": "supersonic",
                 "level": 23
@@ -66912,10 +66593,7 @@
                 "name": "thunder-punch",
                 "method": "tutor"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -67101,10 +66779,7 @@
                 "name": "bite",
                 "level": 20
             },
-            {
-                "name": "roar",
-                "level": 45
-            },
+            
             {
                 "name": "supersonic",
                 "level": 23
@@ -67171,10 +66846,7 @@
                 "name": "thunder-punch",
                 "method": "tutor"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -67376,10 +67048,7 @@
     {
         "id": "makuhita",
         "leveUpMoves": [
-            {
-                "name": "whirlwind",
-                "level": 16
-            },
+            
             {
                 "name": "sand-attack",
                 "level": 4
@@ -67611,10 +67280,7 @@
     {
         "id": "hariyama",
         "leveUpMoves": [
-            {
-                "name": "whirlwind",
-                "level": 16
-            },
+            
             {
                 "name": "sand-attack",
                 "level": 1
@@ -68524,7 +68190,6 @@
             }
         ]
     },
-    
     {
         "id": "delcatty",
         "leveUpMoves": [
@@ -69361,10 +69026,7 @@
                 "name": "double-edge",
                 "level": 43
             },
-            {
-                "name": "roar",
-                "level": 22
-            },
+            
             {
                 "name": "harden",
                 "level": 4
@@ -69407,10 +69069,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "strength",
                 "method": "machine"
@@ -69612,10 +69271,7 @@
                 "name": "double-edge",
                 "level": 51
             },
-            {
-                "name": "roar",
-                "level": 22
-            },
+            
             {
                 "name": "harden",
                 "level": 1
@@ -69658,10 +69314,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "strength",
                 "method": "machine"
@@ -69867,10 +69520,7 @@
                 "name": "double-edge",
                 "level": 57
             },
-            {
-                "name": "roar",
-                "level": 22
-            },
+            
             {
                 "name": "harden",
                 "level": 1
@@ -69925,10 +69575,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -70235,10 +69882,6 @@
                 "level": 46
             },
             {
-                "name": "bide",
-                "level": 1
-            },
-            {
                 "name": "high-jump-kick",
                 "level": 32
             },
@@ -70508,10 +70151,6 @@
             {
                 "name": "recover",
                 "level": 55
-            },
-            {
-                "name": "bide",
-                "level": 1
             },
             {
                 "name": "high-jump-kick",
@@ -70784,10 +70423,7 @@
                 "name": "bite",
                 "level": 28
             },
-            {
-                "name": "roar",
-                "level": 36
-            },
+            
             {
                 "name": "thunder-wave",
                 "level": 4
@@ -70826,10 +70462,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -70979,10 +70612,7 @@
                 "name": "bite",
                 "level": 30
             },
-            {
-                "name": "roar",
-                "level": 42
-            },
+            
             {
                 "name": "thunder-wave",
                 "level": 1
@@ -71025,10 +70655,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -73072,10 +72699,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -73277,10 +72901,7 @@
                 "name": "growl",
                 "level": 4
             },
-            {
-                "name": "mist",
-                "level": 24
-            },
+            
             {
                 "name": "water-gun",
                 "level": 7
@@ -73335,10 +72956,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -73484,10 +73102,7 @@
                 "name": "growl",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 24
-            },
+            
             {
                 "name": "water-gun",
                 "level": 1
@@ -73542,10 +73157,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -73944,10 +73556,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -76348,10 +75957,7 @@
                 "name": "sing",
                 "level": 9
             },
-            {
-                "name": "mist",
-                "level": 23
-            },
+            
             {
                 "name": "peck",
                 "level": 1
@@ -76563,10 +76169,7 @@
                 "name": "sing",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 23
-            },
+            
             {
                 "name": "peck",
                 "level": 1
@@ -76617,10 +76220,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -76888,10 +76488,7 @@
                 "name": "swords-dance",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -82224,10 +81821,7 @@
                 "name": "gust",
                 "level": 1
             },
-            {
-                "name": "whirlwind",
-                "level": 27
-            },
+            
             {
                 "name": "stomp",
                 "level": 17
@@ -82290,10 +81884,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -83758,10 +83349,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -83977,10 +83565,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -85171,10 +84756,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -85382,10 +84964,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -85617,10 +85196,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -87270,10 +86846,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -87605,10 +87178,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -87916,10 +87486,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -88183,10 +87750,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -88474,10 +88038,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -90854,10 +90415,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -91659,10 +91217,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -91908,10 +91463,7 @@
                 "name": "growl",
                 "level": 4
             },
-            {
-                "name": "mist",
-                "level": 36
-            },
+            
             {
                 "name": "hydro-pump",
                 "level": 43
@@ -91927,10 +91479,6 @@
             {
                 "name": "drill-peck",
                 "level": 39
-            },
-            {
-                "name": "bide",
-                "level": 22
             },
             {
                 "name": "bubble",
@@ -92123,10 +91671,7 @@
                 "name": "growl",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 42
-            },
+            
             {
                 "name": "hydro-pump",
                 "level": 51
@@ -92142,10 +91687,6 @@
             {
                 "name": "drill-peck",
                 "level": 46
-            },
-            {
-                "name": "bide",
-                "level": 24
             },
             {
                 "name": "bubble",
@@ -92358,10 +91899,7 @@
                 "name": "growl",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 46
-            },
+            
             {
                 "name": "hydro-pump",
                 "level": 59
@@ -92412,10 +91950,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -92637,10 +92172,7 @@
                 "name": "wing-attack",
                 "level": 9
             },
-            {
-                "name": "whirlwind",
-                "level": 21
-            },
+            
             {
                 "name": "tackle",
                 "level": 1
@@ -92824,10 +92356,7 @@
                 "name": "wing-attack",
                 "level": 9
             },
-            {
-                "name": "whirlwind",
-                "level": 23
-            },
+            
             {
                 "name": "tackle",
                 "level": 1
@@ -93004,7 +92533,6 @@
             }
         ]
     },
-    
     {
         "id": "staraptor",
         "leveUpMoves": [
@@ -93012,10 +92540,7 @@
                 "name": "wing-attack",
                 "level": 1
             },
-            {
-                "name": "whirlwind",
-                "level": 23
-            },
+            
             {
                 "name": "tackle",
                 "level": 1
@@ -93718,10 +93243,6 @@
                 "level": 1
             },
             {
-                "name": "bide",
-                "level": 1
-            },
-            {
                 "name": "bug-bite",
                 "level": 16
             }
@@ -93763,10 +93284,6 @@
             {
                 "name": "focus-energy",
                 "level": 22
-            },
-            {
-                "name": "bide",
-                "level": 1
             },
             {
                 "name": "leech-life",
@@ -93963,10 +93480,7 @@
                 "name": "bite",
                 "level": 17
             },
-            {
-                "name": "roar",
-                "level": 21
-            },
+            
             {
                 "name": "scary-face",
                 "level": 37
@@ -93997,10 +93511,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "strength",
                 "method": "machine"
@@ -94150,10 +93661,7 @@
                 "name": "bite",
                 "level": 18
             },
-            {
-                "name": "roar",
-                "level": 23
-            },
+            
             {
                 "name": "scary-face",
                 "level": 43
@@ -94184,10 +93692,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "strength",
                 "method": "machine"
@@ -94337,10 +93842,7 @@
                 "name": "bite",
                 "level": 18
             },
-            {
-                "name": "roar",
-                "level": 23
-            },
+            
             {
                 "name": "scary-face",
                 "level": 49
@@ -94371,10 +93873,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -94932,10 +94431,7 @@
                 "name": "swords-dance",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -95211,10 +94707,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -95502,10 +94995,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -95745,10 +95235,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -96710,10 +96197,6 @@
                 "level": 5
             },
             {
-                "name": "bide",
-                "level": 1
-            },
-            {
                 "name": "swift",
                 "level": 21
             },
@@ -97177,10 +96660,7 @@
                 "name": "ice-punch",
                 "method": "tutor"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "surf",
                 "method": "machine"
@@ -100188,10 +99668,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -100658,10 +100135,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -100881,10 +100355,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -102745,10 +102216,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -102972,10 +102440,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -103215,10 +102680,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -103765,10 +103227,7 @@
                 "name": "swords-dance",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "strength",
                 "method": "machine"
@@ -104024,10 +103483,7 @@
                 "name": "swords-dance",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -104291,10 +103747,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "strength",
                 "method": "machine"
@@ -104474,10 +103927,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -104920,10 +104370,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -106547,10 +105994,7 @@
                 "name": "leer",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 21
-            },
+            
             {
                 "name": "blizzard",
                 "level": 41
@@ -106762,10 +106206,7 @@
                 "name": "leer",
                 "level": 1
             },
-            {
-                "name": "mist",
-                "level": 21
-            },
+            
             {
                 "name": "blizzard",
                 "level": 47
@@ -107944,10 +107385,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -109578,10 +109016,7 @@
                 "name": "swords-dance",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -109813,10 +109248,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "ice-beam",
                 "method": "machine"
@@ -110273,10 +109705,7 @@
                 "name": "take-down",
                 "level": 32
             },
-            {
-                "name": "mist",
-                "level": 48
-            },
+            
             {
                 "name": "blizzard",
                 "level": 56
@@ -110335,10 +109764,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "ice-beam",
                 "method": "machine"
@@ -113101,10 +112527,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -113396,10 +112819,7 @@
                 "name": "cut",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -113703,10 +113123,7 @@
             }
         ],
         "otherMoves": [
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -114201,10 +113618,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -114508,10 +113922,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "hyper-beam",
                 "method": "machine"
@@ -114761,10 +114172,7 @@
     {
         "id": "cresselia",
         "leveUpMoves": [
-            {
-                "name": "mist",
-                "level": 20
-            },
+            
             {
                 "name": "aurora-beam",
                 "level": 29
@@ -116054,10 +115462,7 @@
                 "name": "fly",
                 "method": "machine"
             },
-            {
-                "name": "roar",
-                "method": "machine"
-            },
+            
             {
                 "name": "flamethrower",
                 "method": "machine"
@@ -116440,8 +115845,4 @@
             }
         ]
     }
-
-
-
-
 ]
