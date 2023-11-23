@@ -66,7 +66,8 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         
     },
     async execute(interaction){
-        if( moveinfo.findIndex(function(item) { return item.id == interaction.options.getString('move').toLowerCase()}) == -1){
+        
+        if( moves.findIndex(function(item) { return item.move.toLowerCase() == interaction.options.getString('move').toLowerCase()}) == -1){
             return interaction.reply(`${interaction.options.getString('move')} is not a valid move to learn`);
         }
         let playerData; 

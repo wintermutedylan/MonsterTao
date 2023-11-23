@@ -85,9 +85,9 @@ module.exports = {
         
     },
     async execute(interaction){
-        if( moveinfo.findIndex(function(item) { return item.id == interaction.options.getString('forgetmove').toLowerCase()}) == -1){
+        if( moves.findIndex(function(item) { return item.move.toLowerCase() == interaction.options.getString('forgetmove').toLowerCase()}) == -1){
             return interaction.reply(`${interaction.options.getString('forgetmove')} is not a valid move to forget`);
-        } else if( moveinfo.findIndex(function(item) { return item.id == interaction.options.getString('learnmove').toLowerCase()}) == -1){
+        } else if( moves.findIndex(function(item) { return item.move.toLowerCase() == interaction.options.getString('learnmove').toLowerCase()}) == -1){
             return interaction.reply(`${interaction.options.getString('learnmove')} is not a valid move to learn`);
         }
         let playerData; 
