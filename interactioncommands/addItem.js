@@ -67,22 +67,24 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
             
                 await interaction.respond(
-                    filtered.slice(0, 25).map(choice => ({ name: "Name: " + choice.name + ",Cost: " + choice.value, value: choice.name })),
+                    filtered.slice(0, 25).map(choice => ({ name: "Name: " + choice.name + ", Cost: " + choice.value, value: choice.name })),
                 );
                 
             }
             if(focusedOption.name === 'amount'){
                 let limit = Math.floor(playerData.coins/items.find(function(f) { return f.name == interaction.options.getString('item')}).cost)
-                if(limit == 0){
-                    moveChoices = 0;
-                } else {
-                    moveChoices = Array.from({length:limit},(k)=>k+1);
-                }
+                 
+                    var list = [];
+                    for (var i = 0; i <= limit; i++) {
+                        list.push(i.toString());
+                    }
                 
-                const movefiltered = moveChoices.filter(choice => choice.includes(focusedOption.value));
+                
+                
+                const movefiltered = list.filter(choice => choice.includes(focusedOption.value));
             
                 await interaction.respond(
-                    movefiltered.slice(0, 25).map(choice => ({ name: choice, value: choice })),
+                    movefiltered.slice(0, 25).map(choice => ({ name: choice, value: Number(choice) })),
                 );
             }
         }
@@ -97,12 +99,21 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         if( items.findIndex(function(item) { return item.name == interaction.options.getString('item')}) == -1){
             return interaction.reply(`${interaction.options.getString('item')} is not a valid item to buy.`);
         }
-        let newAmount;
         let itemStuff = items.find(function(item) { return item.name == interaction.options.getString('item')});
+        let limit = Math.floor(playerData.coins/(itemStuff.cost));
+        if(limit == 0){
+            return interaction.reply(`You don't have enough coins to buy ${interaction.options.getInteger('amount')} ${interaction.options.getString('item')}`);
+        }
+
+        let newAmount = playerData.coins - (interaction.options.getInteger('amount')*itemStuff.cost);
+        if(newAmount < 0){
+            return interaction.reply("An error has occured and you have gone negative in coins.  please try again. no coins have been deducted");
+        }
+        
         let itemIndex =  playerData.bag.findIndex(function(item) { return item.name == interaction.options.getString('item')})
-        let finalItem;
+        
         if(itemIndex == -1){
-            finalItem = {
+            let finalItem = {
                 name: itemStuff.name,
                 amount: interaction.options.getInteger('amount')
             }
@@ -116,6 +127,42 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                             bag: finalItem
                         }
                         
+                    },
+                    
+                );
+        
+            } catch(err){
+                console.log(err);
+            }
+            try {
+                await playerModel.findOneAndUpdate(
+                    {
+                        userID: ID
+                    },
+                    {
+                        $inc: {
+                            coins: -(interaction.options.getInteger('amount')*itemStuff.cost)
+                        }
+                        
+                    },
+                    
+                );
+        
+            } catch(err){
+                console.log(err);
+            }
+        } else {
+            try {
+                await playerModel.findOneAndUpdate(
+                    {
+                        userID: ID
+                    },
+                    {
+                        $inc: {
+                            ["bag." + itemIndex + ".amount"]: interaction.options.getInteger('amount'),
+                            coins: -(interaction.options.getInteger('amount')*itemStuff.cost)
+                        }
+                        
                     }
                 );
         
@@ -123,23 +170,8 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 console.log(err);
             }
         }
-        try {
-            await playerModel.findOneAndUpdate(
-                {
-                    userID: ID
-                },
-                {
-                    $push: {
-                        ["maids." + pokemonIndex + ".moves"]: modStr
-                    }
-                    
-                }
-            );
-    
-        } catch(err){
-            console.log(err);
-        }
-        interaction.reply(`Your ${pokemonInfo.id} with PC ID of ${pokemonInfo.pcID} learned ${interaction.options.getString('move')}`);
+        
+        interaction.reply(`You have bought ${interaction.options.getInteger('amount')} ${interaction.options.getString('item')}.  ${(interaction.options.getInteger('amount')*itemStuff.cost)} has been deducted.`);
         
 
 

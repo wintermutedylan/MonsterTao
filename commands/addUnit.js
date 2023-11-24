@@ -8,7 +8,7 @@ module.exports = {
     name: 'addunit',
     cooldown: 10,
     aliases: [],
-    permissions: [],
+    permissions: ["ADMINISTRATOR"],
     description: "adds a pokemon to your pc.  arguments it takes are the pokemon name then level in that order",
     async execute(client, message, cmd, args, Discord){
         
