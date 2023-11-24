@@ -7,6 +7,7 @@ var typeList = require("../units/typechart.json");
 var natureTable = require("../units/natures.json");
 var expTable = require("../units/exptable.json");
 var stageCalcs = require("../units/stages.json");
+var items = require("../units/items.json");
 const lucky = require('lucky-item').default;
 const playerModel = require("../models/playerSchema");
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ChannelType, ComponentType, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -106,6 +107,7 @@ module.exports = {
 
         let finalPokemon = {
             id: unit.id,
+            pokedexNumber: unit.number,
             types: unit.types,
             level: wildPokemon.level,
             nature: pickedNature.name,
@@ -123,6 +125,7 @@ module.exports = {
             healthIV: healthIV,
             baseXP: unit.baseEXP,
             evs: unit.evMap,
+            growthRate: unit.growthRate,
             stages: {
                 attack: 0,
                 defense: 0,
@@ -282,10 +285,9 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                 
             }
             thread.send("Seems you are out of usable units.  you have died.  better luck next time. The thread will be deleted in 15 seconds");
-            setTimeout(15000)
             setTimeout(() => {
                 thread.delete();
-              }, "15000");
+              }, 15000);
             
             return;
         } else {
@@ -474,7 +476,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             thread.send(`You have defeated the wild ${p2current.id} congrats.  This thread will self-destruct in 15 seconds`); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
             setTimeout(() => {
                 thread.delete();
-              }, "15000");
+              }, 15000);
             return;
         } else {
             //force the bot to swap to a random unit for now
@@ -523,7 +525,8 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                  
                 } else if (s.toLowerCase() == 'item'){
                     //for items have then categorized as ball, heal, and 
-                    thread.send("this is a placeholder this doesn't work rn");
+                    useItem(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
                     
                  
                 } else if (s.toLowerCase() == 'switch'){
@@ -545,6 +548,332 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
 
     }
 
+}
+async function useItem(p1party, p2party, p1current, p2current, thread, author, turn){
+        thread.send('What type of item would you like to use: Heal, Ball, or type cancel to go back');
+
+
+        const filter = (m) => {
+            return  m.author.id === author.id && (m.content.toLowerCase() === 'heal' || m.content.toLowerCase() === 'ball' || m.content.toLowerCase() == 'cancel' );
+        }
+        const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+        var s;
+        
+        
+
+        collector.on('collect', message => {
+            s = message.content;
+            
+        });
+
+        collector.on('end', collected => {
+        
+            if (collected.size === 0) {
+                
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+                return
+            }
+            
+                if (s.toLowerCase() == 'cancel'){
+                    
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                 
+                } else if (s.toLowerCase() == 'heal'){
+                    //for items have then categorized as ball, heal, and 
+                    thread.send("Not implemented yet going back to battle main function");
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+                    
+                 
+                } else if (s.toLowerCase() == 'ball'){
+                    selectBall(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+                    
+                 
+                }
+            
+            
+        });
+}
+async function selectBall(p1party, p2party, p1current, p2current, thread, author, turn){
+
+    let playerBag; 
+    playerBag = await playerModel.findOne({ userID: author.id});
+    let balls = [];
+    let ballString = "";
+    for(let b = 0 ; b < playerBag.bag.length; b++){
+        let foundItem = items.find(function(x){ return x.type == 'ball' && x.name == playerBag.bag[b].name});
+        if(foundItem){
+            let f = {
+                name: foundItem.name,
+                catchModifier: foundItem.catchModifier,
+                amount: playerBag.bag[b].amount
+            }
+            balls.push(f);
+            ballString += `${foundItem.name}, owned: ${playerBag.bag[b].amount}\n`;
+        }
+    }
+    
+        
+    
+    thread.send(`What ball would you like to use:\n${ballString}`);
+
+
+    const filter = (m) => {
+        let hasItem = false;
+        for (let j = 0; j < balls.length; j++){
+            if (m.content.toLowerCase() === balls[j].name.toLowerCase()){
+                hasItem = true;
+                break;
+            }
+        }
+        return  m.author.id === author.id && (hasItem || m.content.toLowerCase() === "cancel");
+    }
+    const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+    var s;
+    
+    
+
+    collector.on('collect', message => {
+        s = message.content;
+        
+    });
+
+    collector.on('end', collected => {
+    
+        if (collected.size === 0) {
+            
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            
+            return
+        }
+        
+            if (s.toLowerCase() == 'cancel'){
+                
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+            } else {
+                let newBagArray = playerBag.bag;
+                let ball = balls.find(function(item) { return item.name.toLowerCase() == s.toLowerCase()})
+                let modifier = ball.catchModifier;
+                let statusModifier = 1;
+                let ballIndex = playerBag.bag.findIndex(function(h) { return h.name == ball.name});
+                if(p2current.statusMap.asleep == true || p2current.statusMap.frozen == true){
+                    statusModifier = 2;
+                } else if(p2current.statusMap.burn == true || p2current.statusMap.poisoned == true || p2current.statusMap.paralysis == true){
+                    statusModifier = 1.5;
+                } else {
+                    statusModifier = 1;
+                }
+                if(ball.amount - 1 == 0){
+                    if(ballIndex > -1){
+                        newBagArray.splice(ballIndex, 1); 
+                        removeBall(author.id, newBagArray)
+                    }   
+                } else {
+                    removeBallAmount(author.id, ballIndex);
+                }
+                let fullCatchRate = ((3 * p2current.health - 2 * p2current.currentHealth) / (3 * p2current.health)) * p2current.catchRate * modifier * statusModifier;
+                let shakeTimes = 0;
+                if(fullCatchRate >= 255){
+                    shakeTimes = 4;
+                } else {
+                    for(let shake = 0; shake < 4; shake++){
+                        let shakeRandomNumber = randomIntFromInterval(0, 65535);
+                        let shakeCheck = Math.floor(1048560/Math.floor(Math.sqrt(Math.floor(Math.sqrt(Math.floor(16711680/fullCatchRate))))));
+                        
+                        if(shakeRandomNumber < shakeCheck){
+                            shakeTimes += 1;
+                        }
+
+                    }
+                }
+                let delay = 1000; //1 second delay that will increase in the for loop
+                if(shakeTimes == 0){
+                    setTimeout(() => {
+                        thread.send("Oh, no! The Pokémon broke free!");
+                        turn++;
+                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                    }, delay)
+                    
+                } else if(shakeTimes == 1){
+                    for(let i = 0; i < 1; i++){
+                        setTimeout(() => {
+                            thread.send("*Shake*");
+                        }, delay);
+                        delay+= 1000;
+                    }
+                    setTimeout(() => {
+                        thread.send("Aww! It appeared to be caught!");
+                        turn++;
+                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                    }, delay);
+
+                } else if(shakeTimes == 2){
+                    for(let i = 0; i < 2; i++){
+                        setTimeout(() => {
+                            thread.send("*Shake*");
+                        }, delay);
+                        delay+= 1000;
+                    }
+                    setTimeout(() => {
+                        thread.send("Aargh! Almost had it!");
+                        turn++;
+                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                    }, delay);
+
+                } else if(shakeTimes == 3){
+                    for(let i = 0; i < 3; i++){
+                        setTimeout(() => {
+                            thread.send("*Shake*");
+                        }, delay);
+                        delay+= 1000;
+                    }
+                    setTimeout(() => {
+                        thread.send("Shoot! It was so close, too!");
+                        turn++;
+                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                    }, delay);
+
+                } else {
+                    for(let i = 0; i < 4; i++){
+                        setTimeout(() => {
+                            thread.send("*Shake*");
+                        }, delay);
+                        delay+= 1000;
+                    }
+                    setTimeout(() => {
+                        
+                        thread.send(`Gotcha! ${p2current.id} was caught!`);
+                        let pcID = playerBag.maids.length + 1;
+                        
+                        
+                        let unitExp = expTable.find(function(item) { return item.name == p2current.growthRate});
+                        let exp = unitExp.levelTable.find(function(expItem) { return expItem.level == p2current.level}).experience;
+                        let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == p2current.level + 1});
+                        const newEmbed = new EmbedBuilder()
+                        .setColor('#E76AA3')
+                        .setTitle(`Pokemon Info`)
+                        .setDescription(`__**${p2current.id} PCID# ${pcID}**__`)
+                        .setFields(
+                            {name: "Level", value:`Level: ${p2current.level}, EXP: ${exp}/${expToNextLevel.experience}` },
+                            {name: "Stats", value:`Hp: ${p2current.health}/${p2current.health}, Atk: ${p2current.attack}, SpAtk: ${p2current.specialAttack}, Def: ${p2current.defense}, SpDef: ${p2current.specialDefense}` },
+                            {name: "IVs", value: `Hp: ${p2current.healthIV}, Atk: ${p2current.attackIV}, SpAtk: ${p2current.specialAttackIV}, Def: ${p2current.defenseIV}, SpDef: ${p2current.specialDefenseIV}`}
+                        )
+                        thread.send({content: "Here are the stats of the pokemon you just caught", embeds:[newEmbed]});
+                        addUnit(p2current, author.id, p2current.level, pcID, exp, p2current.nature);
+                        thread.send("This thread will now self-destruct in 15 seconds.")
+                        setTimeout(() => {
+                            thread.delete();
+                          }, 15000);
+                        return;
+                    }, delay);
+
+                }
+
+
+            }
+        
+        
+    });
+}
+async function addUnit(unit, ID, level, pcID, exp, nature){
+    
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $push: {
+                    maids: {
+                        "pcID": pcID,
+                        "pokedexNumber": unit.number,
+                        "id": unit.id,
+                        "types": unit.types,
+                        "level": level,
+                        "experience": exp,
+                        "nature": nature,
+                        "happiness": 0,
+                        "growthRate": unit.growthRate,
+                        "health": unit.health,
+                        "attack": unit.attack,
+                        "defense": unit.defense,
+                        "specialAttack": unit.specialAttack,
+                        "specialDefense": unit.specialDefense,
+                        "currentHealth": unit.health,
+                        "moves": unit.moves,
+                        "ivMap": {
+                            "healthIV": unit.healthIV,
+                            "attackIV": unit.attackIV,
+                            "defenseIV": unit.defenseIV,
+                            "specialAttackIV": unit.specialAttackIV,
+                            "specialDefenseIV": unit.specialDefenseIV
+                        },
+                        "evMap": {
+                            "hp": 0,
+                            "attack": 0,
+                            "defense": 0,
+                            "specialAttack": 0,
+                            "specialDefense": 0
+                        },
+                        "statusMap": {
+                            "burned": false, 
+                            "frozen": false, 
+                            "paralysis": false, 
+                            "poisoned": false, 
+                            "asleep": false, 
+                            "sleepTurns": 0, 
+                            "confusion": false, 
+                            "confusionTurns": 0
+                        }
+                        
+                    }
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+async function removeBallAmount(ID, location){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $inc: {
+                    ["bag." + location + ".amount"]: -1
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+async function removeBall(ID, bagArray){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $set: {
+                    bag: bagArray
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
 }
 async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, forceSwape = false){
     if(turn % 2 == 1){
@@ -1296,7 +1625,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Fire-punch":
             case "Flamethrower":
             case "Fire-blast":
-                let isBurned = nonVolitileCheck(p1current, p2current, turn, 10, ["Fire"]);
+                let isBurned = nonVolitileCheck(p1current, p2current, turn, 10, ["Fire"], thread);
                 if(isBurned && turn % 2 == 1){
                     p2current.statusMap.burned = true;
                     thread.send(`The wild ${p2current.id} has been burned.`);
@@ -1308,20 +1637,14 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
+                    
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }
             case "Ice-punch":
             case "Ice-beam":
             case "Blizzard":
-                let isFrozen = nonVolitileCheck(p1current, p2current, turn, 10, ["Ice"]);
+                let isFrozen = nonVolitileCheck(p1current, p2current, turn, 10, ["Ice"], thread);
                 if(isFrozen && turn % 2 == 1){
                     p2current.statusMap.frozen = true;
                     thread.send(`The wild ${p2current.id} has been frozen.`);
@@ -1347,7 +1670,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Thunder-shock":
             case "Thunderbolt":
             case "Thunder":
-                let isParalysis = nonVolitileCheck(p1current, p2current, turn, 10, ["Electric"]);
+                let isParalysis = nonVolitileCheck(p1current, p2current, turn, 10, ["Electric"], thread);
                 if(isParalysis && turn % 2 == 1){
                     p2current.statusMap.paralysis = true;
                     thread.send(`The wild ${p2current.id} has been paralyzed.`);
@@ -1406,7 +1729,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             case "Body-slam":
             case "Lick":
-                let bodyCheck = nonVolitileCheck(p1current, p2current, turn, 30, ["Electric"]);
+                let bodyCheck = nonVolitileCheck(p1current, p2current, turn, 30, ["Electric"], thread);
                 if(bodyCheck && turn % 2 == 1){
                     p2current.statusMap.paralysis = true;
                     thread.send(`The wild ${p2current.id} has been paralyzed.`);
@@ -1429,7 +1752,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     break;
                 }
             case "Smog":
-                let smogCheck = nonVolitileCheck(p1current, p2current, turn, 40, ["Poison", "Steel"]);
+                let smogCheck = nonVolitileCheck(p1current, p2current, turn, 40, ["Poison", "Steel"], thread);
                 if(smogCheck && turn % 2 == 1){
                     p2current.statusMap.poisoned = true;
                     thread.send(`The wild ${p2current.id} has been poisoned.`);
@@ -1452,7 +1775,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     break;
                 }
             case "Sludge":
-                let sludgeCheck = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"]);
+                let sludgeCheck = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"], thread);
                 if(sludgeCheck && turn % 2 == 1){
                     p2current.statusMap.poisoned = true;
                     thread.send(`The wild ${p2current.id} has been poisoned.`);
@@ -1540,7 +1863,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     
                 }
             case "Poison-sting":
-                let isPoisoned = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"]);
+                let isPoisoned = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"], thread);
                 if(isPoisoned && turn % 2 == 1){
                     p2current.statusMap.poisoned = true;
                     thread.send(`The wild ${p2current.id} has been poisoned.`);
@@ -1563,7 +1886,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     break;
                 }
             case "Twineedle":
-                let Poisoned = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"]);
+                let Poisoned = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"], thread);
                 if(Poisoned && turn % 2 == 1){
                     p2current.statusMap.poisoned = true;
                     thread.send(`The wild ${p2current.id} has been poisoned.`);
@@ -1640,7 +1963,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Sleep-powder":
             case "Lovely-kiss":
             case "Spore":
-                let isSleep = nonVolitileCheck(p1current, p2current, turn, 100, []);
+                let isSleep = nonVolitileCheck(p1current, p2current, turn, 100, [], thread);
                 if(isSleep && turn % 2 == 1){
                     p2current.statusMap.sleep = true;
                     p2current.statusMap.sleepTurns = randomIntFromInterval(1,5);
@@ -1842,7 +2165,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Stun-spore":
             case "Thunder-wave":
             case "Glare":
-                let isStun = nonVolitileCheck(p1current, p2current, turn, 100, ["Electric"]);
+                let isStun = nonVolitileCheck(p1current, p2current, turn, 100, ["Electric"], thread);
                 
                 if(isStun && turn % 2 == 1){
 
@@ -1869,7 +2192,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 break;
             case "Toxic":
 
-                let isToxic = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"]);
+                let isToxic = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"], thread);
                 if(isToxic && turn % 2 == 1){
 
                     p2current.statusMap.poisoned = true;
@@ -1892,7 +2215,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             case "Poison-powder":
             case "Poison-gas":
-                let isPisonStuff = nonVolitileCheck(p1current, p2current, turn, 100, ["Poison", "Steel"]);
+                let isPisonStuff = nonVolitileCheck(p1current, p2current, turn, 100, ["Poison", "Steel"], thread);
                 if(isPisonStuff && turn % 2 == 1){
 
                     p2current.statusMap.poisoned = true;
@@ -1983,7 +2306,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     
                     for (let j = 0; j < p1party.length; j++){ //updates health for the current pokemon out
                         if (p1current.id === p1party[j].id){
-                            p1party[j].currentHealth += healAmount;
+                            p1party[j].currentHealth = p1party[j].currentHealth + healAmount;
                             let total = p1party[j].currentHealth + healAmount;  
                             if(total > p1party[j].health){
                                 p1party[j].currentHealth = p1party[j].health;
@@ -2002,7 +2325,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     
                     for (let j = 0; j < p2party.length; j++){ //updates health for the current pokemon out
                         if (p2current.id === p2party[j].id){
-                            p2party[j].currentHealth += healAmount
+                            p2party[j].currentHealth = p2party[j].currentHealth + healAmount;
                             let total = p2party[j].currentHealth + healAmount;  
                             if(total > p2party[j].health){
                                 p2party[j].currentHealth = p2party[j].health;
@@ -2146,9 +2469,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     break;
                 }
             case "Tri-attack":
-                let tri1Check = nonVolitileCheck(p1current, p2current, turn, 20, ["Electric"]);
-                let tri2Check = nonVolitileCheck(p1current, p2current, turn, 20, ["Fire"]);
-                let tri3Check = nonVolitileCheck(p1current, p2current, turn, 20, ["Ice"]);
+                let tri1Check = nonVolitileCheck(p1current, p2current, turn, 20, ["Electric"], thread);
+                let tri2Check = nonVolitileCheck(p1current, p2current, turn, 20, ["Fire"], thread);
+                let tri3Check = nonVolitileCheck(p1current, p2current, turn, 20, ["Ice"], thread);
                 if((tri1Check || tri2Check || tri3Check) && turn % 2 == 1){
                     if(tri1Check){
                         p2current.statusMap.paralysis = true;
@@ -2283,9 +2606,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             
                 thread.send({ embeds: [newEmbed] });
             } else if(stageQuote != "" && damage != 0){
-                for (let j = 0; j < p2party.length; j++){
-                    if (p2current.id === p2party[j].id){
-                        p2party[j].currentHealth = p2party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                for (let j = 0; j < p1party.length; j++){
+                    if (p1current.id === p1party[j].id){
+                        p1party[j].currentHealth = p1party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
                     }
                 }
                 
@@ -2530,7 +2853,7 @@ function getStatus(p1current, p2current){
     results.push(p2status);
     return results;
 }
-function nonVolitileCheck(p1current, p2current, turn, chance, immuneType){
+function nonVolitileCheck(p1current, p2current, turn, chance, immuneType, thread){
     let results = false;
     let p1type = maids.find(function(item) { return item.id.toLowerCase() == p1current.id.toLowerCase()}).types;
     let p2type = maids.find(function(item) { return item.id.toLowerCase() == p2current.id.toLowerCase()}).types;
@@ -2548,13 +2871,20 @@ function nonVolitileCheck(p1current, p2current, turn, chance, immuneType){
                 affect = true;
             }
         }
-        if(affect || p2status.length > 0){
+        if(affect){
             results = false;
+            
         } else {
             let amountCheck = Math.round(Math.random() * 100);
             
-            if (amountCheck < chance){ 
-                results = true;
+            if (amountCheck < chance){
+                if(p2status.length > 0){
+                    thread.send(`The wild ${p2current.id} already has a status.`);
+                    results = false;
+                } else {
+                    results = true;
+                }
+                
             } else {
                 results = false;
             }
@@ -2579,7 +2909,14 @@ function nonVolitileCheck(p1current, p2current, turn, chance, immuneType){
             let amountCheck = Math.round(Math.random() * 100);
             
             if (amountCheck < chance){ 
-                results = true;
+                if(p1status.length > 0){
+                    thread.send(`Your ${p1current.id} already has a status.`);
+                    results = false;
+                } else {
+                    results = true;
+                }
+                
+                
             } else {
                 results = false;
             }
