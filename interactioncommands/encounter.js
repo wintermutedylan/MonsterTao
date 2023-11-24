@@ -1656,13 +1656,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
+                    
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }
@@ -1682,13 +1676,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
+                    
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }
@@ -1741,13 +1729,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
+                    
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }
@@ -1764,13 +1746,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
+                    
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }
@@ -1787,13 +1763,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
+                    
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }
@@ -1875,13 +1845,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
+                    
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }
@@ -1899,13 +1863,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     break;
                 } else {
                     
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
+                    
                     
                     damage = damageFormula(moveDetails, p1current, p2current, turn) + damageFormula(moveDetails, p1current, p2current, turn);
                     break;
@@ -1977,14 +1935,8 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
                     
+                    thread.send("The move failed");
                     break;
                 }
             case "Supersonic":
@@ -2179,13 +2131,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
+                    thread.send("The move failed");
                         break;
-                    } else {
-                        thread.send(`Your${p1current.id} already has a status.`);
-                        break;
-                    }
+                    
                 }
             case "Dragon-rage":
                 damage = 40;
@@ -2205,13 +2153,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
+                    thread.send("The move failed");
                         break;
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        break;
-                    }
+                    
                 }
             case "Poison-powder":
             case "Poison-gas":
@@ -2228,13 +2172,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     
                     break;
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
+                    thread.send("The move failed");
                         break;
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        break;
-                    }
+                    
                 }
             case "Psychic":
                 let psychicCheck = Math.round(Math.random() * 100);
@@ -2508,13 +2448,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         break;
                     }
                 } else {
-                    if(turn % 2 == 1){
-                        thread.send(`The wild ${p2current.id} already has a status.`);
-                        
-                    } else {
-                        thread.send(`Your ${p1current.id} already has a status.`);
-                        
-                    }
+                    
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }

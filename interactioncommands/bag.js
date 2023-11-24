@@ -22,7 +22,7 @@ module.exports = {
         const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')
         .setTitle(`${interaction.user.username}'s Bag`)
-        .setDescription(`**Total coins:** ${new Intl.NumberFormat().format(totalCoins)}\n${bagString}THIS IS A PLACEHODER \nTHIS WILL BE WHERE YOU SEE YOUR BALLS, ITEMS, COINS, TMS`)
+        .setDescription(`**Total coins:** ${new Intl.NumberFormat().format(totalCoins)}\n${bagString}`)
         
 
         
