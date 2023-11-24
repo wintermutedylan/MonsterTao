@@ -30,36 +30,45 @@ module.exports = {
         let choices;
         let playerData; 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
+        if(!playerData){
+            choices = ["You don't exist. Please run /register to create a profile"]
+            const filtered = choices.filter(choice => choice.includes(focusedOption.value));
         
-        
+            await interaction.respond(
+                filtered.map(choice => ({ name: choice, value: choice })),
+            );
 
-        
-        if (focusedOption.name === 'pokemon') {
-            
-            let pokemon = [];
-            for(let i = 0; i < playerData.maids.length; i++){
-                let x = {
-                    name:  playerData.maids[i].id,
-                    value: playerData.maids[i].pcID.toString()
+        } else {
+ 
+            if (focusedOption.name === 'pokemon') {
+                
+                let pokemon = [];
+                for(let i = 0; i < playerData.maids.length; i++){
+                    let x = {
+                        name:  playerData.maids[i].id,
+                        value: playerData.maids[i].pcID.toString()
+                    }
+                    pokemon.push(x);
                 }
-                pokemon.push(x);
+                
+                choices = pokemon;
+                
+                
             }
-            
-            choices = pokemon;
-            
-            
-        }
 
-        const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
-        
-        await interaction.respond(
-            filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.value + ": " + choice.name, value: choice.value })),
-        );
+            const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
+            
+            await interaction.respond(
+                filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.value + ": " + choice.name, value: choice.value })),
+            );
+        }
     },
     
     async execute(interaction){
         let playerData; 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
+        if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
+        var ID = interaction.user.id;
         let sorted = playerData.maids.find( function(item) { return item.pcID == interaction.options.getString('pokemon') } );
         const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')

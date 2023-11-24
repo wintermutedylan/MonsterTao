@@ -2,31 +2,41 @@ const { userMention, memberNicknameMention, channelMention, roleMention  } = req
 var maids = require("../units/maids.json");
 var moves = require("../units/moves.json");
 var moveinfo = require("../units/moveinfo.json");
+var items = require("../units/items.json");
 const playerModel = require("../models/playerSchema");
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ChannelType, ComponentType, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = { //make this a slash command where when you enter the pcid it iwll get all the moves you can learn at your level
     cooldown: 10,
     data: new SlashCommandBuilder()
-		.setName('learnmove')
+		.setName('buyitem')
 		.setDescription('Add a move to one of your pokemon')
         
+        .addStringOption(option =>
+			option.setName('type')
+				.setDescription('Type of item you want to buy')
+                .setRequired(true)
+				.addChoices(
+                    { name: 'Heal', value: 'heal'},
+                    { name: 'Ball', value: 'ball'}
+                    
+                    ))
         .addStringOption(option => 
             option
-                .setName('pokemon')
-                .setDescription('The name of the pokemon you want to add a move to')
+                .setName('item')
+                .setDescription('The item you want to buy')
                 .setAutocomplete(true)
                 .setRequired(true))
-        .addStringOption(option => 
+        .addIntegerOption(option => 
             option
-                .setName('move')
-                .setDescription('The moves it can learn at its current level')
+                .setName('amount')
+                .setDescription('The amount of the selected item you want to buy')
                 .setAutocomplete(true)
                 .setRequired(true)),
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
         let choices;
-        let moveChoices;
+        let moveChoices = [];
         let playerData; 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
         
@@ -41,13 +51,14 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         } else {
 
         
-            if (focusedOption.name === 'pokemon') {
+            if (focusedOption.name === 'item') {
                 
                 let pokemon = [];
-                for(let i = 0; i < playerData.maids.length; i++){
+                
+                for(let i = 0; i < items.filter(item => item.type == interaction.options.getString('type')).length; i++){
                     let x = {
-                        name: playerData.maids[i].id,
-                        value: playerData.maids[i].pcID.toString()
+                        name: items[i].name,
+                        value: items[i].cost
                     }
                     pokemon.push(x);
                 }
@@ -56,18 +67,22 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
             
                 await interaction.respond(
-                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.value + ": " + choice.name, value: choice.value })),
+                    filtered.slice(0, 25).map(choice => ({ name: "Name: " + choice.name + ",Cost: " + choice.value, value: choice.name })),
                 );
                 
             }
-            if(focusedOption.name === 'move'){
-                let pokemonStuff = playerData.maids.find(function(expItem) { return expItem.pcID == Number(interaction.options.getString('pokemon'))});
-                let movesCanLearn = moveinfo.find(function(item) { return item.id == pokemonStuff.id.toLowerCase()});
-                moveChoices = movesCanLearn.leveUpMoves.filter(m => pokemonStuff.level >= m.level);
-                const movefiltered = moveChoices.filter(choice => choice.name.includes(focusedOption.value));
+            if(focusedOption.name === 'amount'){
+                let limit = Math.floor(playerData.coins/items.find(function(f) { return f.name == interaction.options.getString('item')}).cost)
+                if(limit == 0){
+                    moveChoices = 0;
+                } else {
+                    moveChoices = Array.from({length:limit},(k)=>k+1);
+                }
+                
+                const movefiltered = moveChoices.filter(choice => choice.includes(focusedOption.value));
             
                 await interaction.respond(
-                    movefiltered.slice(0, 25).map(choice => ({ name: choice.name, value: choice.name })),
+                    movefiltered.slice(0, 25).map(choice => ({ name: choice, value: choice })),
                 );
             }
         }
@@ -79,17 +94,35 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
         if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         var ID = interaction.user.id;
-        if( moves.findIndex(function(item) { return item.move.toLowerCase() == interaction.options.getString('move').toLowerCase()}) == -1){
-            return interaction.reply(`${interaction.options.getString('move')} is not a valid move to learn`);
+        if( items.findIndex(function(item) { return item.name == interaction.options.getString('item')}) == -1){
+            return interaction.reply(`${interaction.options.getString('item')} is not a valid item to buy.`);
         }
+        let newAmount;
+        let itemStuff = items.find(function(item) { return item.name == interaction.options.getString('item')});
+        let itemIndex =  playerData.bag.findIndex(function(item) { return item.name == interaction.options.getString('item')})
+        let finalItem;
+        if(itemIndex == -1){
+            finalItem = {
+                name: itemStuff.name,
+                amount: interaction.options.getInteger('amount')
+            }
+            try {
+                await playerModel.findOneAndUpdate(
+                    {
+                        userID: ID
+                    },
+                    {
+                        $push: {
+                            bag: finalItem
+                        }
+                        
+                    }
+                );
         
-        
-        let pokemonInfo = playerData.maids.find(function(item) { return item.pcID == Number(interaction.options.getString('pokemon'))})
-        let pokemonIndex =  playerData.maids.findIndex(function(item) { return item.pcID == Number(interaction.options.getString('pokemon'))})
-        if(pokemonInfo.moves.length >= 4) return interaction.reply(`${pokemonInfo.id} already knows 4 moves, please use the command replace move`);
-        let str = interaction.options.getString('move');
-        let modStr = str[0].toUpperCase() + str.slice(1);
-
+            } catch(err){
+                console.log(err);
+            }
+        }
         try {
             await playerModel.findOneAndUpdate(
                 {

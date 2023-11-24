@@ -1,286 +1,286 @@
 [
     {
-        "number": 1,
-        "id": "Bulbasaur",
-        "types": [
-            "Grass",
-            "Poison"
-        ],
-        "health": 45,
-        "attack": 49,
-        "defense": 49,
-        "specialAttack": 65,
-        "specialDefense": 65,
-        "moves": [],
-        "healthIV": 0,
-        "attackIV": 0,
-        "defenseIV": 0,
-        "specialAttackIV": 0,
-        "specialDefenseIV": 0,
-        "growthRate": "medium-slow",
-        "baseEXP": 64,
-        "evMap": {
-            "hp": 0,
-            "attack": 0,
-            "defense": 0,
-            "specialAttack": 1,
-            "specialDefense": 0
-        },
-        "evolutionDetails": {
-            "evolvesTo": "ivysaur",
-            "evolutionData": {
-                "gender": null,
-                "held_item": null,
-                "item": null,
-                "known_move": null,
-                "known_move_type": null,
-                "location": null,
-                "min_affection": null,
-                "min_beauty": null,
-                "min_happiness": null,
-                "min_level": 16,
-                "needs_overworld_rain": false,
-                "party_species": null,
-                "party_type": null,
-                "relative_physical_stats": null,
-                "time_of_day": "",
-                "trade_species": null,
-                "trigger": {
-                    "name": "level-up",
-                    "url": "https://pokeapi.co/api/v2/evolution-trigger/1/"
-                },
-                "turn_upside_down": false
-            },
-            "is_baby": false
-        }
+        "name": "celadon-city-area",
+        "badges": 0
     },
     {
-        "number": 2,
-        "id": "Ivysaur",
-        "types": [
-            "Grass",
-            "Poison"
-        ],
-        "health": 60,
-        "attack": 62,
-        "defense": 63,
-        "specialAttack": 80,
-        "specialDefense": 80,
-        "moves": [],
-        "healthIV": 0,
-        "attackIV": 0,
-        "defenseIV": 0,
-        "specialAttackIV": 0,
-        "specialDefenseIV": 0,
-        "growthRate": "medium-slow",
-        "baseEXP": 142,
-        "evMap": {
-            "hp": 0,
-            "attack": 0,
-            "defense": 0,
-            "specialAttack": 1,
-            "specialDefense": 1
-        },
-        "evolutionDetails": {
-            "evolvesTo": "venusaur",
-            "evolutionData": {
-                "gender": null,
-                "held_item": null,
-                "item": null,
-                "known_move": null,
-                "known_move_type": null,
-                "location": null,
-                "min_affection": null,
-                "min_beauty": null,
-                "min_happiness": null,
-                "min_level": 32,
-                "needs_overworld_rain": false,
-                "party_species": null,
-                "party_type": null,
-                "relative_physical_stats": null,
-                "time_of_day": "",
-                "trade_species": null,
-                "trigger": {
-                    "name": "level-up",
-                    "url": "https://pokeapi.co/api/v2/evolution-trigger/1/"
-                },
-                "turn_upside_down": false
-            },
-            "is_baby": false
-        }
+        "name": "celadon-city-celadon-mansion",
+        "badges": 0
     },
     {
-        "number": 3,
-        "id": "Venusaur",
-        "types": [
-            "Grass",
-            "Poison"
-        ],
-        "health": 80,
-        "attack": 82,
-        "defense": 83,
-        "specialAttack": 100,
-        "specialDefense": 100,
-        "moves": [],
-        "healthIV": 0,
-        "attackIV": 0,
-        "defenseIV": 0,
-        "specialAttackIV": 0,
-        "specialDefenseIV": 0,
-        "growthRate": "medium-slow",
-        "baseEXP": 263,
-        "evMap": {
-            "hp": 0,
-            "attack": 0,
-            "defense": 0,
-            "specialAttack": 2,
-            "specialDefense": 1
-        },
-        "evolutionDetails": {
-            "evolvesTo": "N/A",
-            "evolutionData": [],
-            "is_baby": false
-        }
+        "name": "cerulean-city-area",
+        "badges": 0
     },
     {
-        "number": 4,
-        "id": "Charmander",
-        "types": [
-            "Fire"
-        ],
-        "health": 39,
-        "attack": 52,
-        "defense": 43,
-        "specialAttack": 60,
-        "specialDefense": 50,
-        "moves": [],
-        "healthIV": 0,
-        "attackIV": 0,
-        "defenseIV": 0,
-        "specialAttackIV": 0,
-        "specialDefenseIV": 0,
-        "growthRate": "medium-slow",
-        "baseEXP": 62,
-        "evMap": {
-            "hp": 0,
-            "attack": 0,
-            "defense": 0,
-            "specialAttack": 0,
-            "specialDefense": 0
-        },
-        "evolutionDetails": {
-            "evolvesTo": "charmeleon",
-            "evolutionData": {
-                "gender": null,
-                "held_item": null,
-                "item": null,
-                "known_move": null,
-                "known_move_type": null,
-                "location": null,
-                "min_affection": null,
-                "min_beauty": null,
-                "min_happiness": null,
-                "min_level": 16,
-                "needs_overworld_rain": false,
-                "party_species": null,
-                "party_type": null,
-                "relative_physical_stats": null,
-                "time_of_day": "",
-                "trade_species": null,
-                "trigger": {
-                    "name": "level-up",
-                    "url": "https://pokeapi.co/api/v2/evolution-trigger/1/"
-                },
-                "turn_upside_down": false
-            },
-            "is_baby": false
-        }
+        "name": "cinnabar-island-area",
+        "badges": 0
     },
     {
-        "number": 5,
-        "id": "Charmeleon",
-        "types": [
-            "Fire"
-        ],
-        "health": 58,
-        "attack": 64,
-        "defense": 58,
-        "specialAttack": 80,
-        "specialDefense": 65,
-        "moves": [],
-        "healthIV": 0,
-        "attackIV": 0,
-        "defenseIV": 0,
-        "specialAttackIV": 0,
-        "specialDefenseIV": 0,
-        "growthRate": "medium-slow",
-        "baseEXP": 142,
-        "evMap": {
-            "hp": 0,
-            "attack": 0,
-            "defense": 0,
-            "specialAttack": 1,
-            "specialDefense": 0
-        },
-        "evolutionDetails": {
-            "evolvesTo": "charizard",
-            "evolutionData": {
-                "gender": null,
-                "held_item": null,
-                "item": null,
-                "known_move": null,
-                "known_move_type": null,
-                "location": null,
-                "min_affection": null,
-                "min_beauty": null,
-                "min_happiness": null,
-                "min_level": 36,
-                "needs_overworld_rain": false,
-                "party_species": null,
-                "party_type": null,
-                "relative_physical_stats": null,
-                "time_of_day": "",
-                "trade_species": null,
-                "trigger": {
-                    "name": "level-up",
-                    "url": "https://pokeapi.co/api/v2/evolution-trigger/1/"
-                },
-                "turn_upside_down": false
-            },
-            "is_baby": false
-        }
+        "name": "cinnabar-island-cinnabar-lab",
+        "badges": 0
     },
     {
-        "number": 6,
-        "id": "Charizard",
-        "types": [
-            "Fire",
-            "Flying"
-        ],
-        "health": 78,
-        "attack": 84,
-        "defense": 78,
-        "specialAttack": 109,
-        "specialDefense": 85,
-        "moves": [],
-        "healthIV": 0,
-        "attackIV": 0,
-        "defenseIV": 0,
-        "specialAttackIV": 0,
-        "specialDefenseIV": 0,
-        "growthRate": "medium-slow",
-        "baseEXP": 267,
-        "evMap": {
-            "hp": 0,
-            "attack": 0,
-            "defense": 0,
-            "specialAttack": 3,
-            "specialDefense": 0
-        },
-        "evolutionDetails": {
-            "evolvesTo": "N/A",
-            "evolutionData": [],
-            "is_baby": false
-        }
+        "name": "digletts-cave-area",
+        "badges": 0
+    },
+    {
+        "name": "fuchsia-city-area",
+        "badges": 0
+    },
+    {
+        "name": "mt-moon-1f",
+        "badges": 0
+    },
+    {
+        "name": "mt-moon-b1f",
+        "badges": 0
+    },
+    {
+        "name": "mt-moon-b2f",
+        "badges": 0
+    },
+    {
+        "name": "pallet-town-area",
+        "badges": 0
+    },
+    {
+        "name": "rock-tunnel-b1f",
+        "badges": 0
+    },
+    {
+        "name": "rock-tunnel-b2f",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-1-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-10-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-11-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-12-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-13-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-14-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-15-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-16-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-17-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-18-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-sea-route-19-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-2-south-towards-viridian-city",
+        "badges": 0
+    },
+    {
+        "name": "kanto-sea-route-20-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-sea-route-21-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-22-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-24-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-25-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-3-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-3-pokemon-center",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-4-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-4-pokemon-center",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-5-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-6-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-7-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-8-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-9-area",
+        "badges": 0
+    },
+    {
+        "name": "seafoam-islands-1f",
+        "badges": 0
+    },
+    {
+        "name": "seafoam-islands-b1f",
+        "badges": 0
+    },
+    {
+        "name": "seafoam-islands-b2f",
+        "badges": 0
+    },
+    {
+        "name": "seafoam-islands-b3f",
+        "badges": 0
+    },
+    {
+        "name": "seafoam-islands-b4f",
+        "badges": 0
+    },
+    {
+        "name": "cerulean-cave-1f",
+        "badges": 0
+    },
+    {
+        "name": "cerulean-cave-2f",
+        "badges": 0
+    },
+    {
+        "name": "cerulean-cave-b1f",
+        "badges": 0
+    },
+    {
+        "name": "vermilion-city-area",
+        "badges": 0
+    },
+    {
+        "name": "vermilion-city-ss-anne-dock",
+        "badges": 0
+    },
+    {
+        "name": "viridian-city-area",
+        "badges": 0
+    },
+    {
+        "name": "viridian-forest-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-route-23-area",
+        "badges": 0
+    },
+    {
+        "name": "power-plant-area",
+        "badges": 0
+    },
+    {
+        "name": "kanto-victory-road-2-1f",
+        "badges": 0
+    },
+    {
+        "name": "kanto-victory-road-2-2f",
+        "badges": 0
+    },
+    {
+        "name": "kanto-victory-road-2-3f",
+        "badges": 0
+    },
+    {
+        "name": "pokemon-tower-3f",
+        "badges": 0
+    },
+    {
+        "name": "pokemon-tower-4f",
+        "badges": 0
+    },
+    {
+        "name": "pokemon-tower-5f",
+        "badges": 0
+    },
+    {
+        "name": "pokemon-tower-6f",
+        "badges": 0
+    },
+    {
+        "name": "pokemon-tower-7f",
+        "badges": 0
+    },
+    {
+        "name": "pokemon-mansion-1f",
+        "badges": 0
+    },
+    {
+        "name": "pokemon-mansion-2f",
+        "badges": 0
+    },
+    {
+        "name": "pokemon-mansion-3f",
+        "badges": 0
+    },
+    {
+        "name": "pokemon-mansion-b1f",
+        "badges": 0
+    },
+    {
+        "name": "kanto-safari-zone-middle",
+        "badges": 0
+    },
+    {
+        "name": "kanto-safari-zone-area-1-east",
+        "badges": 0
+    },
+    {
+        "name": "kanto-safari-zone-area-2-north",
+        "badges": 0
+    },
+    {
+        "name": "kanto-safari-zone-area-3-west",
+        "badges": 0
+    },
+    {
+        "name": "saffron-city-fighting-dojo",
+        "badges": 0
+    },
+    {
+        "name": "saffron-city-silph-co-7f",
+        "badges": 0
     }
 ]

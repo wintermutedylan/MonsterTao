@@ -1,0 +1,26 @@
+[
+    {
+        "name": "master-ball",
+        "catchModifier": 255,
+        "cost": 999999,
+        "type": "ball"
+    },
+    {
+        "name": "ultra-ball",
+        "catchModifier": 2,
+        "cost": 800,
+        "type": "ball"
+    },
+    {
+        "name": "great-ball",
+        "catchModifier": 1.5,
+        "cost": 600,
+        "type": "ball"
+    },
+    {
+        "name": "poke-ball",
+        "catchModifier": 1,
+        "cost": 200,
+        "type": "ball"
+    }
+]

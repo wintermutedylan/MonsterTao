@@ -35,7 +35,6 @@ module.exports = {
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
 		let choices;
-
 		if (focusedOption.name === 'route') {
             
             let routes = [];
@@ -59,7 +58,7 @@ module.exports = {
     async execute(interaction){
         let playerData; 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
-        if (!playerData) return interaction.reply("You don't exist. Please try again.");
+        if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         var ID = interaction.user.id;
         let route = interaction.options.getString('route');//use args here.  this is just a placeholder for testing
         let encounterArr = [];
@@ -141,7 +140,8 @@ module.exports = {
                 sleepTurns: 0,
                 confusion: false,
                 confusionTurns: 0
-            }
+            },
+            catchRate: unit.catchRate
         }
         createBattleThread(interaction, finalPokemon);
         
@@ -2567,7 +2567,13 @@ function nonVolitileCheck(p1current, p2current, turn, chance, immuneType){
                 
             }
         }
-        if(p1type.includes(immuneType) || p1status.length > 0){
+        let affect = false;
+        for(let s = 0; s < immuneType.length; s++){
+            if(p1type.includes(immuneType[s])){
+                affect = true;
+            }
+        }
+        if(affect || p1status.length > 0){
             results = false;
         } else {
             let amountCheck = Math.round(Math.random() * 100);

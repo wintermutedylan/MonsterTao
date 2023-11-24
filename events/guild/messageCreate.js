@@ -2,13 +2,15 @@ require('dotenv').config();
 const fs = require("fs");
 const JSON_FILE = "../monstertao/units/friendship.json"; //base experience
 
-
 const playerModel = require("../../models/playerSchema");
 
 
 module.exports = async (Discord, client, message) => {
+    let playerData; 
+    playerData = await playerModel.findOne({ userID: message.author.id});
+    
     const prefix = process.env.PREFIX;
-    if(!message.author.bot && !message.content.startsWith(prefix)){ //stores steps in json file locally.  then when you run the party command it will update mongo
+    if(!message.author.bot && !message.content.startsWith(prefix) && playerData){ //stores steps in json file locally.  then when you run the party command it will update mongo
         try{
         const jsonData = fs.readFileSync(JSON_FILE);
         const newData = JSON.parse(jsonData);
@@ -36,25 +38,6 @@ module.exports = async (Discord, client, message) => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const cmd = args.shift().toLowerCase();
     if (cmd[0] === '!') return;
-
-    let playerData;
-
-        try {
-            playerData = await playerModel.findOne({ userID: message.author.id });
-            if (!playerData){
-                let player = await playerModel.create({
-                    userID: message.author.id,
-                    coins: 0,
-                    maids: [],
-                    currentParty: [],
-                    badges: []
-                    
-                });
-                player.save();
-            }
-        } catch(err){
-            console.log(err);
-        }
     
 
     const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));

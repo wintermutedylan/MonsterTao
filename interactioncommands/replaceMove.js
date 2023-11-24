@@ -33,67 +33,76 @@ module.exports = {
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
         let choices;
-        let moveChoices = [];
         let playerData; 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
         
         
-
+        if(!playerData){
+            choices = ["You don't exist. Please run /register to create a profile"]
+            const filtered = choices.filter(choice => choice.includes(focusedOption.value));
         
-        if (focusedOption.name === 'pokemon') {
-            
-            let pokemon = [];
-            for(let i = 0; i < playerData.maids.length; i++){
-                let x = {
-                    name: playerData.maids[i].id,
-                    value: playerData.maids[i].pcID.toString()
+            await interaction.respond(
+                filtered.map(choice => ({ name: choice, value: choice })),
+            );
+
+        } else {
+            if (focusedOption.name === 'pokemon') {
+                
+                let pokemon = [];
+                for(let i = 0; i < playerData.maids.length; i++){
+                    let x = {
+                        name: playerData.maids[i].id,
+                        value: playerData.maids[i].pcID.toString()
+                    }
+                    pokemon.push(x);
                 }
-                pokemon.push(x);
+                
+                choices = pokemon;
+                const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
+            
+                await interaction.respond(
+                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.value + ": " + choice.name, value: choice.value })),
+                );
+                
             }
+            if(focusedOption.name === 'forgetmove'){
+                let pokemonStuff = playerData.maids.find(function(expItem) { return expItem.pcID == Number(interaction.options.getString('pokemon'))});
+                const movefiltered = pokemonStuff.moves.filter(choice => choice.includes(focusedOption.value));
             
-            choices = pokemon;
-            const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
-        
-            await interaction.respond(
-                filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.value + ": " + choice.name, value: choice.value })),
-            );
-            
-        }
-        if(focusedOption.name === 'forgetmove'){
-            let pokemonStuff = playerData.maids.find(function(expItem) { return expItem.pcID == Number(interaction.options.getString('pokemon'))});
-            const movefiltered = pokemonStuff.moves.filter(choice => choice.includes(focusedOption.value));
-        
-            await interaction.respond(
-                movefiltered.slice(0, 25).map(choice => ({ name: choice, value: choice })),
-            );
-        }
-        if(focusedOption.name === 'learnmove'){
-            let pokemonStuff = playerData.maids.find(function(expItem) { return expItem.pcID == Number(interaction.options.getString('pokemon'))});
-            let movesCanLearn = moveinfo.find(function(item) { return item.id == pokemonStuff.id.toLowerCase()});
-            let maybeMoves = movesCanLearn.leveUpMoves.filter(m => pokemonStuff.level >= m.level);
+                await interaction.respond(
+                    movefiltered.slice(0, 25).map(choice => ({ name: choice, value: choice })),
+                );
+            }
+            if(focusedOption.name === 'learnmove'){
+                let pokemonStuff = playerData.maids.find(function(expItem) { return expItem.pcID == Number(interaction.options.getString('pokemon'))});
+                let movesCanLearn = moveinfo.find(function(item) { return item.id == pokemonStuff.id.toLowerCase()});
+                let maybeMoves = movesCanLearn.leveUpMoves.filter(m => pokemonStuff.level >= m.level);
 
-            for(let h = 0; h < pokemonStuff.moves.length; h++){
-                maybeMoves = maybeMoves.filter(m => m.name != pokemonStuff.moves[h].toLowerCase());
+                for(let h = 0; h < pokemonStuff.moves.length; h++){
+                    maybeMoves = maybeMoves.filter(m => m.name != pokemonStuff.moves[h].toLowerCase());
+                }
+                const movefiltered = maybeMoves.filter(choice => choice.name.includes(focusedOption.value));
+            
+                await interaction.respond(
+                    movefiltered.slice(0, 25).map(choice => ({ name: choice.name, value: choice.name })),
+                );
             }
-            const movefiltered = maybeMoves.filter(choice => choice.name.includes(focusedOption.value));
-        
-            await interaction.respond(
-                movefiltered.slice(0, 25).map(choice => ({ name: choice.name, value: choice.name })),
-            );
         }
 
         
     },
     async execute(interaction){
+        let playerData; 
+        playerData = await playerModel.findOne({ userID: interaction.user.id});
+        if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
+        var ID = interaction.user.id;
+
         if( moves.findIndex(function(item) { return item.move.toLowerCase() == interaction.options.getString('forgetmove').toLowerCase()}) == -1){
             return interaction.reply(`${interaction.options.getString('forgetmove')} is not a valid move to forget`);
         } else if( moves.findIndex(function(item) { return item.move.toLowerCase() == interaction.options.getString('learnmove').toLowerCase()}) == -1){
             return interaction.reply(`${interaction.options.getString('learnmove')} is not a valid move to learn`);
         }
-        let playerData; 
-        playerData = await playerModel.findOne({ userID: interaction.user.id});
-        if (!playerData) return message.channel.send("You don't exist. Please try again.");
-        var ID = interaction.user.id;
+        
         
         let pokemonStuff = playerData.maids.find(function(expItem) { return expItem.pcID == Number(interaction.options.getString('pokemon'))});
         let moveArray = pokemonStuff.moves;

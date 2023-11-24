@@ -4,6 +4,7 @@
         "name": "poliwag",
         "region": "kanto",
         "area": "celadon-city-area",
+        
         "encounter": [
             {
                 "encounter_details": [
@@ -30,6 +31,7 @@
         "name": "poliwhirl",
         "region": "kanto",
         "area": "celadon-city-area",
+        
         "encounter": [
             {
                 "encounter_details": [
@@ -76,6 +78,7 @@
         "name": "slowpoke",
         "region": "kanto",
         "area": "celadon-city-area",
+        
         "encounter": [
             {
                 "encounter_details": [
@@ -122,6 +125,7 @@
         "name": "goldeen",
         "region": "kanto",
         "area": "celadon-city-area",
+        
         "encounter": [
             {
                 "encounter_details": [
@@ -148,6 +152,7 @@
         "name": "magikarp",
         "region": "kanto",
         "area": "celadon-city-area",
+        
         "encounter": [
             {
                 "encounter_details": [
@@ -174,6 +179,7 @@
         "name": "eevee",
         "region": "kanto",
         "area": "celadon-city-celadon-mansion",
+        
         "encounter": [
             {
                 "encounter_details": [

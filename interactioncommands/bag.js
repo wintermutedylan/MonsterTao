@@ -10,17 +10,19 @@ module.exports = {
     async execute(interaction){
         let playerData; 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
-        if (!playerData) return interaction.reply("You don't exist. Please try again.");
+        if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         
         
        
         var totalCoins = playerData.coins;
-       
-        
+        let bagString = "";
+        for(let i = 0; i < playerData.bag.length; i++){
+          bagString += `Name: ${playerData.bag[i].name}, Amount: ${playerData.bag[i].amount}\n`
+        }
         const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')
         .setTitle(`${interaction.user.username}'s Bag`)
-        .setDescription(`**Total coins:** ${new Intl.NumberFormat().format(totalCoins)}\nTHIS IS A PLACEHODER \nTHIS WILL BE WHERE YOU SEE YOUR BALLS, ITEMS, COINS, TMS`)
+        .setDescription(`**Total coins:** ${new Intl.NumberFormat().format(totalCoins)}\n${bagString}THIS IS A PLACEHODER \nTHIS WILL BE WHERE YOU SEE YOUR BALLS, ITEMS, COINS, TMS`)
         
 
         

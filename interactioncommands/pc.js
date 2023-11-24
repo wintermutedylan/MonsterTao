@@ -101,7 +101,7 @@ module.exports = {
 
         let playerData; 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
-        if (!playerData) return message.channel.send("You don't exist. Please try again.");
+        if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         var ID = interaction.user.id;
         
         let op = "greaterEqual";

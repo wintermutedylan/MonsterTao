@@ -4,7 +4,8 @@ const playerSchema = new mongoose.Schema({
     coins: { type: Number, default: 0},
     maids: { type: Array, default: []},
     currentParty: { type: Array, default: []},
-    badges: { type: Array, default: []}
+    badges: { type: Array, default: []},
+    bag: { type: Array, default: []}
     
 
 

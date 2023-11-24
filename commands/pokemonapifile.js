@@ -3,7 +3,9 @@
 const { userMention, memberNicknameMention, channelMention, roleMention } = require("@discordjs/builders");
 var maids = require("../units/maids.json");
 var moves = require("../units/moves.json");
+var items = require("../units/items.json");
 var temp = require("../units/tempfile.json");
+var routeEncounters = require("../units/routes.json");
 
 const Pokedex = require("pokeapi-js-wrapper")
 const customOptions = {cache: false, cacheImages: false}
@@ -28,32 +30,56 @@ module.exports = {
         //     }
             
         // }
-        // let searchArray = [];
-        // for(let s = 200; s < 255; s++){
-        //     if(s != 251 || s != 226 || s != 238 || s != 222|| s != 225|| s != 227|| s != 231|| s != 210){
-        //         searchArray.push(s);
-        //     }
+        let searchArray = [];
+        for(let s = 400; s < maids.length; s++){
+            if(maids[s].id.toLowerCase() != 'deoxys-speed' && maids[s].id.toLowerCase() != 'deoxys-defense'&&maids[s].id.toLowerCase() != 'deoxys-attack'&&maids[s].id.toLowerCase() != 'deoxys-normal'&&maids[s].id.toLowerCase() != 'giratina-altered'&&maids[s].id.toLowerCase() != 'wormadam-plant'&&maids[s].id.toLowerCase() != 'shaymin-land'&&maids[s].id.toLowerCase() != 'giratina-origin'){
+                searchArray.push(maids[s].id.toLowerCase());
+            }
             
             
-        // }
+         }
         
         
        
        try{
         (async () => {
-            //finalPokemonArray = getlocations("kanto", 51);
+            const growthArray = await P.getPokemonSpeciesByName(searchArray);
+            // finalPokemonArray = getlocations("kanto", 51);
             
-                // const JSON_FILE = "../monstertao/units/regionlocations.json";
-                // const jsonData = fs.readFileSync(JSON_FILE);
-                // let newData = JSON.parse(jsonData);
-                
-                
-            
-            
-            const growthArray = await P.getEvolutionChainById(searchArray);
-            const JSON_FILE = "../monstertao/units/maids.json"; //base experience
+            const JSON_FILE = "../monstertao/units/maids.json";
             const jsonData = fs.readFileSync(JSON_FILE);
-            const newData = JSON.parse(jsonData);
+            let newData = JSON.parse(jsonData);
+            for(let i = 0; i < growthArray.length; i++){
+                for(let g = 0; g < maids.length; g++){
+                    if(growthArray[i].name == maids[g].id.toLowerCase()){
+                        
+                            newData[g]["catchRate"] = growthArray[i].capture_rate;
+                        
+                        
+                    }
+                }
+            }
+                
+                
+            
+            
+            //const growthArray = await P.getEvolutionChainById(searchArray);
+            // let moreData = [];
+            // const JSON_FILE = "../monstertao/units/tempfile.json"; //base experience
+            // //const jsonData = fs.readFileSync(JSON_FILE);
+            
+            // for(let i = 0; i < routeEncounters.length; i++){
+            //     if(moreData.findIndex(function(item) { return item.name == routeEncounters[i].area}) == -1){
+            //         let x = {
+            //             name: routeEncounters[i].area,
+            //             badges: 0
+            //         }
+            //         moreData.push(x);
+            //     }
+            // }
+            
+            //let data = JSON.stringify(moreData);
+            //fs.writeFileSync(JSON_FILE, data);
             
             // for(let i = 0; i < growthArray.length; i++){
             //     for(let j = 0; j < maids.length; j++){
@@ -166,13 +192,12 @@ module.exports = {
 
             
             
-        //let data = JSON.stringify(finalPokemonArray); //this is for writing to a new file
-        //console.log(data);
-        //let data = JSON.stringify(newData); //this is for editing a json.  to add more to each array
-        //console.log(data);
-        //fs.writeFileSync(JSON_FILE, data)
+        // let data = JSON.stringify(moreData); //this is for writing to a new file
+        // console.log(data);
+        let data = JSON.stringify(newData); //this is for editing a json.  to add more to each array
+        fs.writeFileSync(JSON_FILE, data)
         
-        // fs.writeFileSync(JSON_FILE, data, (error) => {
+        // fs.writeFile(JSON_FILE, data, (error) => {
         //     // throwing the error
         //     // in case of a writing problem
         //     if (error) {
