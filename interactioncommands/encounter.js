@@ -86,7 +86,9 @@ module.exports = {
         for(let m in sorted){
             
             if(wildPokemon.level >= sorted[m].level && moves.length < 4){  //goes down the array and adds the move to the moves array.  array is sorted highest to lowest.  so a high level pokemon won't just get low level moves
-                moves.push(sorted[m].name);
+                let str = sorted[m].name;
+                let modStr = str[0].toUpperCase() + str.slice(1);
+                moves.push(modStr);
             }
         }
         let baseAtk = unit.attack;
@@ -762,7 +764,10 @@ async function selectBall(p1party, p2party, p1current, p2current, thread, author
                             {name: "IVs", value: `Hp: ${p2current.healthIV}, Atk: ${p2current.attackIV}, SpAtk: ${p2current.specialAttackIV}, Def: ${p2current.defenseIV}, SpDef: ${p2current.specialDefenseIV}`}
                         )
                         thread.send({content: "Here are the stats of the pokemon you just caught", embeds:[newEmbed]});
+                        let pokemonLocation = playerBag.maids.findIndex(function(item) {return item.id.toLowerCase() == p1current.id.toLowerCase()});
                         addUnit(p2current, author.id, p2current.level, pcID, exp, p2current.nature);
+                        setCurrentHealth(pokemonLocation, p1current.currentHealth, author.id);
+                        setStatusMap(pokemonLocation, p1current.statusMap, author.id);
                         thread.send("This thread will now self-destruct in 15 seconds.")
                         setTimeout(() => {
                             thread.delete();
@@ -3102,6 +3107,26 @@ async function setCurrentHealth(location, currenthealth, ID){
             {
                 $set: {
                     ["maids." + location + ".currentHealth"]: currenthealth,
+                    
+                }
+                
+            }
+            
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+async function setStatusMap(location, status, ID){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $set: {
+                    ["maids." + location + ".statusMap"]: status,
                     
                 }
                 
