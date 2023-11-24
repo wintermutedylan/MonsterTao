@@ -761,7 +761,8 @@ async function selectBall(p1party, p2party, p1current, p2current, thread, author
                         .setFields(
                             {name: "Level", value:`Level: ${p2current.level}, EXP: ${exp}/${expToNextLevel.experience}` },
                             {name: "Stats", value:`Hp: ${p2current.health}/${p2current.health}, Atk: ${p2current.attack}, SpAtk: ${p2current.specialAttack}, Def: ${p2current.defense}, SpDef: ${p2current.specialDefense}` },
-                            {name: "IVs", value: `Hp: ${p2current.healthIV}, Atk: ${p2current.attackIV}, SpAtk: ${p2current.specialAttackIV}, Def: ${p2current.defenseIV}, SpDef: ${p2current.specialDefenseIV}`}
+                            {name: "IVs", value: `Hp: ${p2current.healthIV}, Atk: ${p2current.attackIV}, SpAtk: ${p2current.specialAttackIV}, Def: ${p2current.defenseIV}, SpDef: ${p2current.specialDefenseIV}`},
+                            {name: "Moves", value: `${p2current.moves.join(", ")}`}
                         )
                         thread.send({content: "Here are the stats of the pokemon you just caught", embeds:[newEmbed]});
                         let pokemonLocation = playerBag.maids.findIndex(function(item) {return item.id.toLowerCase() == p1current.id.toLowerCase()});
