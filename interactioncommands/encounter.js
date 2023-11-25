@@ -297,12 +297,21 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                 }
                 
             }
-            thread.send("Seems you are out of usable units.  you have died.  better luck next time. The thread will be deleted in 15 seconds");
-            setTimeout(() => {
-                thread.delete();
-              }, 15000);
-            
-            return;
+            if(turn == 1){
+                thread.send("Looks like you have alive pokemon in your party.  go run the /heal command. this thread will close in 15 seconds");
+                setTimeout(() => {
+                    thread.delete();
+                  }, 15000);
+                  return;
+                
+            } else {
+                thread.send("Seems you are out of usable units.  you have died.  better luck next time. The thread will be deleted in 15 seconds");
+                setTimeout(() => {
+                    thread.delete();
+                }, 15000);
+                
+                return;
+            }
         } else {
             //force swap
             pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, true); //set optional at the end to trigger a force swap

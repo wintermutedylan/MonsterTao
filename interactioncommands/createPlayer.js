@@ -85,6 +85,15 @@ async function createAndAddStarter(ID, starter, interaction, message){
             }
         }
         
+        if(starter == 'Bulbasaur'){
+            let moves = ["Tackle", "Growl"];
+        } else if(starter == 'Charmander'){
+            let moves = ["Scratch", "Growl"];
+        } else if(starter == 'Squirtle'){
+            let moves = ["Tackle", "Tail-whip"];
+        }
+
+        
         let baseAtk = unit.attack;
         let baseSpecialAtk = unit.specialAttack;
         let baseDef = unit.defense;
@@ -113,7 +122,7 @@ async function createAndAddStarter(ID, starter, interaction, message){
         unit.defense = otherStatCalc(baseDef, unit.defenseIV, 0, levelToSetUnit, natureValues.defenseNatureValue);
         unit.specialDefense = otherStatCalc(baseSpecialDef, unit.specialDefenseIV, 0, levelToSetUnit, natureValues.specialDefenseNatureValue);
         unit.health = healthStatCalc(baseHP, unit.healthIV, 0, levelToSetUnit);
-        addUnit(unit, ID, levelToSetUnit, pcID, exp, pickedNature.name);
+        addUnit(unit, ID, levelToSetUnit, pcID, exp, pickedNature.name, moves);
         let unitExp = expTable.find(function(item) { return item.name == unit.growthRate});
         let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == levelToSetUnit + 1});
         const newEmbed = new EmbedBuilder()
@@ -167,7 +176,7 @@ function pickNatureValues(nature){
     }
     return values;
 }
-async function addUnit(unit, ID, level, pcID, exp, nature){
+async function addUnit(unit, ID, level, pcID, exp, nature, moves){
     
     try {
         await playerModel.findOneAndUpdate(
@@ -192,7 +201,7 @@ async function addUnit(unit, ID, level, pcID, exp, nature){
                         "specialAttack": unit.specialAttack,
                         "specialDefense": unit.specialDefense,
                         "currentHealth": unit.health,
-                        "moves": unit.moves,
+                        "moves": moves,
                         "ivMap": {
                             "healthIV": unit.healthIV,
                             "attackIV": unit.attackIV,
@@ -238,6 +247,27 @@ async function addToParty(pcID, ID){
             {
                 $push: {
                     currentParty: pcID 
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+async function addToBag(pcID, ID){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $push: {
+                    bag: {
+                        name: 'poke-ball',
+                        amount: 5
+                    }
                 }
                 
             }
