@@ -30,35 +30,35 @@ module.exports = {
         //     }
             
         // }
-        let searchArray = [];
-        for(let s = 400; s < maids.length; s++){
-            if(maids[s].id.toLowerCase() != 'deoxys-speed' && maids[s].id.toLowerCase() != 'deoxys-defense'&&maids[s].id.toLowerCase() != 'deoxys-attack'&&maids[s].id.toLowerCase() != 'deoxys-normal'&&maids[s].id.toLowerCase() != 'giratina-altered'&&maids[s].id.toLowerCase() != 'wormadam-plant'&&maids[s].id.toLowerCase() != 'shaymin-land'&&maids[s].id.toLowerCase() != 'giratina-origin'){
-                searchArray.push(maids[s].id.toLowerCase());
-            }
+        // let searchArray = [];
+        // for(let s = 400; s < maids.length; s++){
+        //     if(maids[s].id.toLowerCase() != 'deoxys-speed' && maids[s].id.toLowerCase() != 'deoxys-defense'&&maids[s].id.toLowerCase() != 'deoxys-attack'&&maids[s].id.toLowerCase() != 'deoxys-normal'&&maids[s].id.toLowerCase() != 'giratina-altered'&&maids[s].id.toLowerCase() != 'wormadam-plant'&&maids[s].id.toLowerCase() != 'shaymin-land'&&maids[s].id.toLowerCase() != 'giratina-origin'){
+        //         searchArray.push(maids[s].id.toLowerCase());
+        //     }
             
             
-         }
+        //  }
         
         
        
        try{
         (async () => {
-            const growthArray = await P.getPokemonSpeciesByName(searchArray);
-            // finalPokemonArray = getlocations("kanto", 51);
+            // const growthArray = await P.getPokemonSpeciesByName(searchArray);
+            finalPokemonArray = getlocations("sinnoh", 127);
             
-            const JSON_FILE = "../monstertao/units/maids.json";
-            const jsonData = fs.readFileSync(JSON_FILE);
-            let newData = JSON.parse(jsonData);
-            for(let i = 0; i < growthArray.length; i++){
-                for(let g = 0; g < maids.length; g++){
-                    if(growthArray[i].name == maids[g].id.toLowerCase()){
+            // const JSON_FILE = "../monstertao/units/maids.json";
+            // const jsonData = fs.readFileSync(JSON_FILE);
+            // let newData = JSON.parse(jsonData);
+            // for(let i = 0; i < growthArray.length; i++){
+            //     for(let g = 0; g < maids.length; g++){
+            //         if(growthArray[i].name == maids[g].id.toLowerCase()){
                         
-                            newData[g]["catchRate"] = growthArray[i].capture_rate;
+            //                 newData[g]["catchRate"] = growthArray[i].capture_rate;
                         
                         
-                    }
-                }
-            }
+            //         }
+            //     }
+            // }
                 
                 
             
@@ -194,8 +194,8 @@ module.exports = {
             
         // let data = JSON.stringify(moreData); //this is for writing to a new file
         // console.log(data);
-        let data = JSON.stringify(newData); //this is for editing a json.  to add more to each array
-        fs.writeFileSync(JSON_FILE, data)
+        // let data = JSON.stringify(newData); //this is for editing a json.  to add more to each array
+        // fs.writeFileSync(JSON_FILE, data)
         
         // fs.writeFile(JSON_FILE, data, (error) => {
         //     // throwing the error
@@ -279,7 +279,7 @@ async function getEncounters(searchArray, r){
                     let isInRedBlue = false;
                     for(let j = 0; j < growthArray[b].pokemon_encounters[i].version_details.length; j++){
                         
-                        if(growthArray[b].pokemon_encounters[i].version_details[j].version.name == "red" || growthArray[b].pokemon_encounters[i].version_details[j].version.name == "blue"){
+                        if(growthArray[b].pokemon_encounters[i].version_details[j].version.name == "diamond" || growthArray[b].pokemon_encounters[i].version_details[j].version.name == "pearl" || growthArray[b].pokemon_encounters[i].version_details[j].version.name == "platinum"){
                             earray.push(growthArray[b].pokemon_encounters[i].version_details[j]);
                             isInRedBlue = true;
                             break;
@@ -301,16 +301,16 @@ async function getEncounters(searchArray, r){
         //let data = JSON.stringify(newData); //this is for editing a json.  to add more to each array
         //console.log(data);
         
-        // fs.writeFileSync("../monstertao/units/tempfile.json", data, (error) => {
-        //     // throwing the error
-        //     // in case of a writing problem
-        //     if (error) {
-        //       // logging the error
-        //       console.error(error);
+        fs.writeFileSync("../monstertao/units/tempfile.json", data, (error) => {
+            // throwing the error
+            // in case of a writing problem
+            if (error) {
+              // logging the error
+              console.error(error);
           
-        //       throw error;
-        //     }
+              throw error;
+            }
           
-        //     console.log("data.json written correctly");
-        //   });
+            console.log("data.json written correctly");
+          });
 }

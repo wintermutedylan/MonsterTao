@@ -1,0 +1,39 @@
+[
+    {
+        "badges": 0,
+        "maxLevel": 25
+    },
+    {
+        "badges": 1,
+        "maxLevel": 30
+    },
+    {
+        "badges": 2,
+        "maxLevel": 35
+    },
+    {
+        "badges": 3,
+        "maxLevel": 40
+    },
+    {
+        "badges": 4,
+        "maxLevel": 45
+    },
+    {
+        "badges": 5,
+        "maxLevel": 50
+    },
+    {
+        "badges": 6,
+        "maxLevel": 55
+    },
+    {
+        "badges": 7,
+        "maxLevel": 60
+    },
+    {
+        "badges": 8,
+        "maxLevel": 100
+    }
+    
+]

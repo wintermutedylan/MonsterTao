@@ -8,6 +8,7 @@ var natureTable = require("../units/natures.json");
 var expTable = require("../units/exptable.json");
 var stageCalcs = require("../units/stages.json");
 var items = require("../units/items.json");
+var badgePenalty = require("../units/badgepenalty.json");
 const lucky = require('lucky-item').default;
 const playerModel = require("../models/playerSchema");
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ChannelType, ComponentType, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -321,19 +322,117 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             let usedPCID = [];
             let leveledUpString = "";
             for(let g = 0; g < p1party.length; g++){
-                if(p1party[g].usedInBattle && p1party[g].currentHealth > 0){
+                if(p1party[g].currentHealth > 0){
                     
                     usedPCID.push(p1party[g]);
                 }
             }
-            let resultExp = Math.floor(((p2current.baseXP * p2current.level) / 7) * (1 / usedPCID.length)); //exp formula.  ((base * enemylevel)/7) * (1/number used in battle and alive) * (1 if wild, 1.5 if trainer)
+            
             
             
             for(let x = 0; x < usedPCID.length; x++){
+                let happinessCalc = 1;
+                let used = 2;
+                if(usedPCID[x].happiness >= 220){
+                    happinessCalc = 1.2;
+                }
+                if(usedPCID[x].usedInBattle){
+                    used = 1;
+                }
+                let resultExp = Math.floor(Math.floor((p2current.baseXP * p2current.level / 5) * (1/used) * (((2*p2current.level+10)/(p2current.level+usedPCID[x].level+10))**2.5) + 1) * happinessCalc);
                 let startLevel = usedPCID[x].level;
                 let totalXP = usedPCID[x].experience + resultExp;
                 let finalXP = totalXP;
                 let finalLevel = startLevel;
+                let newEvs = {
+                    hp: usedPCID[x].evMap.hp,
+                    attack: usedPCID[x].evMap.attack,
+                    defense: usedPCID[x].evMap.defense,
+                    specialAttack: usedPCID[x].evMap.specialAttack,
+                    specialDefense: usedPCID[x].evMap.specialDefense
+                };
+                let evTotal = newEvs.hp + newEvs.attack + newEvs.defense + newEvs.specialAttack + newEvs.specialDefense;
+                let wildEvs = p2current.evs.attack + p2current.evs.hp + p2current.evs.defense + p2current.evs.specialAttack + p2current.evs.specialDefense;
+                while(evTotal < 425 && wildEvs > 0){
+                    if(p2current.evs.hp > 0 && newEvs.hp != 252){
+                        let oldHP = newEvs.hp;
+                        newEvs.hp += p2current.evs.hp;
+                        if(newEvs.hp > 252){
+                            evTotal += 252 - oldHP;
+                            newEvs.hp = 252;
+                            wildEvs -= p2current.evs.hp;
+                            p2current.evs.hp = 0;
+                        } else {
+                            evTotal += p2current.evs.hp;
+                            wildEvs -= p2current.evs.hp;
+                            p2current.evs.hp = 0;
+                        }
+                        
+                    }
+                    if(p2current.evs.attack > 0 && newEvs.attack != 252){
+                        let oldattack = newEvs.attack;
+                        newEvs.attack += p2current.evs.attack;
+                        if(newEvs.attack > 252){
+                            evTotal += 252 - oldattack;
+                            newEvs.attack = 252;
+                            wildEvs -= p2current.evs.attack;
+                            p2current.evs.attack = 0;
+                        } else {
+                            evTotal += p2current.evs.attack;
+                            wildEvs -= p2current.evs.attack;
+                            p2current.evs.attack = 0;
+                        }
+                        
+                    }
+                    if(p2current.evs.defense > 0 && newEvs.defense != 252){
+                        let olddefense = newEvs.defense;
+                        newEvs.defense += p2current.evs.defense;
+                        if(newEvs.defense > 252){
+                            evTotal += 252 - olddefense;
+                            newEvs.defense = 252;
+                            wildEvs -= p2current.evs.defense;
+                            p2current.evs.defense = 0;
+                        } else {
+                            evTotal += p2current.evs.defense;
+                            wildEvs -= p2current.evs.defense;
+                            p2current.evs.defense = 0;
+                        }
+                        
+                    }
+                    if(p2current.evs.specialAttack > 0 && newEvs.specialAttack != 252){
+                        let oldspecialAttack = newEvs.specialAttack;
+                        newEvs.specialAttack += p2current.evs.specialAttack;
+                        if(newEvs.specialAttack > 252){
+                            evTotal += 252 - oldspecialAttack;
+                            newEvs.specialAttack = 252;
+                            wildEvs -= p2current.evs.specialAttack;
+                            p2current.evs.specialAttack = 0;
+                        } else {
+                            evTotal += p2current.evs.specialAttack;
+                            wildEvs -= p2current.evs.specialAttack;
+                            p2current.evs.specialAttack = 0;
+                        }
+                        
+                    }
+                    if(p2current.evs.specialDefense > 0 && newEvs.specialDefense != 252){
+                        let oldspecialDefense = newEvs.specialDefense;
+                        newEvs.specialDefense += p2current.evs.specialDefense;
+                        if(newEvs.specialDefense > 252){
+                            evTotal += 252 - oldspecialDefense;
+                            newEvs.specialDefense = 252;
+                            wildEvs -= p2current.evs.specialDefense;
+                            p2current.evs.specialDefense = 0;
+                        } else {
+                            evTotal += p2current.evs.specialDefense;
+                            wildEvs -= p2current.evs.specialDefense;
+                            p2current.evs.specialDefense = 0;
+                        }
+                        
+                    }
+                    
+                    
+                    
+                }
                 if(startLevel != 100){
                     let unitExp = expTable.find(function(item) { return item.name == usedPCID[x].growthRate});
                     
@@ -346,102 +445,12 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                             break;
                         }
                     }
-                    let newEvs = {
-                        hp: usedPCID[x].evMap.hp,
-                        attack: usedPCID[x].evMap.attack,
-                        defense: usedPCID[x].evMap.defense,
-                        specialAttack: usedPCID[x].evMap.specialAttack,
-                        specialDefense: usedPCID[x].evMap.specialDefense
-                    };
-                    let evTotal = newEvs.hp + newEvs.attack + newEvs.defense + newEvs.specialAttack + newEvs.specialDefense;
-                    let wildEvs = p2current.evs.attack + p2current.evs.hp + p2current.evs.defense + p2current.evs.specialAttack + p2current.evs.specialDefense;
-                    while(evTotal < 425 && wildEvs > 0){
-                        if(p2current.evs.hp > 0 && newEvs.hp != 252){
-                            let oldHP = newEvs.hp;
-                            newEvs.hp += p2current.evs.hp;
-                            if(newEvs.hp > 252){
-                                evTotal += 252 - oldHP;
-                                newEvs.hp = 252;
-                                wildEvs -= p2current.evs.hp;
-                                p2current.evs.hp = 0;
-                            } else {
-                                evTotal += p2current.evs.hp;
-                                wildEvs -= p2current.evs.hp;
-                                p2current.evs.hp = 0;
-                            }
-                            
-                        }
-                        if(p2current.evs.attack > 0 && newEvs.attack != 252){
-                            let oldattack = newEvs.attack;
-                            newEvs.attack += p2current.evs.attack;
-                            if(newEvs.attack > 252){
-                                evTotal += 252 - oldattack;
-                                newEvs.attack = 252;
-                                wildEvs -= p2current.evs.attack;
-                                p2current.evs.attack = 0;
-                            } else {
-                                evTotal += p2current.evs.attack;
-                                wildEvs -= p2current.evs.attack;
-                                p2current.evs.attack = 0;
-                            }
-                            
-                        }
-                        if(p2current.evs.defense > 0 && newEvs.defense != 252){
-                            let olddefense = newEvs.defense;
-                            newEvs.defense += p2current.evs.defense;
-                            if(newEvs.defense > 252){
-                                evTotal += 252 - olddefense;
-                                newEvs.defense = 252;
-                                wildEvs -= p2current.evs.defense;
-                                p2current.evs.defense = 0;
-                            } else {
-                                evTotal += p2current.evs.defense;
-                                wildEvs -= p2current.evs.defense;
-                                p2current.evs.defense = 0;
-                            }
-                            
-                        }
-                        if(p2current.evs.specialAttack > 0 && newEvs.specialAttack != 252){
-                            let oldspecialAttack = newEvs.specialAttack;
-                            newEvs.specialAttack += p2current.evs.specialAttack;
-                            if(newEvs.specialAttack > 252){
-                                evTotal += 252 - oldspecialAttack;
-                                newEvs.specialAttack = 252;
-                                wildEvs -= p2current.evs.specialAttack;
-                                p2current.evs.specialAttack = 0;
-                            } else {
-                                evTotal += p2current.evs.specialAttack;
-                                wildEvs -= p2current.evs.specialAttack;
-                                p2current.evs.specialAttack = 0;
-                            }
-                            
-                        }
-                        if(p2current.evs.specialDefense > 0 && newEvs.specialDefense != 252){
-                            let oldspecialDefense = newEvs.specialDefense;
-                            newEvs.specialDefense += p2current.evs.specialDefense;
-                            if(newEvs.specialDefense > 252){
-                                evTotal += 252 - oldspecialDefense;
-                                newEvs.specialDefense = 252;
-                                wildEvs -= p2current.evs.specialDefense;
-                                p2current.evs.specialDefense = 0;
-                            } else {
-                                evTotal += p2current.evs.specialDefense;
-                                wildEvs -= p2current.evs.specialDefense;
-                                p2current.evs.specialDefense = 0;
-                            }
-                            
-                        }
-                        
-                        
-                        
-                    }
+                    
                     
                     let player; 
                     player = await playerModel.findOne({ userID: author.id});
                     let unitIndex = player.maids.findIndex( function(item) { return item.pcID == usedPCID[x].pcID } );
-                    
-                    if(finalLevel > startLevel){ //uses this if the pokemon levels up to calc new stats
-                        let unitBaseStats = maids.find(function(item2) { return item2.id.toLowerCase() == usedPCID[x].id.toLowerCase()});
+                    let unitBaseStats = maids.find(function(item2) { return item2.id.toLowerCase() == usedPCID[x].id.toLowerCase()});
                         let natValues = pickNatureValues(usedPCID[x].nature);
                         let newStats = {
                             health: healthStatCalc(unitBaseStats.health, usedPCID[x].ivMap.healthIV, newEvs.hp, usedPCID[x].level),
@@ -450,16 +459,32 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                             specialAttack: otherStatCalc(unitBaseStats.specialAttack, usedPCID[x].ivMap.specialAttackIV, newEvs.specialAttack, usedPCID[x].level, natValues.specialAttackNatureValue),
                             specialDefense: otherStatCalc(unitBaseStats.specialDefense, usedPCID[x].ivMap.specialDefenseIV, newEvs.specialDefense, usedPCID[x].level, natValues.specialDefenseNatureValue)
                         }
+                    if(finalLevel > startLevel){ //uses this if the pokemon levels up to calc new stats
+                        
                         setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, usedPCID[x].statusMap, newStats);
                         leveledUpString += `Your ${usedPCID[x].id} gained ${resultExp} XP and leveled up to level ${finalLevel}\n`;
                         let leveledPokemon = p1party.findIndex(function(item) { return item.pcID == usedPCID[x].pcID });
                         p1party[leveledPokemon].currentHealth += (newStats.health - usedPCID[x].health);
 
                     } else { //this is used if pokemon didnt level up
-                        setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, usedPCID[x].statusMap);
+                        setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, usedPCID[x].statusMap, newStats);
                         leveledUpString += `Your ${usedPCID[x].id} gained ${resultExp} XP\n`;
                     }
                     
+                } else {
+                    let player; 
+                    player = await playerModel.findOne({ userID: author.id});
+                    let unitIndex = player.maids.findIndex( function(item) { return item.pcID == usedPCID[x].pcID } );
+                    let unitBaseStats = maids.find(function(item2) { return item2.id.toLowerCase() == usedPCID[x].id.toLowerCase()});
+                        let natValues = pickNatureValues(usedPCID[x].nature);
+                        let newStats = {
+                            health: healthStatCalc(unitBaseStats.health, usedPCID[x].ivMap.healthIV, newEvs.hp, usedPCID[x].level),
+                            attack: otherStatCalc(unitBaseStats.attack, usedPCID[x].ivMap.attackIV, newEvs.attack, usedPCID[x].level, natValues.attackNatureValue),
+                            defense: otherStatCalc(unitBaseStats.defense, usedPCID[x].ivMap.defenseIV, newEvs.defense, usedPCID[x].level, natValues.defenseNatureValue),
+                            specialAttack: otherStatCalc(unitBaseStats.specialAttack, usedPCID[x].ivMap.specialAttackIV, newEvs.specialAttack, usedPCID[x].level, natValues.specialAttackNatureValue),
+                            specialDefense: otherStatCalc(unitBaseStats.specialDefense, usedPCID[x].ivMap.specialDefenseIV, newEvs.specialDefense, usedPCID[x].level, natValues.specialDefenseNatureValue)
+                        }
+                    setEVsForMaxLevel(newEvs, unitIndex, author.id, usedPCID[x].statusMap, newStats);
                 }
             }
             let player1; 
@@ -662,7 +687,7 @@ async function selectBall(p1party, p2party, p1current, p2current, thread, author
                 let statusModifier = 1;
                 let ballIndex = playerBag.bag.findIndex(function(h) { return h.name == ball.name});
                 if(p2current.statusMap.asleep == true || p2current.statusMap.frozen == true){
-                    statusModifier = 2;
+                    statusModifier = 2.5;
                 } else if(p2current.statusMap.burn == true || p2current.statusMap.poisoned == true || p2current.statusMap.paralysis == true){
                     statusModifier = 1.5;
                 } else {
@@ -676,17 +701,32 @@ async function selectBall(p1party, p2party, p1current, p2current, thread, author
                 } else {
                     removeBallAmount(author.id, ballIndex);
                 }
-                let fullCatchRate = ((3 * p2current.health - 2 * p2current.currentHealth) / (3 * p2current.health)) * p2current.catchRate * modifier * statusModifier;
+                let badgesNeeded = badgePenalty.find(function(item) { return p2current.level <= item.maxLevel }).badges;
+                let lowLevelModifier = (36 - 2 * p2current.level)/10;
+                if(lowLevelModifier < 1){
+                    lowLevelModifier = 1;
+                }
+                
+                let bp = badgesNeeded - playerBag.badges.length;
+                if(bp < 0){
+                    bp = 0;
+                }
+                let finalBP = 0.8 ** bp;
+                
+                let fullCatchRate = (((3*p2current.health - 2*p2current.currentHealth)*1*p2current.catchRate*modifier*finalBP)/(3*p2current.health)) * lowLevelModifier * statusModifier;
+                
+                let shakeCheck = Math.floor(65536/(255/fullCatchRate)**0.1875);
+                
                 let shakeTimes = 0;
                 if(fullCatchRate >= 255){
                     shakeTimes = 4;
                 } else {
                     for(let shake = 0; shake < 4; shake++){
                         let shakeRandomNumber = randomIntFromInterval(0, 65535);
-                        let shakeCheck = Math.floor(1048560/Math.floor(Math.sqrt(Math.floor(Math.sqrt(Math.floor(16711680/fullCatchRate))))));
+                        
                         
                         if(shakeRandomNumber < shakeCheck){
-                            shakeTimes += 1;
+                            shakeTimes++;
                         }
 
                     }
@@ -1025,7 +1065,15 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
         for (let k = 0; k < p2party.length; k++){
             if (p2party[k].id.toLowerCase() == unitToSwap.id.toLowerCase()){
                 p2current = p2party[k]; //do stages here for trainer battle
-                console.log("need to do stages for trainer battle at line 652");
+                p2party[k].stages = {
+                    attack: 0,
+                    defense: 0,
+                    specialAttack: 0,
+                    specialDefense: 0,
+                    evasion: 0,
+                    accuracy: 0
+                };
+                
                 break;
             }
         }
@@ -1470,6 +1518,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     stageQuote += `The wild${p2current.id} healed for ${healAmount} hp and fell asleep\n`;
                     break;
                 }
+            
                 
             
             
@@ -1626,6 +1675,38 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
                 addCoins(coins, author.id);
                 thread.send(`You picked up ${coins} coins`);
+                break;
+            case "Magnitude":
+                let magnitudeCheck = Math.round(Math.random() * 100);
+                let power;
+                
+                if (magnitudeCheck < 5){ 
+                    power = 10;
+                    stageQuote += "Magnitude 4!";
+                } else if(magnitudeCheck < 15 ){ 
+                    power = 30;
+                    stageQuote += "Magnitude 5!";
+                } else if (magnitudeCheck < 35){ 
+                    power = 50;
+                    stageQuote += "Magnitude 6!";
+                } else if (magnitudeCheck < 65){ 
+                    power = 70;
+                    stageQuote += "Magnitude 7!";
+                } else if (magnitudeCheck < 85){ 
+                    power = 90;
+                    stageQuote += "Magnitude 8!";
+                } else if (magnitudeCheck < 95){ 
+                    power = 110;
+                    stageQuote += "Magnitude 9!";
+                } else { 
+                    power = 150;
+                    stageQuote += "Magnitude 10!";
+                }
+                moveDetails.power = power;
+                damage = damageFormula(moveDetails, p1current, p2current, turn);
+                
+                
+                
                 break;
             case "Ember":
             case "Fire-punch":
@@ -3049,28 +3130,8 @@ async function startBattle(p1party, p2party, p1current, p2current, thread, autho
         });
 
 }
-async function setExperienceAndLevel(finalLevel, finalXP, evMap, location, ID, status, stats = null){
-    if(stats == null){ //no new stats just evs and xp
-        try {
-            await playerModel.findOneAndUpdate(
-                {
-                    userID: ID
-                },
-                {
-                    $set: {
-                        ["maids." + location + ".level"]: finalLevel,
-                        ["maids." + location + ".experience"]: finalXP,
-                        ["maids." + location + ".evMap"]: evMap,
-                        ["maids." + location + ".statusMap"]: status
-                    }
-                    
-                }
-            );
-    
-        } catch(err){
-            console.log(err);
-        }
-    } else { //set the new stats, evs, level
+async function setExperienceAndLevel(finalLevel, finalXP, evMap, location, ID, status, stats){
+   
         try {
             await playerModel.findOneAndUpdate(
                 {
@@ -3095,9 +3156,33 @@ async function setExperienceAndLevel(finalLevel, finalXP, evMap, location, ID, s
         } catch(err){
             console.log(err);
         }
-    }
+    
     
 
+}
+async function setEVsForMaxLevel(evMap, location, ID, status, stats){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $set: {
+                    ["maids." + location + ".evMap"]: evMap,
+                    ["maids." + location + ".health"]: stats.health,
+                    ["maids." + location + ".attack"]: stats.attack,
+                    ["maids." + location + ".defense"]: stats.defense,
+                    ["maids." + location + ".specialAttack"]: stats.specialAttack,
+                    ["maids." + location + ".specialDefense"]: stats.specialDefense,
+                    ["maids." + location + ".statusMap"]: status
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
 }
 async function setCurrentHealth(location, currenthealth, ID){
     try {
