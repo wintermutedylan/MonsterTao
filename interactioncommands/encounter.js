@@ -102,7 +102,7 @@ module.exports = {
         let defenseIV = randomIntFromInterval(0, 15);
         let specialDefenseIV = randomIntFromInterval(0, 15);
         let healthIV = randomIntFromInterval(0, 15);
-        let hp = healthStatCalc(baseHP, unit.healthIV, 0, wildPokemon.level);
+        let hp = healthStatCalc(baseHP, healthIV, 0, wildPokemon.level);
         
         
         let pickedNature = natureTable[Math.floor(Math.random()*natureTable.length)];
@@ -502,6 +502,8 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             .setDescription(leveledUpString)
             thread.send({ embeds: [newEmbed] });
             thread.send(`You have defeated the wild ${p2current.id} congrats.  This thread will self-destruct in 15 seconds`); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
+            addCoins(200, author.id);
+            thread.send(`You have obtained 200 coins`);
             setTimeout(() => {
                 thread.delete();
               }, 15000);
@@ -809,6 +811,8 @@ async function selectBall(p1party, p2party, p1current, p2current, thread, author
                         addUnit(p2current, author.id, p2current.level, pcID, exp, p2current.nature);
                         setCurrentHealth(pokemonLocation, p1current.currentHealth, author.id);
                         setStatusMap(pokemonLocation, p1current.statusMap, author.id);
+                        addCoins(100, author.id);
+                        thread.send(`You have obtained 100 coins`);
                         thread.send("This thread will now self-destruct in 15 seconds.")
                         setTimeout(() => {
                             thread.delete();
@@ -835,7 +839,7 @@ async function addUnit(unit, ID, level, pcID, exp, nature){
                 $push: {
                     maids: {
                         "pcID": pcID,
-                        "pokedexNumber": unit.number,
+                        "pokedexNumber": unit.pokedexNumber,
                         "id": unit.id,
                         "types": unit.types,
                         "level": level,
@@ -1338,6 +1342,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             case "Recover":
             case "Soft-boiled":
+            case "Ingrain":
                 if(turn % 2 == 1){
                     let healAmount = Math.floor(p1current.health/2);
                     
@@ -1430,6 +1435,40 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     }
                     break;
                 }
+            case "Calm-mind":
+                if(turn % 2 == 1){
+                    p1current.stages.specialAttack += 1;
+                    p1current.stages.specialDefense += 1;
+                    if(p1current.stages.specialAttack > 6){
+                        p1current.stages.specialAttack = 6;
+                        stageQuote += `Your ${p1current.id}'s Special Attack won't go higher!\n`;
+                    } else {
+                        stageQuote += `Your ${p1current.id}'s Special Attack rose!\n`;
+                    }
+                    if(p1current.stages.specialDefense > 6){
+                        p1current.stages.specialDefense = 6;
+                        stageQuote += `Your ${p1current.id}'s Special Defense won't go higher!\n`;
+                    } else {
+                        stageQuote += `Your ${p1current.id}'s Special Defense rose!\n`;
+                    }
+                    break;
+                } else {
+                    p2current.stages.specialAttack += 1;
+                    p2current.stages.specialDefense += 1;
+                    if(p2current.stages.specialAttack > 6){
+                        p2current.stages.specialAttack = 6;
+                        stageQuote += `The wild ${p2current.id}'s Special Attack won't go higher!\n`;
+                    } else {
+                        stageQuote += `The wild ${p2current.id}'s Special Attack rose!\n`;
+                    }
+                    if(p2current.stages.specialDefense > 6){
+                        p2current.stages.specialDefense = 6;
+                        stageQuote += `The wild ${p2current.id}'s Special Defense won't go higher!\n`;
+                    } else {
+                        stageQuote += `The wild ${p2current.id}'s Special Defense rose!\n`;
+                    }
+                    break;
+                }
             case "Amnesia":
                 if(turn % 2 == 1){
                     p1current.stages.specialDefense += 2;
@@ -1475,6 +1514,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 stageQuote += "NO CRITS IN THIS.  DON'T USE THIS MOVE\n";
                 break;
             case "Swift":
+            case "Shock-wave":
                 isSwift = true;
                 damage = damageFormula(moveDetails, p1current, p2current, turn);
                 break;
@@ -1650,6 +1690,8 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Spike-cannon":
             case "Barrage":
             case "Fury-swipes":
+            case "Rock-blast":
+            case "Sand-tomb":
                 let amountCheck = Math.round(Math.random() * 100);
                 let amount;
                 if (amountCheck < 35){ // this is 2 slaps
@@ -1678,6 +1720,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 break;
             case "Magnitude":
                 let magnitudeCheck = Math.round(Math.random() * 100);
+                let orPower = moveDetails.power;
                 let power;
                 
                 if (magnitudeCheck < 5){ 
@@ -1704,6 +1747,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
                 moveDetails.power = power;
                 damage = damageFormula(moveDetails, p1current, p2current, turn);
+                moveDetails.power = orPower;
                 
                 
                 
@@ -1804,6 +1848,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             case "Body-slam":
             case "Lick":
+            case "Bounce":
                 let bodyCheck = nonVolitileCheck(p1current, p2current, turn, 30, ["Electric"], thread);
                 if(bodyCheck && turn % 2 == 1){
                     p2current.statusMap.paralysis = true;
@@ -2000,6 +2045,31 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         stageQuote += `Your ${p1current.id}'s Accuracy fell\n`;
                     }
                     
+                    break;
+                    
+                }
+            case "Mud-slap":
+                if(turn % 2 == 1){
+                    
+                    p2current.stages.accuracy -= 1;
+                    if(p2current.stages.accuracy < -6){
+                        p2current.stages.accuracy = -6;
+                        stageQuote += `The wild ${p2current.id}'s Accuracy won't go lower\n`;
+                    } else{
+                        stageQuote += `The wild ${p2current.id}'s Accuracy fell\n`;
+                    }
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else {
+                    
+                    p1current.stages.accuracy -= 1;
+                    if(p1current.stages.accuracy < -6){
+                        p1current.stages.accuracy = -6;
+                        stageQuote += `Your ${p1current.id}'s Accuracy won't go lower\n`;
+                    } else{
+                        stageQuote += `Your ${p1current.id}'s Accuracy fell\n`;
+                    }
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                     
                 }
@@ -2321,6 +2391,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Absorb":
             case "Mega-drain":
             case "Leech-life":
+            case "Giga-drain":
                 damage = damageFormula(moveDetails, p1current, p2current, turn);
                 if(turn % 2 == 1){
                     let healAmount = 0;
@@ -2442,6 +2513,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 stageQuote += "THIS MOVE DOESN'T WORK.  SORRY\n";
                 break;
             case "Dizzy-punch":
+            case "Water-pulse":
                 let dizzyCheck = Math.round(Math.random() * 100);
                 
                 if(turn % 2 == 1){
@@ -2553,6 +2625,8 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     }
                     break;
                 }
+            
+
             
             
             
@@ -3069,6 +3143,15 @@ async function snapshot(message, boss, thread){
     
     let p2party =[];
     p2party.push(boss);
+    // let p2party = [];
+    
+    // for (let i = 0; i < bosses.length; i++){
+    //     if (boss === bosses[i].id){
+    //         p2party = bosses[i].units;
+            
+    //     }
+    // }
+    // let p2current = p2party[0];
     /* this is for gym battles and pvp to add stat stages to every pokemon in party
     for(let f = 0; f < p2party.length; f++){
         p2party[f]["stages"] = {

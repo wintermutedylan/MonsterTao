@@ -31,10 +31,12 @@ module.exports = {
         let baseDef = unit.defense;
         let baseSpecialDef = unit.specialDefense;
         let baseHP = unit.health;
-        let attackNatureValue = 1;
-        let defenseNatureValue = 1;
-        let specialAttackNatureValue = 1;
-        let specialDefenseNatureValue = 1;
+        let attackIV = randomIntFromInterval(0, 15);
+        let specialAttackIV = randomIntFromInterval(0, 15);
+        let defenseIV = randomIntFromInterval(0, 15);
+        let specialDefenseIV = randomIntFromInterval(0, 15);
+        let healthIV = randomIntFromInterval(0, 15);
+        let hp = healthStatCalc(baseHP, healthIV, 0, levelToSetUnit);
         let pickedNature = natureTable[Math.floor(Math.random()*natureTable.length)];
         let natureValues = pickNatureValues(pickedNature);
         //check the nature json here and update the values above.  random nature.  grab from json that matches name.  do switch for both increase and decrease
@@ -59,22 +61,53 @@ module.exports = {
         var ID = message.author.id;
         let currentPartyLength = playerData.currentParty.length;
         if (currentPartyLength < 6){
-            addToParty(pcID, ID);
+            //addToParty(pcID, ID);
         }
-        unit.attackIV = randomIntFromInterval(0, 15);
-        unit.specialAttackIV = randomIntFromInterval(0, 15);
-        unit.defenseIV = randomIntFromInterval(0, 15);
-        unit.specialDefenseIV = randomIntFromInterval(0, 15);
-        unit.healthIV = randomIntFromInterval(0, 15);
-        unit.attack = otherStatCalc(baseAtk, unit.attackIV, 0, levelToSetUnit, natureValues.attackNatureValue);
-        unit.specialAttack = otherStatCalc(baseSpecialAtk, unit.specialAttackIV, 0, levelToSetUnit, natureValues.specialAttackNatureValue);
-        unit.defense = otherStatCalc(baseDef, unit.defenseIV, 0, levelToSetUnit, natureValues.defenseNatureValue);
-        unit.specialDefense = otherStatCalc(baseSpecialDef, unit.specialDefenseIV, 0, levelToSetUnit, natureValues.specialDefenseNatureValue);
-        unit.health = healthStatCalc(baseHP, unit.healthIV, 0, levelToSetUnit);
-        addUnit(unit, ID, levelToSetUnit, pcID, exp, pickedNature.name);
-        message.channel.send(`The ${pickedNature.name} Level ${levelToSetUnit} ${unitName} has the following stats
-Attack IV: ${unit.attackIV}, Special Attack IV: ${unit.specialAttackIV}, Defense IV: ${unit.defenseIV}, Special Defense IV: ${unit.specialDefenseIV}, Health IV: ${unit.healthIV}
-Total Attack: ${unit.attack}, Total Special Attack: ${unit.specialAttack}, Total Defense: ${unit.defense}, Total Special Defense: ${unit.specialDefense}, Total Health: ${unit.health}`);
+        let finalPokemon = {
+            id: unit.id,
+            pokedexNumber: unit.number,
+            types: unit.types,
+            level: levelToSetUnit,
+            nature: pickedNature.name,
+            health: hp,
+            attack: otherStatCalc(baseAtk, attackIV, 0, levelToSetUnit, natureValues.attackNatureValue),
+            defense: otherStatCalc(baseDef, defenseIV, 0, levelToSetUnit, natureValues.defenseNatureValue),
+            specialAttack: otherStatCalc(baseSpecialAtk, specialAttackIV, 0, levelToSetUnit, natureValues.specialAttackNatureValue),
+            specialDefense: otherStatCalc(baseSpecialDef, specialDefenseIV, 0, levelToSetUnit, natureValues.specialDefenseNatureValue),
+            currentHealth: hp,
+            moves: [],
+            attackIV: attackIV,
+            specialAttackIV: specialAttackIV,
+            defenseIV: defenseIV,
+            specialDefenseIV: specialDefenseIV,
+            healthIV: healthIV,
+            baseXP: unit.baseEXP,
+            evs: unit.evMap,
+            growthRate: unit.growthRate,
+            stages: {
+                attack: 0,
+                defense: 0,
+                specialAttack: 0,
+                specialDefense: 0,
+                evasion: 0,
+                accuracy: 0
+            },
+            statusMap: {
+                burned: false,
+                frozen: false,
+                paralysis: false,
+                poisoned: false,
+                asleep: false,
+                sleepTurns: 0,
+                confusion: false,
+                confusionTurns: 0
+            },
+            catchRate: unit.catchRate
+        }
+        //addUnit(finalPokemon, ID, levelToSetUnit, pcID, exp, pickedNature.name);
+        message.channel.send(`The ${pickedNature.name} Level ${levelToSetUnit} ${finalPokemon.id} has the following stats
+Attack IV: ${finalPokemon.attackIV}, Special Attack IV: ${finalPokemon.specialAttackIV}, Defense IV: ${finalPokemon.defenseIV}, Special Defense IV: ${finalPokemon.specialDefenseIV}, Health IV: ${finalPokemon.healthIV}
+Total Attack: ${finalPokemon.attack}, Total Special Attack: ${finalPokemon.specialAttack}, Total Defense: ${finalPokemon.defense}, Total Special Defense: ${finalPokemon.specialDefense}, Total Health: ${finalPokemon.health}`);
 
 
 
@@ -133,7 +166,7 @@ async function addUnit(unit, ID, level, pcID, exp, nature){
                 $push: {
                     maids: {
                         "pcID": pcID,
-                        "pokedexNumber": unit.number,
+                        "pokedexNumber": unit.pokedexNumber,
                         "id": unit.id,
                         "types": unit.types,
                         "level": level,
