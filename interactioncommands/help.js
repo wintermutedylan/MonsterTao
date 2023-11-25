@@ -21,8 +21,8 @@ module.exports = {
         }
         const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')
-        .setTitle(`${interaction.user.username}'s Bag`)
-        .setDescription(`**Total coins:** ${new Intl.NumberFormat().format(totalCoins)}\n${bagString}`)
+        .setTitle(`Help Menu`)
+        .setDescription(`List of commands`)
         
 
         

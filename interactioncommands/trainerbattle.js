@@ -1,4 +1,3 @@
-const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
 var maids = require("../units/maids.json");
 var routeEncounters = require("../units/routes.json");
 var moveinfo = require("../units/moveinfo.json");
@@ -8,171 +7,37 @@ var natureTable = require("../units/natures.json");
 var expTable = require("../units/exptable.json");
 var stageCalcs = require("../units/stages.json");
 var items = require("../units/items.json");
+var bosses = require("../units/raidbosses.json");
 var badgePenalty = require("../units/badgepenalty.json");
-const lucky = require('lucky-item').default;
+const { userMention, memberNicknameMention, channelMention, roleMention  } = require("@discordjs/builders");
 const playerModel = require("../models/playerSchema");
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, SlashCommandBuilder, ChannelType, ComponentType, ButtonBuilder, ButtonStyle } = require('discord.js');
-
-
 module.exports = {
-    cooldown: 15,
-	data: new SlashCommandBuilder()
-		.setName('encounter')
-		.setDescription('Encounters a wild Pokemon')
+    name: 'trainerbattle',
+    data: new SlashCommandBuilder()
+		.setName('gymbattle')
+		.setDescription('Start a gym battle')
 		.addStringOption(option =>
-			option.setName('region')
-				.setDescription('Region to encounter a pokemon')
+			option.setName('gymleader')
+				.setDescription('Select the gym leader')
                 .setRequired(true)
 				.addChoices(
-                    { name: 'Kanto', value: 'kanto'},
-                    { name: 'Johto', value: 'johto'},
-                    { name: 'Hoenn', value: 'hoenn'},
-                    { name: 'Sinnoh', value: 'sinnoh'}
-                    ))
-        .addStringOption(option =>
-            option.setName('route')
-                .setDescription('Route to encounter a pokemon')
-                .setRequired(true)
-				.setAutocomplete(true)),
-    async autocomplete(interaction) {
-        const focusedOption = interaction.options.getFocused(true);
-		let choices;
-		if (focusedOption.name === 'route') {
-            
-            let routes = [];
-            for(let i = 0; i < routeEncounters.length; i++){
-                if(routeEncounters[i].region == interaction.options.getString('region').toLowerCase() && !routes.includes(routeEncounters[i].area)){
-                    routes.push(routeEncounters[i].area);
-                }
-            }
-            
-            choices = routes;
-            
-			
-		}
-
-		const filtered = choices.filter(choice => choice.includes(focusedOption.value));
-        
-		await interaction.respond(
-			filtered.slice(0, 25).map(choice => ({ name: choice, value: choice })),
-		);
-    },
+                    { name: 'Oak', value: 'Oak'},
+                    { name: 'Misty', value: 'Misty'},
+                    { name: 'Surge', value: 'Surge'},
+                    { name: 'Erika', value: 'Erika'},
+                    { name: 'Koga', value: 'Koga'},
+                    { name: 'Sabrina', value: 'Sabrina'},
+                    { name: 'Blaine', value: 'Blaine'},
+                    { name: 'Giovanni', value: 'Giovanni'}
+                    )),
     async execute(interaction){
-        let playerData; 
-        playerData = await playerModel.findOne({ userID: interaction.user.id});
-        if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
-        var ID = interaction.user.id;
-        let cost = playerData.badges.length * 100;
-        if(playerData.coins < cost){
-            return interaction.reply(`You don't have enough coins to start this encounter. you need ${cost} and you have ${playerData.coins}`);
-        }
-        let route = interaction.options.getString('route');//use args here.  this is just a placeholder for testing
-        let encounterArr = [];
-        for(let i = 0; i < routeEncounters.length; i++){
-            if(routeEncounters[i].area == route){
-                for(let j = 0; j < routeEncounters[i].encounter[0].encounter_details.length; j++){
-                    let info = {
-                        name: routeEncounters[i].name,
-                        weight: routeEncounters[i].encounter[0].encounter_details[j].chance,
-                        level: routeEncounters[i].encounter[0].encounter_details[j].max_level,
-                        
-                    }
-                    encounterArr.push(info);
-                }
-            }
-        }
-
-        let wildPokemon = lucky.itemBy(encounterArr, 'weight');
-        let unit = maids.find( function(item) { return item.id.toLowerCase() == wildPokemon.name } ); //finds the pokemon in the maids.json without using a for loop.  use this everywhere now.  
-        let unitMoves = moveinfo.find( function(item) { return item.id.toLowerCase() == wildPokemon.name } );
-        let moves = [];
-        
-        var sorted = unitMoves.leveUpMoves.sort((a, b) => (b.level) - (a.level)); //sorted the move array to go from highest learn level to lowest. 
-        for(let m in sorted){
-            
-            if(wildPokemon.level >= sorted[m].level && moves.length < 4){  //goes down the array and adds the move to the moves array.  array is sorted highest to lowest.  so a high level pokemon won't just get low level moves
-                let str = sorted[m].name;
-                let modStr = str[0].toUpperCase() + str.slice(1);
-                moves.push(modStr);
-            }
-        }
-        let baseAtk = unit.attack;
-        let baseSpecialAtk = unit.specialAttack;
-        let baseDef = unit.defense;
-        let baseSpecialDef = unit.specialDefense;
-        let baseHP = unit.health;
-        let attackIV = randomIntFromInterval(0, 15);
-        let specialAttackIV = randomIntFromInterval(0, 15);
-        let defenseIV = randomIntFromInterval(0, 15);
-        let specialDefenseIV = randomIntFromInterval(0, 15);
-        let healthIV = randomIntFromInterval(0, 15);
-        let hp = healthStatCalc(baseHP, healthIV, 0, wildPokemon.level);
-        
-        
-        let pickedNature = natureTable[Math.floor(Math.random()*natureTable.length)];
-        let natureValues = pickNatureValues(pickedNature); //sets the nature values map so its easier to find
-
-        let finalPokemon = {
-            id: unit.id,
-            pokedexNumber: unit.number,
-            types: unit.types,
-            level: wildPokemon.level,
-            nature: pickedNature.name,
-            health: hp,
-            attack: otherStatCalc(baseAtk, attackIV, 0, wildPokemon.level, natureValues.attackNatureValue),
-            defense: otherStatCalc(baseDef, defenseIV, 0, wildPokemon.level, natureValues.defenseNatureValue),
-            specialAttack: otherStatCalc(baseSpecialAtk, specialAttackIV, 0, wildPokemon.level, natureValues.specialAttackNatureValue),
-            specialDefense: otherStatCalc(baseSpecialDef, specialDefenseIV, 0, wildPokemon.level, natureValues.specialDefenseNatureValue),
-            currentHealth: hp,
-            moves: moves,
-            attackIV: attackIV,
-            specialAttackIV: specialAttackIV,
-            defenseIV: defenseIV,
-            specialDefenseIV: specialDefenseIV,
-            healthIV: healthIV,
-            baseXP: unit.baseEXP,
-            evs: unit.evMap,
-            growthRate: unit.growthRate,
-            stages: {
-                attack: 0,
-                defense: 0,
-                specialAttack: 0,
-                specialDefense: 0,
-                evasion: 0,
-                accuracy: 0
-            },
-            statusMap: {
-                burned: false,
-                frozen: false,
-                paralysis: false,
-                poisoned: false,
-                asleep: false,
-                sleepTurns: 0,
-                confusion: false,
-                confusionTurns: 0
-            },
-            catchRate: unit.catchRate
-        }
-        createBattleThread(interaction, finalPokemon);
-        
-
-        
-        
-
-        //create move array here with the moves it can learn at its current level.  if there are more than 4 moves take the highest level moves.  
-        //then create the pokemon with its ivs stats moves level using same format at pokemon in gym leader json
-        //then just use trainerbattle.js stuff to do the battling. need to make some changes because it is a wild pokemon.  need to add exp gain after winning
-
-
-        
-        
-
-
-
-
-
+               createBattleThread(interaction, interaction.options.getString('gymleader'));
+      
         
     }
+
+    
 }
 function pickNatureValues(nature){
     let values= {
@@ -232,14 +97,14 @@ function otherStatCalc(base, iv, ev, level, nature){
 
 async function createBattleThread(message, boss){
     if(message.channel.isThread()) return message.reply("please use this command out of a thread");
-    let threadName = `${message.user.globalName}'s battle against a wild ${boss.id}`;
+    let threadName = `${message.user.globalName}'s battle against ${boss}`;
     const thread = await message.channel.threads.create({
         name: threadName,
         autoArchiveDuration: 60,
         type: ChannelType.PrivateThread,
-        reason: 'Wild battle thread',
+        reason: 'Boss battle thread',
     });
-    message.reply({ content: `you are now in a battle a wild **${boss.id}** please move to the created thread ${channelMention(thread.id)}`, ephemeral: true});
+    message.reply({ content: `you are now in a battle against **${boss}** please move to the created thread ${channelMention(thread.id)}`, ephemeral: true});
     await thread.members.add(message.user.id);
     snapshot(message, boss, thread);
 }
@@ -271,9 +136,9 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                     }
                     p2party[j].currentHealth -= statusDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
                     if(p2current.statusMap.burned){
-                        thread.send(`The wild ${p2party[j].id} took ${statusDamage} burn damage`);
+                        thread.send(`${p2party[0].bossName}'s ${p2party[j].id} took ${statusDamage} burn damage`);
                     } else {
-                        thread.send(`The wild ${p2party[j].id} took ${statusDamage} poison damage`);
+                        thread.send(`${p2party[0].bossName}'s ${p2party[j].id} took ${statusDamage} poison damage`);
                     }
                     
                 }
@@ -322,7 +187,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             
         }
     } else if(p2current.currentHealth <= 0){
-        thread.send(`The wild ${p2current.id} has fainted.`);
+        thread.send(`${p2party[0].bossName}'s ${p2current.id} has fainted.`);
         let usableUnits = false;
         for(let i = 0; i < p2party.length; i++){
             if (p2party[i].currentHealth > 0){
@@ -514,18 +379,25 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             .setTitle(`XP gain`)
             .setDescription(leveledUpString)
             thread.send({ embeds: [newEmbed] });
-            thread.send(`You have defeated the wild ${p2current.id} congrats.  This thread will self-destruct in 15 seconds`); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
-            let reward = p2current.level * 35;
+            let reward = p2party[0].reward;
             addCoins(reward, author.id);
-            thread.send(`You have obtained ${reward} coins`);
+            
+            if(player1.badges.includes(p2party[0].bossName)){
+                thread.send(`You have already have ${p2party[0].bossName}'s badge, You just obtained ${reward} coins instead`);
+            } else {
+                thread.send(`You have defeated ${p2party[0].bossName} Congrats!  You have obtained ${p2party[0].bossName}'s badge and ${reward} coins!`);
+                addBadge(p2party[0].bossName, author.id);
+            }
+            thread.send(`This thread will self-destruct in 15 seconds`); //this is where to do exp gain and ev stuff.  need to run api to get evs for all pokemon. ignore speed ev.
+            
             setTimeout(() => {
                 thread.delete();
               }, 15000);
             return;
         } else {
             //force the bot to swap to a random unit for now
-            //pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, true);//set optional at the end to trigger a force swap
-            thread.send("it should never get to this point. since there is only 1 wild pokemon.  contact admin if this happens");
+            pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, true);//set optional at the end to trigger a force swap
+            
         }
     } else if(turn % 2 == 1){ //check if turn is odd so p1 goes
         if (turn == 1){
@@ -586,7 +458,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             
         });
     } else {
-        thread.send(`The wild ${p2current.id} will now take action`);
+        thread.send(`${p2party[0].bossName}'s ${p2current.id} will now take action`);
         let move = p2current.moves[Math.floor(Math.random()*p2current.moves.length)];
         //thread.send(`**${p2current.id}** used ${move}`);
         dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move);
@@ -597,11 +469,11 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
 
 }
 async function useItem(p1party, p2party, p1current, p2current, thread, author, turn){
-        thread.send('What type of item would you like to use: Heal, Ball, or type cancel to go back');
+        thread.send('What type of item would you like to use: Heal or type cancel to go back');
 
 
         const filter = (m) => {
-            return  m.author.id === author.id && (m.content.toLowerCase() === 'heal' || m.content.toLowerCase() === 'ball' || m.content.toLowerCase() == 'cancel' );
+            return  m.author.id === author.id && (m.content.toLowerCase() === 'heal' || m.content.toLowerCase() == 'cancel' );
         }
         const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
         var s;
@@ -633,12 +505,7 @@ async function useItem(p1party, p2party, p1current, p2current, thread, author, t
                     
                     
                  
-                } else if (s.toLowerCase() == 'ball'){
-                    selectBall(p1party, p2party, p1current, p2current, thread, author, turn);
-                    
-                    
-                 
-                }
+                } 
             
             
         });
@@ -1077,16 +944,19 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
         }
     } else {
         let pokemonAlive = [];
+        
         for (let i = 0; i < p2party.length; i++){
+            
             if (p2party[i].currentHealth > 0 && p2party[i].id != p2current.id){
                 
                 pokemonAlive.push(p2party[i].id);
                 
             }
         }
+        
         let unitToSwap = pokemonAlive[Math.floor(Math.random()*pokemonAlive.length)];
         for (let k = 0; k < p2party.length; k++){
-            if (p2party[k].id.toLowerCase() == unitToSwap.id.toLowerCase()){
+            if (p2party[k].id.toLowerCase() == unitToSwap.toLowerCase()){
                 p2current = p2party[k]; //do stages here for trainer battle
                 p2party[k].stages = {
                     attack: 0,
@@ -1253,7 +1123,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 p2current.statusMap.sleepTurns -= 1;
                 missed = true;
             } else {
-                thread.send(`The wild ${p2current.id} woke up`);
+                thread.send(`${p2party[0].bossName}'s ${p2current.id} woke up`);
                 missed = false;
             }
             
@@ -1286,7 +1156,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
                 
             } else {
-                thread.send(`The wild ${p2current.id} snapped out of confusion`);
+                thread.send(`${p2party[0].bossName}'s ${p2current.id} snapped out of confusion`);
                 missed = false;
             }
             
@@ -1311,9 +1181,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.attack += 2;
                     if(p2current.stages.attack > 6){
                         p2current.stages.attack = 6;
-                        stageQuote += `The wild ${p2current.id}'s Attack won't go higher!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Attack won't go higher!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Attack sharply rose!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Attack sharply rose!\n`;
                     }
                     break;
                 }
@@ -1332,9 +1202,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.attack += 1;
                     if(p2current.stages.attack > 6){
                         p2current.stages.attack = 6;
-                        stageQuote += `The wild ${p2current.id}'s Attack won't go higher!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Attack won't go higher!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Attack rose!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Attack rose!\n`;
                     }
                     break;
                 }
@@ -1353,9 +1223,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.evasion += 1;
                     if(p2current.stages.evasion > 6){
                         p2current.stages.evasion = 6;
-                        stageQuote += `The wild ${p2current.id}'s Evasion won't go higher!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Evasion won't go higher!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Evasion rose!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Evasion rose!\n`;
                     }
                     break;
                 }
@@ -1388,7 +1258,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                             }
                         }
                     }
-                    stageQuote += `The wild ${p2current.id} healed for ${healAmount} hp\n`;
+                    stageQuote += `${p2party[0].bossName}'s ${p2current.id} healed for ${healAmount} hp\n`;
                     break;
                 }
             case "Harden":
@@ -1407,9 +1277,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.defense += 1;
                     if(p2current.stages.defense > 6){
                         p2current.stages.defense = 6;
-                        stageQuote += `The wild ${p2current.id}'s Defense won't go higher!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense won't go higher!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Defense rose!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense rose!\n`;
                     }
                     break;
                 }
@@ -1428,9 +1298,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.defense += 2;
                     if(p2current.stages.defense > 6){
                         p2current.stages.defense = 6;
-                        stageQuote += `The wild ${p2current.id}'s Defense won't go higher!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense won't go higher!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Defense rose!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense rose!\n`;
                     }
                     break;
                 }
@@ -1448,9 +1318,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.specialAttack += 1;
                     if(p2current.stages.specialAttack > 6){
                         p2current.stages.specialAttack = 6;
-                        stageQuote += `The wild ${p2current.id}'s Special Attack won't go higher!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Attack won't go higher!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Special Attack rose!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Attack rose!\n`;
                     }
                     break;
                 }
@@ -1476,15 +1346,15 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.specialDefense += 1;
                     if(p2current.stages.specialAttack > 6){
                         p2current.stages.specialAttack = 6;
-                        stageQuote += `The wild ${p2current.id}'s Special Attack won't go higher!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Attack won't go higher!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Special Attack rose!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Attack rose!\n`;
                     }
                     if(p2current.stages.specialDefense > 6){
                         p2current.stages.specialDefense = 6;
-                        stageQuote += `The wild ${p2current.id}'s Special Defense won't go higher!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Defense won't go higher!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Special Defense rose!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Defense rose!\n`;
                     }
                     break;
                 }
@@ -1502,9 +1372,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.specialDefense += 2;
                     if(p2current.stages.specialDefense > 6){
                         p2current.stages.specialDefense = 6;
-                        stageQuote += `The wild ${p2current.id}'s Special Defense won't go higher!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Defense won't go higher!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Special Defense rose!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Defense rose!\n`;
                     }
                     break;
                 }
@@ -1574,7 +1444,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                             
                         }
                     }
-                    stageQuote += `The wild${p2current.id} healed for ${healAmount} hp and fell asleep\n`;
+                    stageQuote += `${p2party[0].bossName}'s ${p2current.id} healed for ${healAmount} hp and fell asleep\n`;
                     break;
                 }
             
@@ -1635,7 +1505,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`The wild ${p2current.id} used ${moveDetails.move}`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move}`)
                 .setDescription(`${stageQuote}\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
@@ -1655,7 +1525,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 hitChance = p1current.level - p2current.level + 30;
             }
         } else {
-            thread.send(`The wild ${p2current.id} used ${moveDetails.move}`);
+            thread.send(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move}`);
             if(p2current.level < p1current.level){
                 hitChance = 0;
             } else {
@@ -1778,7 +1648,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 let isBurned = nonVolitileCheck(p1current, p2current, turn, 10, ["Fire"], thread);
                 if(isBurned && turn % 2 == 1){
                     p2current.statusMap.burned = true;
-                    thread.send(`The wild ${p2current.id} has been burned.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been burned.`);
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else if(isBurned && turn % 2 == 0){
@@ -1797,7 +1667,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 let isFrozen = nonVolitileCheck(p1current, p2current, turn, 10, ["Ice"], thread);
                 if(isFrozen && turn % 2 == 1){
                     p2current.statusMap.frozen = true;
-                    thread.send(`The wild ${p2current.id} has been frozen.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been frozen.`);
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else if(isFrozen && turn % 2 == 0){
@@ -1817,7 +1687,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 let isParalysis = nonVolitileCheck(p1current, p2current, turn, 10, ["Electric"], thread);
                 if(isParalysis && turn % 2 == 1){
                     p2current.statusMap.paralysis = true;
-                    thread.send(`The wild ${p2current.id} has been paralyzed.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been paralyzed.`);
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else if(isParalysis && turn % 2 == 0){
@@ -1847,9 +1717,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.accuracy -= 1;
                     if(p2current.stages.accuracy < -6){
                         p2current.stages.accuracy = -6;
-                        stageQuote += `The wild ${p2current.id}'s Accuracy won't go lower\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Accuracy won't go lower\n`;
                     } else{
-                        stageQuote += `The wild ${p2current.id}'s Accuracy fell\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Accuracy fell\n`;
                     }
                     break;
                 } else {
@@ -1871,7 +1741,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 let bodyCheck = nonVolitileCheck(p1current, p2current, turn, 30, ["Electric"], thread);
                 if(bodyCheck && turn % 2 == 1){
                     p2current.statusMap.paralysis = true;
-                    thread.send(`The wild ${p2current.id} has been paralyzed.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been paralyzed.`);
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else if(bodyCheck && turn % 2 == 0){
@@ -1888,7 +1758,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 let smogCheck = nonVolitileCheck(p1current, p2current, turn, 40, ["Poison", "Steel"], thread);
                 if(smogCheck && turn % 2 == 1){
                     p2current.statusMap.poisoned = true;
-                    thread.send(`The wild ${p2current.id} has been poisoned.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been poisoned.`);
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else if(smogCheck && turn % 2 == 0){
@@ -1905,7 +1775,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 let sludgeCheck = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"], thread);
                 if(sludgeCheck && turn % 2 == 1){
                     p2current.statusMap.poisoned = true;
-                    thread.send(`The wild ${p2current.id} has been poisoned.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been poisoned.`);
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else if(sludgeCheck && turn % 2 == 0){
@@ -1939,7 +1809,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                             p2party[j].currentHealth = p2party[j].currentHealth - selfDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
                         }
                     }
-                    thread.send(`The wild ${p2current.id} took ${selfDamage} recoil damage`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} took ${selfDamage} recoil damage`);
                     break;
                 }
             case "Thrash":
@@ -1955,7 +1825,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 } else {
                     p2current.statusMap.confusion = true;
                     p2current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
-                    thread.send(`The wild ${p2current.id} hit 3 times and is now confused`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} hit 3 times and is now confused`);
                     break;
                 }
             case "Leer":
@@ -1965,9 +1835,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.defense -= 1;
                     if(p2current.stages.defense < -6){
                         p2current.stages.defense = -6;
-                        stageQuote += `The wild ${p2current.id}'s Defense won't go lower\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense won't go lower\n`;
                     } else{
-                        stageQuote += `The wild ${p2current.id}'s Defense fell\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense fell\n`;
                     }
                     break;
                 } else {
@@ -1987,7 +1857,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 let isPoisoned = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"], thread);
                 if(isPoisoned && turn % 2 == 1){
                     p2current.statusMap.poisoned = true;
-                    thread.send(`The wild ${p2current.id} has been poisoned.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been poisoned.`);
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else if(isPoisoned && turn % 2 == 0){
@@ -2004,7 +1874,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 let Poisoned = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"], thread);
                 if(Poisoned && turn % 2 == 1){
                     p2current.statusMap.poisoned = true;
-                    thread.send(`The wild ${p2current.id} has been poisoned.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been poisoned.`);
                     damage = damageFormula(moveDetails, p1current, p2current, turn) + damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else if(Poisoned && turn % 2 == 0){
@@ -2025,9 +1895,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.attack -= 1;
                     if(p2current.stages.attack < -6){
                         p2current.stages.attack = -6;
-                        stageQuote += `The wild ${p2current.id}'s Attack won't go lower\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Attack won't go lower\n`;
                     } else{
-                        stageQuote += `The wild ${p2current.id}'s Attack fell\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Attack fell\n`;
                     }
                     break;
                 } else {
@@ -2049,9 +1919,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.accuracy -= 1;
                     if(p2current.stages.accuracy < -6){
                         p2current.stages.accuracy = -6;
-                        stageQuote += `The wild ${p2current.id}'s Accuracy won't go lower\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Accuracy won't go lower\n`;
                     } else{
-                        stageQuote += `The wild ${p2current.id}'s Accuracy fell\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Accuracy fell\n`;
                     }
                     break;
                 } else {
@@ -2073,9 +1943,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.accuracy -= 1;
                     if(p2current.stages.accuracy < -6){
                         p2current.stages.accuracy = -6;
-                        stageQuote += `The wild ${p2current.id}'s Accuracy won't go lower\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Accuracy won't go lower\n`;
                     } else{
-                        stageQuote += `The wild ${p2current.id}'s Accuracy fell\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Accuracy fell\n`;
                     }
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
@@ -2101,7 +1971,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 if(isSleep && turn % 2 == 1){
                     p2current.statusMap.sleep = true;
                     p2current.statusMap.sleepTurns = randomIntFromInterval(1,5);
-                    thread.send(`The wild ${p2current.id} has been put to sleep.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been put to sleep.`);
                     
                     break;
                 } else if(isSleep && turn % 2 == 0){
@@ -2123,9 +1993,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         p2current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
                     
                     
-                        stageQuote += `The wild ${p2current.id} is now confused\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id} is now confused\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id} is already confused\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id} is already confused\n`;
                     }
                     
                     break;
@@ -2167,9 +2037,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         p2current.stages.defense -= 1;
                         if(p2current.stages.defense < -6){
                             p2current.stages.defense = -6;
-                            stageQuote += `The wild ${p2current.id}'s Defense won't go lower\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense won't go lower\n`;
                         } else{
-                            stageQuote += `The wild ${p2current.id}'s Defense fell\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense fell\n`;
                         }
                         damage = damageFormula(moveDetails, p1current, p2current, turn);
                     } else {
@@ -2205,9 +2075,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                             p2current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
                         
                         
-                            stageQuote += `The wild ${p2current.id} is now confused\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id} is now confused\n`;
                         } else {
-                            stageQuote += `The wild ${p2current.id} is already confused\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id} is already confused\n`;
                         }
                         damage = damageFormula(moveDetails, p1current, p2current, turn);
                     } else {
@@ -2242,9 +2112,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         p2current.stages.attack -= 1;
                         if(p2current.stages.attack < -6){
                             p2current.stages.attack = -6;
-                            stageQuote += `The wild ${p2current.id}'s Attack won't go lower\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Attack won't go lower\n`;
                         } else{
-                            stageQuote += `The wild ${p2current.id}'s Attack fell\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Attack fell\n`;
                         }
                         damage = damageFormula(moveDetails, p1current, p2current, turn);
                     } else {
@@ -2298,7 +2168,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 if(isStun && turn % 2 == 1){
 
                     p2current.statusMap.paralyzed = true;
-                    thread.send(`The wild ${p2current.id} has been paralyzed.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been paralyzed.`);
                     
                     break;
                 } else if(isStun && turn % 2 == 0){
@@ -2320,7 +2190,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 if(isToxic && turn % 2 == 1){
 
                     p2current.statusMap.poisoned = true;
-                    thread.send(`The wild ${p2current.id} has been poisoned.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been poisoned.`);
                     
                     break;
                 } else if(isToxic && turn % 2 == 0){
@@ -2339,7 +2209,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 if(isPisonStuff && turn % 2 == 1){
 
                     p2current.statusMap.poisoned = true;
-                    thread.send(`The wild ${p2current.id} has been poisoned.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} has been poisoned.`);
                     
                     break;
                 } else if(isPisonStuff && turn % 2 == 0){
@@ -2360,9 +2230,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         p2current.stages.specialDefense -= 1;
                         if(p2current.stages.specialDefense < -6){
                             p2current.stages.specialDefense = -6;
-                            stageQuote += `The wild ${p2current.id}'s Special Defense won't go lower\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Defense won't go lower\n`;
                         } else{
-                            stageQuote += `The wild ${p2current.id}'s Special Defense fell\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Special Defense fell\n`;
                         }
                         damage = damageFormula(moveDetails, p1current, p2current, turn);
                     } else {
@@ -2392,9 +2262,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     p2current.stages.defense -= 2;
                     if(p2current.stages.defense < -6){
                         p2current.stages.defense = -6;
-                        stageQuote += `The wild ${p2current.id}'s Defense won't go lower!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense won't go lower!\n`;
                     } else {
-                        stageQuote += `The wild ${p2current.id}'s Defense sharply fell!\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id}'s Defense sharply fell!\n`;
                     }
                     break;
                 } else {
@@ -2449,7 +2319,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                             }
                         }
                     }
-                    stageQuote += `The wild ${p2current.id} healed for ${healAmount} hp\n`;
+                    stageQuote += `${p2party[0].bossName}'s ${p2current.id} healed for ${healAmount} hp\n`;
                     break;
                 }
             case "Self-destruct":
@@ -2520,7 +2390,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                                 }
                             }
                         }
-                        stageQuote += `The wild ${p2current.id} healed for ${healAmount} hp\n`;
+                        stageQuote += `${p2party[0].bossName}'s ${p2current.id} healed for ${healAmount} hp\n`;
                         break;
                     } else {
                         stageQuote += `The enemy used Dream-eater but failed becuase you aren't sleep\n`;
@@ -2542,9 +2412,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                             p2current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
                         
                         
-                            stageQuote += `The wild ${p2current.id} is now confused\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id} is now confused\n`;
                         } else {
-                            stageQuote += `The wild ${p2current.id} is already confused\n`;
+                            stageQuote += `${p2party[0].bossName}'s ${p2current.id} is already confused\n`;
                         }
                         damage = damageFormula(moveDetails, p1current, p2current, turn);
                     } else {
@@ -2593,17 +2463,17 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 if((tri1Check || tri2Check || tri3Check) && turn % 2 == 1){
                     if(tri1Check){
                         p2current.statusMap.paralysis = true;
-                        thread.send(`The wild ${p2current.id} has been paralyzed.`);
+                        thread.send(`${p2party[0].bossName}'s ${p2current.id} has been paralyzed.`);
                         damage = damageFormula(moveDetails, p1current, p2current, turn);
                         break;
                     } else if (tri2Check){
                         p2current.statusMap.burn = true;
-                        thread.send(`The wild ${p2current.id} has been burned.`);
+                        thread.send(`${p2party[0].bossName}'s ${p2current.id} has been burned.`);
                         damage = damageFormula(moveDetails, p1current, p2current, turn);
                         break;
                     } else if (tri3Check){
                         p2current.statusMap.frozen = true;
-                        thread.send(`The wild ${p2current.id} has been frozen.`);
+                        thread.send(`${p2party[0].bossName}'s ${p2current.id} has been frozen.`);
                         damage = damageFormula(moveDetails, p1current, p2current, turn);
                         break;
                     }
@@ -2714,7 +2584,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`The wild ${p2current.id} used ${moveDetails.move}`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move}`)
                 .setDescription(`${stageQuote}\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
@@ -2744,7 +2614,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} doing **${damage}** damage`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move} doing **${damage}** damage`)
                 .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
@@ -2860,7 +2730,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but crashed and did ${crashDamage} dmg to itself`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move} but crashed and did ${crashDamage} dmg to itself`)
                 .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
@@ -2874,7 +2744,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but is frozen solid`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move} but is frozen solid`)
                 .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
@@ -2887,7 +2757,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but is paralyzed`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move} but is paralyzed`)
                 .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
@@ -2900,7 +2770,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but is asleep`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move} but is asleep`)
                 .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
@@ -2919,7 +2789,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`The wild ${p2current.id} hurt itself in its confusion doing ${confusionDamage} dmg`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} hurt itself in its confusion doing ${confusionDamage} dmg`)
                 .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
@@ -2932,13 +2802,13 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} but missed`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move} but missed`)
                 .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
                 thread.send({ embeds: [newEmbed] });
                 turn++;
-                //thread.send(`The wild ${p2current.id} missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nIt is your turn to take action\n----------------------------------`);
+                //thread.send(`${p2party[0].bossName}'s ${p2current.id} missed\n----------------------------------\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nIt is your turn to take action\n----------------------------------`);
                 battle(p1party, p2party, p1current, p2current, thread, author, turn);
             }
         }
@@ -2993,7 +2863,7 @@ function nonVolitileCheck(p1current, p2current, turn, chance, immuneType, thread
             
             if (amountCheck < chance){
                 if(p2status.length > 0){
-                    thread.send(`The wild ${p2current.id} already has a status.`);
+                    thread.send(`${p2party[0].bossName}'s ${p2current.id} already has a status.`);
                     results = false;
                 } else {
                     results = true;
@@ -3130,10 +3000,7 @@ function damageFormula(details, p1current, p2current, turn){
 
 
 async function snapshot(message, boss, thread){
-    //maybe push a attack, def, boosts array here.  this will have X items, status moves that lower or raise those stats,  accuracy.  will need to update accuracy calc after 
-    //for accuracy subtracted the evasion stage from the accuracy stage.  if that is higher than than +6 just use +6 from evasion.  and if its lower than -6 just use -6 from evasion. so if +2 accuracy and enemy has +1 evasion then its +1 total then grab 
-    //from array
-    //or just make one stage array in json.  then store the accuracy and evasion stages.  keep same formula then check json instead of having an array for both accuracy and evasion
+    
     let playerData; 
     let p1party = [];
     
@@ -3160,32 +3027,25 @@ async function snapshot(message, boss, thread){
     p1party[0].usedInBattle = true;
 
     
-    let p2party =[];
-    p2party.push(boss);
-    // let p2party = [];
     
-    // for (let i = 0; i < bosses.length; i++){
-    //     if (boss === bosses[i].id){
-    //         p2party = bosses[i].units;
-            
-    //     }
-    // }
-    // let p2current = p2party[0];
-    /* this is for gym battles and pvp to add stat stages to every pokemon in party
-    for(let f = 0; f < p2party.length; f++){
-        p2party[f]["stages"] = {
-            attack: 0,
-            defense: 0,
-            specialAttack: 0,
-            specialDefense: 0,
-            evasion: 0,
-            accuracy: 0
-        };
+    
+    let p2party = [];
+    let reward = 0;
+    let bossName = "n/a";
+    for (let i = 0; i < bosses.length; i++){
+        if (boss === bosses[i].id){
+            p2party = bosses[i].units;
+            reward = bosses[i].coinReward;
+            bossName = bosses[i].id
+        }
     }
-    */
-            
     let p2current = p2party[0];
-    thread.send(`A wild Level ${p2current.level} ${p2current.id} has appeared`)
+    p2party[0]["reward"] = reward;
+    p2party[0]["bossName"] = bossName;
+    
+            
+    
+    thread.send(`${bossName} has sent out a level ${p2current.level} ${p2current.id}`);
         
     
     startBattle(p1party, p2party, p1current, p2current, thread, message.user);
@@ -3335,6 +3195,26 @@ async function addCoins(amount, ID){
             {
                 $inc: {
                     coins: amount,
+                    
+                }
+                
+            }
+            
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+async function addBadge(badge, ID){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $push: {
+                    badges: badge,
                     
                 }
                 

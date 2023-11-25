@@ -19,6 +19,12 @@ module.exports = {
         for(let i = 0; i < playerData.bag.length; i++){
           bagString += `Name: ${playerData.bag[i].name}, Amount: ${playerData.bag[i].amount}\n`
         }
+        if(playerData.badges.length == 0){
+          bagString += `Badges Obtained: none\n`;
+        } else {
+          bagString += `Badges Obtained: ${playerData.badges.join(", ")}\n`;
+        }
+        
         const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')
         .setTitle(`${interaction.user.username}'s Bag`)
