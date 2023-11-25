@@ -14,7 +14,7 @@ const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMen
 
 
 module.exports = {
-    cooldown: 10,
+    cooldown: 15,
 	data: new SlashCommandBuilder()
 		.setName('encounter')
 		.setDescription('Encounters a wild Pokemon')
@@ -244,11 +244,15 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
         if(p1current.statusMap.burned || p1current.statusMap.poisoned){
             for (let j = 0; j < p1party.length; j++){
                 if (p1current.id === p1party[j].id){
-                    p1party[j].currentHealth -= Math.floor(p1party[j].currentHealth/8);//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    let statusDamage = Math.floor(p1party[j].currentHealth/8);
+                    if(statusDamage <= 0){
+                        statusDamage = 1;
+                    }
+                    p1party[j].currentHealth -= statusDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
                     if(p1current.statusMap.burned){
-                        thread.send(`Your ${p1party[j].id} took ${Math.floor(p1party[j].currentHealth/8)} burn damage`);
+                        thread.send(`Your ${p1party[j].id} took ${statusDamage} burn damage`);
                     } else {
-                        thread.send(`Your ${p1party[j].id} took ${Math.floor(p1party[j].currentHealth/8)} poison damage`);
+                        thread.send(`Your ${p1party[j].id} took ${statusDamage} poison damage`);
                     }
                     
                 }
@@ -256,18 +260,24 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
         } if(p2current.statusMap.burned || p2current.statusMap.poisoned){
             for (let j = 0; j < p2party.length; j++){
                 if (p2current.id === p2party[j].id){
-                    p2party[j].currentHealth -= Math.floor(p2party[j].currentHealth/8);//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                    let statusDamage = Math.floor(p2party[j].currentHealth/8);
+                    if(statusDamage <= 0){
+                        statusDamage = 1;
+                    }
+                    p2party[j].currentHealth -= statusDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
                     if(p2current.statusMap.burned){
-                        thread.send(`The wild ${p2party[j].id} took ${Math.floor(p2party[j].currentHealth/8)} burn damage`);
+                        thread.send(`The wild ${p2party[j].id} took ${statusDamage} burn damage`);
                     } else {
-                        thread.send(`The wild ${p2party[j].id} took ${Math.floor(p2party[j].currentHealth/8)} poison damage`);
+                        thread.send(`The wild ${p2party[j].id} took ${statusDamage} poison damage`);
                     }
                     
                 }
             }
         }
     }
+    
     if(p1current.currentHealth <= 0){
+        
         thread.send(`Your ${p1current.id} has fainted.`);
         let usableUnits = false;
         for(let i = 0; i < p1party.length; i++){
@@ -429,16 +439,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                     let player; 
                     player = await playerModel.findOne({ userID: author.id});
                     let unitIndex = player.maids.findIndex( function(item) { return item.pcID == usedPCID[x].pcID } );
-                    let sMap = {
-                        burned: usedPCID[x].statusMap.burned,
-                        frozen: usedPCID[x].statusMap.frozen,
-                        paralysis: usedPCID[x].statusMap.paralysis,
-                        poisoned: usedPCID[x].statusMap.poisoned,
-                        asleep: usedPCID[x].statusMap.asleep,
-                        sleepTurns: usedPCID[x].statusMap.sleepTurns,
-                        confusion: usedPCID[x].statusMap.confusion,
-                        confusionTurns: usedPCID[x].statusMap.confusionTurns
-                    }
+                    
                     if(finalLevel > startLevel){ //uses this if the pokemon levels up to calc new stats
                         let unitBaseStats = maids.find(function(item2) { return item2.id.toLowerCase() == usedPCID[x].id.toLowerCase()});
                         let natValues = pickNatureValues(usedPCID[x].nature);
@@ -449,13 +450,13 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                             specialAttack: otherStatCalc(unitBaseStats.specialAttack, usedPCID[x].ivMap.specialAttackIV, newEvs.specialAttack, usedPCID[x].level, natValues.specialAttackNatureValue),
                             specialDefense: otherStatCalc(unitBaseStats.specialDefense, usedPCID[x].ivMap.specialDefenseIV, newEvs.specialDefense, usedPCID[x].level, natValues.specialDefenseNatureValue)
                         }
-                        setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, sMap, newStats);
+                        setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, usedPCID[x].statusMap, newStats);
                         leveledUpString += `Your ${usedPCID[x].id} gained ${resultExp} XP and leveled up to level ${finalLevel}\n`;
                         let leveledPokemon = p1party.findIndex(function(item) { return item.pcID == usedPCID[x].pcID });
                         p1party[leveledPokemon].currentHealth += (newStats.health - usedPCID[x].health);
 
                     } else { //this is used if pokemon didnt level up
-                        setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, sMap);
+                        setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, usedPCID[x].statusMap);
                         leveledUpString += `Your ${usedPCID[x].id} gained ${resultExp} XP\n`;
                     }
                     
@@ -485,9 +486,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             //pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn, true);//set optional at the end to trigger a force swap
             thread.send("it should never get to this point. since there is only 1 wild pokemon.  contact admin if this happens");
         }
-    }
-    
-    if(turn % 2 == 1){ //check if turn is odd so p1 goes
+    } else if(turn % 2 == 1){ //check if turn is odd so p1 goes
         if (turn == 1){
             thread.send(`You have sent out ${p1current.id}`);
         } else {
@@ -515,7 +514,8 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
         collector.on('end', collected => {
         
             if (collected.size === 0) {
-                
+                    thread.send(`You took too long and now its the wild ${p2current.id}'s turn`);
+                    turn++;
                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 
                 return
@@ -578,7 +578,7 @@ async function useItem(p1party, p2party, p1current, p2current, thread, author, t
             }
             
                 if (s.toLowerCase() == 'cancel'){
-                    
+                    thread.send("You have cancelled and have been sent back to battle select.");
                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
                  
                 } else if (s.toLowerCase() == 'heal'){
@@ -652,7 +652,7 @@ async function selectBall(p1party, p2party, p1current, p2current, thread, author
         }
         
             if (s.toLowerCase() == 'cancel'){
-                
+                thread.send("You have cancelled and been sent back to battle select");
                 battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 
             } else {
@@ -918,7 +918,7 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
             collector.on('end', collected => {
             
                 if (collected.size === 0) {
-                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                        //battle(p1party, p2party, p1current, p2current, thread, author, turn);
                     
                     return
                 }
@@ -939,7 +939,7 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
                         }
                     }
                     thread.send(`You have sent in ${p1current.id}`);
-                    turn++;
+                    
 
                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 
@@ -1040,7 +1040,7 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
 
 async function attack(p1party, p2party, p1current, p2current, thread, author, turn){
     let moves = p1current.moves;
-    thread.send(`What attack would you like to use: ${moves.join(", ")}`);
+    thread.send(`What attack would you like to use: ${moves.join(", ")} or type cancel to go back`);
 
 
         const filter = (m) => {
@@ -2815,7 +2815,7 @@ function nonVolitileCheck(p1current, p2current, turn, chance, immuneType, thread
             results = false;
             
         } else {
-            let amountCheck = Math.round(Math.random() * 100);
+            let amountCheck = Math.floor(Math.random() * 100);
             
             if (amountCheck < chance){
                 if(p2status.length > 0){
@@ -2846,7 +2846,7 @@ function nonVolitileCheck(p1current, p2current, turn, chance, immuneType, thread
         if(affect || p1status.length > 0){
             results = false;
         } else {
-            let amountCheck = Math.round(Math.random() * 100);
+            let amountCheck = Math.floor(Math.random() * 100);
             
             if (amountCheck < chance){ 
                 if(p1status.length > 0){

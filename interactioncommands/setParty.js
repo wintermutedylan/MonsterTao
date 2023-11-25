@@ -64,7 +64,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 const filtered = playerData.maids.filter(choice => choice.id.includes(focusedOption.value));
             
                 await interaction.respond(
-                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": " + choice.id, value: choice.pcID })),
+                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": Level " + choice.level + " " + choice.id, value: choice.pcID })),
                 );
                 
             }
@@ -75,7 +75,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 const filtered = choices.filter(choice => choice.id.includes(focusedOption.value));
             
                 await interaction.respond(
-                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": " + choice.id, value: choice.pcID })),
+                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": Level " + choice.level + " " + choice.id, value: choice.pcID })),
                 );
                 
             }
@@ -86,7 +86,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 const filtered = choices.filter(choice => choice.id.includes(focusedOption.value));
             
                 await interaction.respond(
-                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": " + choice.id, value: choice.pcID })),
+                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": Level " + choice.level + " " + choice.id, value: choice.pcID })),
                 );
                 
             }
@@ -97,7 +97,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 const filtered = choices.filter(choice => choice.id.includes(focusedOption.value));
             
                 await interaction.respond(
-                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": " + choice.id, value: choice.pcID })),
+                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": Level " + choice.level + " " + choice.id, value: choice.pcID })),
                 );
                 
             }
@@ -108,7 +108,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 const filtered = choices.filter(choice => choice.id.includes(focusedOption.value));
             
                 await interaction.respond(
-                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": " + choice.id, value: choice.pcID })),
+                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": Level " + choice.level + " " + choice.id, value: choice.pcID })),
                 );
                 
             }
@@ -119,7 +119,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 const filtered = choices.filter(choice => choice.id.includes(focusedOption.value));
             
                 await interaction.respond(
-                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": " + choice.id, value: choice.pcID })),
+                    filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.pcID + ": Level " + choice.level + " " + choice.id, value: choice.pcID })),
                 );
                 
             }

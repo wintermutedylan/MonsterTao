@@ -171,7 +171,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
             }
         }
         
-        interaction.reply(`You have bought ${interaction.options.getInteger('amount')} ${interaction.options.getString('item')}.  ${(interaction.options.getInteger('amount')*itemStuff.cost)} has been deducted.`);
+        interaction.reply(`You have bought ${interaction.options.getInteger('amount')} ${interaction.options.getString('item')}.  ${(interaction.options.getInteger('amount')*itemStuff.cost)} coins has been deducted.`);
         
 
 
