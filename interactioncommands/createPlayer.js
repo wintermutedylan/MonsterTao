@@ -123,6 +123,7 @@ async function createAndAddStarter(ID, starter, interaction, message){
         unit.specialDefense = otherStatCalc(baseSpecialDef, unit.specialDefenseIV, 0, levelToSetUnit, natureValues.specialDefenseNatureValue);
         unit.health = healthStatCalc(baseHP, unit.healthIV, 0, levelToSetUnit);
         addUnit(unit, ID, levelToSetUnit, pcID, exp, pickedNature.name, moves);
+        addCoin(interaction.user.id);
         let unitExp = expTable.find(function(item) { return item.name == unit.growthRate});
         let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == levelToSetUnit + 1});
         const newEmbed = new EmbedBuilder()
@@ -268,6 +269,24 @@ async function addToBag(pcID, ID){
                         name: 'poke-ball',
                         amount: 5
                     }
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+async function addCoin(ID){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $set: {
+                    coins: 5000
                 }
                 
             }
