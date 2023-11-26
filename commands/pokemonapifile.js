@@ -22,6 +22,7 @@ module.exports = {
     async execute(client, message, cmd, args, Discord) {
         
         let finalPokemonArray = [];
+        let finalItem = [];
         
         // let searchArray = [];
         // for(let s = 0; s < locationInfo.length; s++){
@@ -44,8 +45,37 @@ module.exports = {
        try{
         (async () => {
             // const growthArray = await P.getPokemonSpeciesByName(searchArray);
-            finalPokemonArray = getlocations("sinnoh", 127);
-            
+            //finalPokemonArray = getlocations("sinnoh", 127);
+           
+            for(let i = 0; i < maids.length; i++){
+                for(let j = 0; j < maids[i].evolutionDetails.length; j++){
+                    if(maids[i].evolutionDetails[j].evolutionData != null){
+                        if(maids[i].evolutionDetails[j].evolutionData.trigger.name == "use-item" && maids[i].evolutionDetails[j].evolutionData.item.name != null){
+                            if(!finalPokemonArray.includes(maids[i].evolutionDetails[j].evolutionData.item.name) && maids[i].evolutionDetails[j].evolutionData.item.name != 'sun-shard' && maids[i].evolutionDetails[j].evolutionData.item.name != 'moon-shard'){
+                                finalPokemonArray.push(maids[i].evolutionDetails[j].evolutionData.item.name);
+                            }
+                        }
+                    }
+                }
+            }
+            let healingArray = ["potion","full-restore","max-potion","hyper-potion","super-potion","fresh-water","soda-pop","lemonade","moomoo-milk","energy-powder","energy-root","berry-juice","sweet-heart"]
+            const growthArray = await P.getItemByName(healingArray);
+            for(let x = 0; x < growthArray.length; x++){
+                let itemMap = {
+                    
+                        name: growthArray[x].name,
+                        catchModifier: null,
+                        healAmount: null,
+                        cost: growthArray[x].cost,
+                        type: "healing"
+                    
+                }
+                finalItem.push(itemMap);
+            }
+            const JSON_FILE = "../monstertao/units/tempfile.json";
+            let data = JSON.stringify(finalItem);
+            fs.writeFileSync(JSON_FILE, data);
+
             // const JSON_FILE = "../monstertao/units/maids.json";
             // const jsonData = fs.readFileSync(JSON_FILE);
             // let newData = JSON.parse(jsonData);

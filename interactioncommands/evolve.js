@@ -22,7 +22,9 @@ module.exports = {
                 .setRequired(true)
 				.addChoices(
                     { name: 'Level', value: 'level'},
-                    { name: 'Item (NOT WORKING RN)', value: 'item'}
+                    { name: 'Item (NOT WORKING RN)', value: 'item'},
+                    { name: 'Happiness', value: 'happiness'},
+                    { name: 'Move', value: 'move'}
                     ))
         .addStringOption(option =>
             option.setName('pokemon')
@@ -45,19 +47,15 @@ module.exports = {
             );
 
         } else if (focusedOption.name === 'pokemon') {
-            if(interaction.options.getString('type') == 'level'){
-                let eligiblePokemon = [];
-                for(let i = 0; i < playerData.maids.length; i++){
-                    let unit = maids.find(function(item) { return item.id.toLowerCase() == playerData.maids[i].id.toLowerCase()});
-                    if(playerData.maids[i].level >= unit.evolutionDetails.evolutionData.min_level && maids.findIndex(function(it) { return it.id.toLowerCase() == unit.evolutionDetails.evolvesTo.toLowerCase()}) != -1){
-                        eligiblePokemon.push(playerData.maids[i]);
-                    }
-                }
+            
+            let eligiblePokemon = [];
+            for(let i = 0; i < playerData.maids.length; i++){
+                eligiblePokemon.push(playerData.maids[i]);
                 
-                choices = eligiblePokemon;
-            } else if(interaction.options.getString('type') == 'item') {
-                choices = ["You don't exist. Please run /register to create a profile"]
             }
+            
+            choices = eligiblePokemon;
+            
             const filtered = choices.filter(choice => choice.id.includes(focusedOption.value));
         
             await interaction.respond(
@@ -81,16 +79,85 @@ module.exports = {
         }
         let pokemonInfo = playerData.maids[pokemonLocation];
         
-        let unit = maids.find(function(item) { return item.id.toLowerCase() == pokemonInfo.id.toLowerCase()});
-        if(pokemonInfo.level < unit.evolutionDetails.evolutionData.min_level || maids.findIndex(function(it) { return it.id.toLowerCase() == unit.evolutionDetails.evolvesTo.toLowerCase()}) == -1){
-            return interaction.reply(`${pokemonInfo.id} can't evolve right now`);
-            
-        }
-
         
         let unitDetails = maids.find(function(item) {return item.id.toLowerCase() == pokemonInfo.id.toLowerCase()});
+        let unitToEvolveTo;
+        let evoTo = unitDetails.evolutionDetails.filter(fil => fil.evolvesTo != null);
+        if(interaction.options.getString('type') == 'level'){
+            
+            let actualEvoTo = evoTo.find(function(item) { return item.evolutionData.trigger.name == "level-up" && item.evolutionData.min_level != null});
+            if(!actualEvoTo){
+                return interaction.reply(`${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`);
+            }
+            if(unitDetails.id == "Wurmple"){
+                let amountCheck = Math.round(Math.random() * 100);
+                
+                if (amountCheck < 50){
+                    unitToEvolveTo = maids.find(function(e) { return e.id == 'Cascoon' });
+                } else {
+                    unitToEvolveTo = maids.find(function(e) { return e.id == 'Silcoon' });
+                }
+            } else if(unitDetails.id == "Tyrogue"){
+                
+                if(pokemonInfo.attack > pokemonInfo.defense){
+                    unitToEvolveTo = maids.find(function(e) { return e.id == 'Hitmonlee' });
+                } else if(pokemonInfo.attack < pokemonInfo.defense){
+                    unitToEvolveTo = maids.find(function(e) { return e.id == 'Hitmonchan' });
+                } else {
+                    unitToEvolveTo = maids.find(function(e) { return e.id == 'Hitmontop' });
+                }
+                
+            } else {
+                unitToEvolveTo = maids.find(function(e) { return e.id.toLowerCase() == actualEvoTo.evolvesTo.toLowerCase() });
+            }
+            
+        } else if(interaction.options.getString('type') == 'move'){
+            let actualEvoTo = evoTo.find(function(item) { return item.evolutionData.trigger.name == "move" && item.evolutionData.known_move != null});
+            if(!actualEvoTo){
+                return interaction.reply(`${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`);
+            }
+            if(pokemonInfo.moves.findIndex(function(item) { return item.toLowerCase() == actualEvoTo.evolutionData.known_move.name}) != -1){
+                unitToEvolveTo = maids.find(function(e) { return e.id.toLowerCase() == actualEvoTo.evolvesTo.toLowerCase() });
+            }
+        } else if(interaction.options.getString('type') == 'happiness'){
+            let actualEvoTo = evoTo.find(function(item) { return item.evolutionData.trigger.name == "happiness" && item.evolutionData.min_happiness != null});
+            if(!actualEvoTo){
+                return interaction.reply(`${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`);
+            }
+            if(pokemonInfo.happiness >= actualEvoTo.evolutionData.min_happiness){
+                unitToEvolveTo = maids.find(function(e) { return e.id.toLowerCase() == actualEvoTo.evolvesTo.toLowerCase() });
+            }
+        } else if(interaction.options.getString('type') == 'item'){
+            let actualEvoTo = evoTo.find(function(item) { return item.evolutionData.trigger.name == "use-item" && item.evolutionData.item != null});
+            let itemIndex = pokemonInfo.bag.findIndex(function(item) { return item.name.toLowerCase() == actualEvoTo.evolutionData.item.name.toLowerCase()})
+            let newBagArray = playerBag.bag;
+            if(!actualEvoTo){
+                return interaction.reply(`${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`);
+            }
+            if(itemIndex != -1){
+                unitToEvolveTo = maids.find(function(e) { return e.id.toLowerCase() == actualEvoTo.evolvesTo.toLowerCase() });
+                if(playerData.bag[itemIndex].amount - 1 == 0){
+                    newBagArray.splice(itemIndex, 1); 
+                    removeItem(interaction.user.id, newBagArray);
+                } else {
+                    removeItemAmount(interaction.user.id, itemIndex);
+                }
+            }
+        }
         
-        let unitToEvolveTo = maids.find(function(e) { return e.id.toLowerCase() == unitDetails.evolutionDetails.evolvesTo.toLowerCase()})
+        
+        // for(let e = 0; e < unit.evolutionDetails.length; e++){
+        //     if(pokemonInfo.level < unit.evolutionDetails[e].evolutionData.min_level || maids.findIndex(function(it) { return it.id.toLowerCase() == unit.evolutionDetails[e].evolvesTo.toLowerCase()}) == -1){
+                
+                
+        //     }
+        // }
+        
+
+        
+        
+        
+        
 
         let baseAtk = unitToEvolveTo.attack;
         let baseSpecialAtk = unitToEvolveTo.specialAttack;
@@ -118,6 +185,7 @@ module.exports = {
         let unitExp = expTable.find(function(item) { return item.name == pokemonInfo.growthRate});
         let exp = unitExp.levelTable.find(function(expItem) { return expItem.level == pokemonInfo.level}).experience;
         let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == pokemonInfo.level + 1});
+        
         const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')
         .setTitle(`Pokemon Info`)
@@ -125,8 +193,8 @@ module.exports = {
         .setFields(
             {name: "Level", value:`Level: ${pokemonInfo.level}, EXP: ${exp}/${expToNextLevel.experience}` },
             {name: "Stats", value:`Hp: ${pokemonInfo.health}/${pokemonInfo.health}, Atk: ${pokemonInfo.attack}, SpAtk: ${pokemonInfo.specialAttack}, Def: ${pokemonInfo.defense}, SpDef: ${pokemonInfo.specialDefense}` },
-            {name: "IVs", value: `Hp: ${healthIV}, Atk: ${attackIV}, SpAtk: ${specialAttackIV}, Def: ${defenseIV}, SpDef: ${specialDefenseIV}`},
-            {name: "Moves", value: `${pokemonInfo.moves.join(", ")}`}
+            {name: "IVs", value: `Hp: ${healthIV}, Atk: ${attackIV}, SpAtk: ${specialAttackIV}, Def: ${defenseIV}, SpDef: ${specialDefenseIV}`}
+            
         )
         
         setEvolvePokemon(pokemonLocation,pokemonInfo,interaction.user.id);
@@ -214,4 +282,40 @@ function pickNatureValues(nature){
 
     }
     return values;
+}
+async function removeItemAmount(ID, location){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $inc: {
+                    ["bag." + location + ".amount"]: -1
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+async function removeItem(ID, bagArray){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $set: {
+                    bag: bagArray
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
 }

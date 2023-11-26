@@ -2,25 +2,309 @@
     {
         "name": "master-ball",
         "catchModifier": 255,
+        "healAmount": null,
         "cost": 999999,
         "type": "ball"
     },
     {
         "name": "ultra-ball",
         "catchModifier": 2,
+        "healAmount": null,
         "cost": 800,
         "type": "ball"
     },
     {
         "name": "great-ball",
         "catchModifier": 1.5,
+        "healAmount": null,
         "cost": 600,
         "type": "ball"
     },
     {
         "name": "poke-ball",
         "catchModifier": 1,
+        "healAmount": null,
         "cost": 200,
         "type": "ball"
+    },
+    {
+        "name": "thunder-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "moon-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "fire-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "sun-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "leaf-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "water-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "kings-rock",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 5000,
+        "type": "evolution"
+    },
+    {
+        "name": "metal-coat",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "protector",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "dragon-scale",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "electirizer",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "magmarizer",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "ice-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "up-grade",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "shiny-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "dusk-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "razor-fang",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 5000,
+        "type": "evolution"
+    },
+    {
+        "name": "razor-claw",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 5000,
+        "type": "evolution"
+    },
+    {
+        "name": "dubious-disc",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "dawn-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 3000,
+        "type": "evolution"
+    },
+    {
+        "name": "prism-scale",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "reaper-cloth",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "deep-sea-scale",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "deep-sea-tooth",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "oval-stone",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "sun-shard",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "moon-shard",
+        "catchModifier": null,
+        "healAmount": null,
+        "cost": 2000,
+        "type": "evolution"
+    },
+    {
+        "name": "potion",
+        "catchModifier": null,
+        "healAmount": 20,
+        "cost": 200,
+        "type": "healing"
+    },
+    {
+        "name": "full-restore",
+        "catchModifier": null,
+        "healAmount": 999,
+        "cost": 3000,
+        "type": "healing"
+    },
+    {
+        "name": "max-potion",
+        "catchModifier": null,
+        "healAmount": 999,
+        "cost": 2500,
+        "type": "healing"
+    },
+    {
+        "name": "hyper-potion",
+        "catchModifier": null,
+        "healAmount": 200,
+        "cost": 1500,
+        "type": "healing"
+    },
+    {
+        "name": "super-potion",
+        "catchModifier": null,
+        "healAmount": 50,
+        "cost": 700,
+        "type": "healing"
+    },
+    {
+        "name": "fresh-water",
+        "catchModifier": null,
+        "healAmount": 50,
+        "cost": 200,
+        "type": "healing"
+    },
+    {
+        "name": "soda-pop",
+        "catchModifier": null,
+        "healAmount": 60,
+        "cost": 300,
+        "type": "healing"
+    },
+    {
+        "name": "lemonade",
+        "catchModifier": null,
+        "healAmount": 80,
+        "cost": 400,
+        "type": "healing"
+    },
+    {
+        "name": "moomoo-milk",
+        "catchModifier": null,
+        "healAmount": 100,
+        "cost": 600,
+        "type": "healing"
+    },
+    {
+        "name": "energy-powder",
+        "catchModifier": null,
+        "healAmount": 50,
+        "cost": 500,
+        "type": "healing"
+    },
+    {
+        "name": "energy-root",
+        "catchModifier": null,
+        "healAmount": 200,
+        "cost": 1200,
+        "type": "healing"
+    },
+    {
+        "name": "berry-juice",
+        "catchModifier": null,
+        "healAmount": 20,
+        "cost": 200,
+        "type": "healing"
+    },
+    {
+        "name": "sweet-heart",
+        "catchModifier": null,
+        "healAmount": 20,
+        "cost": 3000,
+        "type": "healing"
     }
 ]

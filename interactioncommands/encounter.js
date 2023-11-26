@@ -62,10 +62,7 @@ module.exports = {
         playerData = await playerModel.findOne({ userID: interaction.user.id});
         if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         var ID = interaction.user.id;
-        let cost = playerData.badges.length * 100;
-        if(playerData.coins < cost){
-            return interaction.reply(`You don't have enough coins to start this encounter. you need ${cost} and you have ${playerData.coins}`);
-        }
+        
         let route = interaction.options.getString('route');//use args here.  this is just a placeholder for testing
         let encounterArr = [];
         for(let i = 0; i < routeEncounters.length; i++){
@@ -153,7 +150,14 @@ module.exports = {
             },
             catchRate: unit.catchRate
         }
-        createBattleThread(interaction, finalPokemon);
+        let cost = finalPokemon.level * 10;
+        if(playerData.badges.length == 0){
+            cost = 0;
+        }
+        if(playerData.coins < cost){
+            return interaction.reply(`You don't have enough coins to start this encounter. you need ${cost} and you have ${playerData.coins}`);
+        }
+        createBattleThread(interaction, finalPokemon, cost);
         
 
         
@@ -230,7 +234,7 @@ function otherStatCalc(base, iv, ev, level, nature){
     return Math.floor(total * nature);
 }
 
-async function createBattleThread(message, boss){
+async function createBattleThread(message, boss, cost){
     if(message.channel.isThread()) return message.reply("please use this command out of a thread");
     let threadName = `${message.user.globalName}'s battle against a wild ${boss.id}`;
     const thread = await message.channel.threads.create({
@@ -241,7 +245,7 @@ async function createBattleThread(message, boss){
     });
     message.reply({ content: `you are now in a battle a wild **${boss.id}** please move to the created thread ${channelMention(thread.id)}`, ephemeral: true});
     await thread.members.add(message.user.id);
-    snapshot(message, boss, thread);
+    snapshot(message, boss, thread, cost);
 }
 
 async function battle(p1party, p2party, p1current, p2current, thread, author, turn){
@@ -1625,7 +1629,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`Your ${p1current.id} used ${moveDetails.move} doing **${damage}** damage`)
+                .setTitle(`The wild ${p2current.id} used ${moveDetails.move} doing **${damage}** damage`)
                 .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
@@ -3129,7 +3133,7 @@ function damageFormula(details, p1current, p2current, turn){
 }
 
 
-async function snapshot(message, boss, thread){
+async function snapshot(message, boss, thread, cost){
     //maybe push a attack, def, boosts array here.  this will have X items, status moves that lower or raise those stats,  accuracy.  will need to update accuracy calc after 
     //for accuracy subtracted the evasion stage from the accuracy stage.  if that is higher than than +6 just use +6 from evasion.  and if its lower than -6 just use -6 from evasion. so if +2 accuracy and enemy has +1 evasion then its +1 total then grab 
     //from array
@@ -3185,7 +3189,8 @@ async function snapshot(message, boss, thread){
     */
             
     let p2current = p2party[0];
-    thread.send(`A wild Level ${p2current.level} ${p2current.id} has appeared`)
+    thread.send(`You have used ${cost} coins to enter this encounter`);
+    thread.send(`A wild Level ${p2current.level} ${p2current.id} has appeared`);
         
     
     startBattle(p1party, p2party, p1current, p2current, thread, message.user);

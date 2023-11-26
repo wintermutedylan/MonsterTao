@@ -17,8 +17,9 @@ module.exports = { //make this a slash command where when you enter the pcid it 
 				.setDescription('Type of item you want to buy')
                 .setRequired(true)
 				.addChoices(
-                    { name: 'Heal', value: 'heal'},
-                    { name: 'Ball', value: 'ball'}
+                    { name: 'Heal', value: 'healing'},
+                    { name: 'Ball', value: 'ball'},
+                    { name: 'Evolution', value: 'evolution'}
                     
                     ))
         .addStringOption(option => 
@@ -35,7 +36,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 .setRequired(true)),
     async autocomplete(interaction) {
         const focusedOption = interaction.options.getFocused(true);
-        let choices;
+        let choices = [];
         let moveChoices = [];
         let playerData; 
         playerData = await playerModel.findOne({ userID: interaction.user.id});
@@ -54,11 +55,11 @@ module.exports = { //make this a slash command where when you enter the pcid it 
             if (focusedOption.name === 'item') {
                 
                 let pokemon = [];
-                
-                for(let i = 0; i < items.filter(item => item.type == interaction.options.getString('type')).length; i++){
+                let itemFilter = items.filter(item => item.type == interaction.options.getString('type'))
+                for(let i = 0; i < itemFilter.length; i++){
                     let x = {
-                        name: items[i].name,
-                        value: items[i].cost
+                        name: itemFilter[i].name,
+                        value: itemFilter[i].cost
                     }
                     pokemon.push(x);
                 }

@@ -1495,7 +1495,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 const newEmbed = new EmbedBuilder()
                 .setColor('#E76AA3')
                 
-                .setTitle(`Your ${p1current.id} used ${moveDetails.move} doing **${damage}** damage`)
+                .setTitle(`${p2party[0].bossName}'s ${p2current.id} used ${moveDetails.move} doing **${damage}** damage`)
                 .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
             
