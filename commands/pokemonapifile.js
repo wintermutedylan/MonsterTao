@@ -3,8 +3,10 @@
 const { userMention, memberNicknameMention, channelMention, roleMention } = require("@discordjs/builders");
 var maids = require("../units/maids.json");
 var moves = require("../units/moves.json");
+var moveinfo = require("../units/moveinfo.json");
 var items = require("../units/items.json");
 var temp = require("../units/tempfile.json");
+
 var routeEncounters = require("../units/routes.json");
 
 const Pokedex = require("pokeapi-js-wrapper")
@@ -24,13 +26,15 @@ module.exports = {
         let finalPokemonArray = [];
         let finalItem = [];
         
-        // let searchArray = [];
-        // for(let s = 0; s < locationInfo.length; s++){
-        //     for(let g = 0; g < locationInfo[s].locationAreas.length; g++){
-        //         searchArray.push(locationInfo[s].locationAreas[g].toLowerCase());
-        //     }
+        
+        
+        let searchArray = [];
+        for(let s = 0; s < temptm.length; s++){
             
-        // }
+            searchArray.push(temptm[s].name);
+            
+            
+        }
         // let searchArray = [];
         // for(let s = 400; s < maids.length; s++){
         //     if(maids[s].id.toLowerCase() != 'deoxys-speed' && maids[s].id.toLowerCase() != 'deoxys-defense'&&maids[s].id.toLowerCase() != 'deoxys-attack'&&maids[s].id.toLowerCase() != 'deoxys-normal'&&maids[s].id.toLowerCase() != 'giratina-altered'&&maids[s].id.toLowerCase() != 'wormadam-plant'&&maids[s].id.toLowerCase() != 'shaymin-land'&&maids[s].id.toLowerCase() != 'giratina-origin'){
@@ -47,34 +51,39 @@ module.exports = {
             // const growthArray = await P.getPokemonSpeciesByName(searchArray);
             //finalPokemonArray = getlocations("sinnoh", 127);
            
-            for(let i = 0; i < maids.length; i++){
-                for(let j = 0; j < maids[i].evolutionDetails.length; j++){
-                    if(maids[i].evolutionDetails[j].evolutionData != null){
-                        if(maids[i].evolutionDetails[j].evolutionData.trigger.name == "use-item" && maids[i].evolutionDetails[j].evolutionData.item.name != null){
-                            if(!finalPokemonArray.includes(maids[i].evolutionDetails[j].evolutionData.item.name) && maids[i].evolutionDetails[j].evolutionData.item.name != 'sun-shard' && maids[i].evolutionDetails[j].evolutionData.item.name != 'moon-shard'){
-                                finalPokemonArray.push(maids[i].evolutionDetails[j].evolutionData.item.name);
-                            }
-                        }
-                    }
-                }
-            }
-            let healingArray = ["potion","full-restore","max-potion","hyper-potion","super-potion","fresh-water","soda-pop","lemonade","moomoo-milk","energy-powder","energy-root","berry-juice","sweet-heart"]
-            const growthArray = await P.getItemByName(healingArray);
-            for(let x = 0; x < growthArray.length; x++){
-                let itemMap = {
+            
+            // for(let i = 0; i < moveinfo.length; i++){
+            //     for(let j = 0; j < moveinfo[i].otherMoves.length; j++){
+            //         if(moveinfo[i].otherMoves[j].method == "machine"){
+            //             if(!finalPokemonArray.includes(moveinfo[i].otherMoves[j].name)){
+            //                 finalPokemonArray.push(moveinfo[i].otherMoves[j].name);
+            //             }
+            //         }
+            //     }
+            // }
+
+            // const growthArray = await P.getItemByName(searchArray);
+            // for(let x = 0; x < growthArray.length; x++){
+            //     let othertm = temptm.find(function(item) { return item.name == growthArray[x].name});
+            //         let itemMap = {
                     
-                        name: growthArray[x].name,
-                        catchModifier: null,
-                        healAmount: null,
-                        cost: growthArray[x].cost,
-                        type: "healing"
+            //             name: othertm.name,
+            //             catchModifier: null,
+            //             healAmount: null,
+            //             moveName: othertm.moveName,
+            //             cost: growthArray[x].cost,
+            //             type: "machine"
                     
-                }
-                finalItem.push(itemMap);
-            }
-            const JSON_FILE = "../monstertao/units/tempfile.json";
-            let data = JSON.stringify(finalItem);
-            fs.writeFileSync(JSON_FILE, data);
+            //     }
+            //         finalItem.push(itemMap);
+                    
+                
+            // }
+            // const JSON_FILE = "../monstertao/units/temptm.json";
+            // let data = JSON.stringify(finalItem);
+            // fs.writeFileSync(JSON_FILE, data);
+            
+            
 
             // const JSON_FILE = "../monstertao/units/maids.json";
             // const jsonData = fs.readFileSync(JSON_FILE);
@@ -277,6 +286,7 @@ async function getlocations(region, amount){
     }
     getlocationAreas(finalPokemonArray, region);
 }
+
 async function getlocationAreas(searchArray, region){
     const growthArray = await P.getLocationByName(searchArray);
     let finalPokemonArray = [];

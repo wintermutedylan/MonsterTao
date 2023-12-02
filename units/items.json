@@ -3,6 +3,7 @@
         "name": "master-ball",
         "catchModifier": 255,
         "healAmount": null,
+        "moveName": null,
         "cost": 999999,
         "type": "ball"
     },
@@ -10,6 +11,7 @@
         "name": "ultra-ball",
         "catchModifier": 2,
         "healAmount": null,
+        "moveName": null,
         "cost": 800,
         "type": "ball"
     },
@@ -17,6 +19,7 @@
         "name": "great-ball",
         "catchModifier": 1.5,
         "healAmount": null,
+        "moveName": null,
         "cost": 600,
         "type": "ball"
     },
@@ -24,6 +27,7 @@
         "name": "poke-ball",
         "catchModifier": 1,
         "healAmount": null,
+        "moveName": null,
         "cost": 200,
         "type": "ball"
     },
@@ -31,6 +35,7 @@
         "name": "thunder-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -38,6 +43,7 @@
         "name": "moon-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -45,6 +51,7 @@
         "name": "fire-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -52,6 +59,7 @@
         "name": "sun-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -59,6 +67,7 @@
         "name": "leaf-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -66,6 +75,7 @@
         "name": "water-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -73,6 +83,7 @@
         "name": "kings-rock",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 5000,
         "type": "evolution"
     },
@@ -80,6 +91,7 @@
         "name": "metal-coat",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -87,6 +99,7 @@
         "name": "protector",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -94,6 +107,7 @@
         "name": "dragon-scale",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -101,6 +115,7 @@
         "name": "electirizer",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -108,6 +123,7 @@
         "name": "magmarizer",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -115,6 +131,7 @@
         "name": "ice-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -122,6 +139,7 @@
         "name": "up-grade",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -129,6 +147,7 @@
         "name": "shiny-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -136,6 +155,7 @@
         "name": "dusk-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -143,6 +163,7 @@
         "name": "razor-fang",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 5000,
         "type": "evolution"
     },
@@ -150,6 +171,7 @@
         "name": "razor-claw",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 5000,
         "type": "evolution"
     },
@@ -157,6 +179,7 @@
         "name": "dubious-disc",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -164,6 +187,7 @@
         "name": "dawn-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 3000,
         "type": "evolution"
     },
@@ -171,6 +195,7 @@
         "name": "prism-scale",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -178,6 +203,7 @@
         "name": "reaper-cloth",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -185,6 +211,7 @@
         "name": "deep-sea-scale",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -192,6 +219,7 @@
         "name": "deep-sea-tooth",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -199,6 +227,7 @@
         "name": "oval-stone",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -206,6 +235,7 @@
         "name": "sun-shard",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -213,6 +243,7 @@
         "name": "moon-shard",
         "catchModifier": null,
         "healAmount": null,
+        "moveName": null,
         "cost": 2000,
         "type": "evolution"
     },
@@ -220,6 +251,7 @@
         "name": "potion",
         "catchModifier": null,
         "healAmount": 20,
+        "moveName": null,
         "cost": 200,
         "type": "healing"
     },
@@ -227,6 +259,7 @@
         "name": "full-restore",
         "catchModifier": null,
         "healAmount": 999,
+        "moveName": null,
         "cost": 3000,
         "type": "healing"
     },
@@ -234,6 +267,7 @@
         "name": "max-potion",
         "catchModifier": null,
         "healAmount": 999,
+        "moveName": null,
         "cost": 2500,
         "type": "healing"
     },
@@ -241,6 +275,7 @@
         "name": "hyper-potion",
         "catchModifier": null,
         "healAmount": 200,
+        "moveName": null,
         "cost": 1500,
         "type": "healing"
     },
@@ -248,6 +283,7 @@
         "name": "super-potion",
         "catchModifier": null,
         "healAmount": 50,
+        "moveName": null,
         "cost": 700,
         "type": "healing"
     },
@@ -255,6 +291,7 @@
         "name": "fresh-water",
         "catchModifier": null,
         "healAmount": 50,
+        "moveName": null,
         "cost": 200,
         "type": "healing"
     },
@@ -262,6 +299,7 @@
         "name": "soda-pop",
         "catchModifier": null,
         "healAmount": 60,
+        "moveName": null,
         "cost": 300,
         "type": "healing"
     },
@@ -269,6 +307,7 @@
         "name": "lemonade",
         "catchModifier": null,
         "healAmount": 80,
+        "moveName": null,
         "cost": 400,
         "type": "healing"
     },
@@ -276,6 +315,7 @@
         "name": "moomoo-milk",
         "catchModifier": null,
         "healAmount": 100,
+        "moveName": null,
         "cost": 600,
         "type": "healing"
     },
@@ -283,6 +323,7 @@
         "name": "energy-powder",
         "catchModifier": null,
         "healAmount": 50,
+        "moveName": null,
         "cost": 500,
         "type": "healing"
     },
@@ -290,6 +331,7 @@
         "name": "energy-root",
         "catchModifier": null,
         "healAmount": 200,
+        "moveName": null,
         "cost": 1200,
         "type": "healing"
     },
@@ -297,6 +339,7 @@
         "name": "berry-juice",
         "catchModifier": null,
         "healAmount": 20,
+        "moveName": null,
         "cost": 200,
         "type": "healing"
     },
@@ -304,7 +347,800 @@
         "name": "sweet-heart",
         "catchModifier": null,
         "healAmount": 20,
+        "moveName": null,
         "cost": 3000,
         "type": "healing"
+    },
+    {
+        "name": "tm01",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "focus-punch",
+        "cost": 40000,
+        "type": "machine"
+    },
+    {
+        "name": "tm02",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "dragon-claw",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm03",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "water-pulse",
+        "cost": 50000,
+        "type": "machine"
+    },
+    {
+        "name": "tm04",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "calm-mind",
+        "cost": 50000,
+        "type": "machine"
+    },
+    {
+        "name": "tm06",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "toxic",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm07",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "hail",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm08",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "bulk-up",
+        "cost": 50000,
+        "type": "machine"
+    },
+    {
+        "name": "tm09",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "bullet-seed",
+        "cost": 50000,
+        "type": "machine"
+    },
+    {
+        "name": "tm10",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "hidden-power",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm11",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "sunny-day",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm12",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "taunt",
+        "cost": 50000,
+        "type": "machine"
+    },
+    {
+        "name": "tm13",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "ice-beam",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm14",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "blizzard",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm15",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "hyper-beam",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm16",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "light-screen",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm17",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "protect",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm18",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "rain-dance",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm19",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "giga-drain",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm20",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "safeguard",
+        "cost": 100000,
+        "type": "machine"
+    },
+    {
+        "name": "tm21",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "frustration",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm22",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "solar-beam",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm23",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "iron-tail",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm24",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "thunderbolt",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm25",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "thunder",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm26",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "earthquake",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm27",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "return",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm28",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "dig",
+        "cost": 100000,
+        "type": "machine"
+    },
+    {
+        "name": "tm29",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "psychic",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm30",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "shadow-ball",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm31",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "brick-break",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm32",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "double-team",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm33",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "reflect",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm34",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "shock-wave",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm35",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "flamethrower",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm36",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "sludge-bomb",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm37",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "sandstorm",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm38",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "fire-blast",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm39",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "rock-tomb",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm40",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "aerial-ace",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm41",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "torment",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm42",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "facade",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm43",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "secret-power",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm44",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "rest",
+        "cost": 100000,
+        "type": "machine"
+    },
+    {
+        "name": "tm45",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "attract",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm46",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "thief",
+        "cost": 30000,
+        "type": "machine"
+    },
+    {
+        "name": "tm47",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "steel-wing",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm48",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "skill-swap",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm49",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "snatch",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm50",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "overheat",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm51",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "roost",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm52",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "focus-blast",
+        "cost": 100000,
+        "type": "machine"
+    },
+    {
+        "name": "tm53",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "energy-ball",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm54",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "false-swipe",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm55",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "brine",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm56",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "fling",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm57",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "charge-beam",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm58",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "endure",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm59",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "dragon-pulse",
+        "cost": 100000,
+        "type": "machine"
+    },
+    {
+        "name": "tm60",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "drain-punch",
+        "cost": 30000,
+        "type": "machine"
+    },
+    {
+        "name": "tm61",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "will-o-wisp",
+        "cost": 30000,
+        "type": "machine"
+    },
+    {
+        "name": "tm62",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "silver-wind",
+        "cost": 30000,
+        "type": "machine"
+    },
+    {
+        "name": "tm63",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "embargo",
+        "cost": 50000,
+        "type": "machine"
+    },
+    {
+        "name": "tm64",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "explosion",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm65",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "shadow-claw",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm66",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "payback",
+        "cost": 30000,
+        "type": "machine"
+    },
+    {
+        "name": "tm67",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "recycle",
+        "cost": 30000,
+        "type": "machine"
+    },
+    {
+        "name": "tm68",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "giga-impact",
+        "cost": 30000,
+        "type": "machine"
+    },
+    {
+        "name": "tm69",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "rock-polish",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm70",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "flash",
+        "cost": 50000,
+        "type": "machine"
+    },
+    {
+        "name": "tm71",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "stone-edge",
+        "cost": 50000,
+        "type": "machine"
+    },
+    {
+        "name": "tm72",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "avalanche",
+        "cost": 50000,
+        "type": "machine"
+    },
+    {
+        "name": "tm73",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "thunder-wave",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm74",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "gyro-ball",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm75",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "swords-dance",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm76",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "stealth-rock",
+        "cost": 10000,
+        "type": "machine"
+    },
+    {
+        "name": "tm77",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "psych-up",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm78",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "captivate",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm79",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "dark-pulse",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm80",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "rock-slide",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm81",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "x-scissor",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm82",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "sleep-talk",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm83",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "natural-gift",
+        "cost": 100000,
+        "type": "machine"
+    },
+    {
+        "name": "tm84",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "poison-jab",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm85",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "dream-eater",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm86",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "grass-knot",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm87",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "swagger",
+        "cost": 1000,
+        "type": "machine"
+    },
+    {
+        "name": "tm88",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "pluck",
+        "cost": 20000,
+        "type": "machine"
+    },
+    {
+        "name": "tm89",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "u-turn",
+        "cost": 20000,
+        "type": "machine"
+    },
+    {
+        "name": "tm90",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "substitute",
+        "cost": 20000,
+        "type": "machine"
+    },
+    {
+        "name": "tm91",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "flash-cannon",
+        "cost": 20000,
+        "type": "machine"
+    },
+    {
+        "name": "tm92",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "trick-room",
+        "cost": 100000,
+        "type": "machine"
+    },
+    {
+        "name": "hm01",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "cut",
+        "cost": 5000,
+        "type": "machine"
+    },
+    {
+        "name": "hm02",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "fly",
+        "cost": 5000,
+        "type": "machine"
+    },
+    {
+        "name": "hm03",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "surf",
+        "cost": 5000,
+        "type": "machine"
+    },
+    {
+        "name": "hm04",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "strength",
+        "cost": 5000,
+        "type": "machine"
+    },
+    {
+        "name": "hm05",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "defog",
+        "cost": 5000,
+        "type": "machine"
+    },
+    {
+        "name": "hm06",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "rock-smash",
+        "cost": 5000,
+        "type": "machine"
+    },
+    {
+        "name": "hm07",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "waterfall",
+        "cost": 5000,
+        "type": "machine"
+    },
+    {
+        "name": "hm08",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": "rock-climb",
+        "cost": 5000,
+        "type": "machine"
     }
 ]

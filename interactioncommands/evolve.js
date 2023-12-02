@@ -56,7 +56,7 @@ module.exports = {
             
             choices = eligiblePokemon;
             
-            const filtered = choices.filter(choice => choice.id.includes(focusedOption.value));
+            const filtered = choices.filter(choice => choice.id.includes(focusedOption.value) || choice.pcID.includes(focusedOption.value));
         
             await interaction.respond(
                 filtered.slice(0, 25).map(choice => ({ name:'PCID# ' + choice.pcID + ' ' + choice.id, value: choice.pcID.toString() })),

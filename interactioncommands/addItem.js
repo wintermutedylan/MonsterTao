@@ -19,7 +19,8 @@ module.exports = { //make this a slash command where when you enter the pcid it 
 				.addChoices(
                     { name: 'Heal', value: 'healing'},
                     { name: 'Ball', value: 'ball'},
-                    { name: 'Evolution', value: 'evolution'}
+                    { name: 'Evolution', value: 'evolution'},
+                    { name: "TM", value: "machine"}
                     
                     ))
         .addStringOption(option => 
@@ -56,20 +57,39 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 
                 let pokemon = [];
                 let itemFilter = items.filter(item => item.type == interaction.options.getString('type'))
-                for(let i = 0; i < itemFilter.length; i++){
-                    let x = {
-                        name: itemFilter[i].name,
-                        value: itemFilter[i].cost
+                if(interaction.options.getString('type') == "machine"){
+                    for(let i = 0; i < itemFilter.length; i++){
+                        let x = {
+                            name: itemFilter[i].name,
+                            move: itemFilter[i].moveName,
+                            value: itemFilter[i].cost
+                        }
+                        pokemon.push(x);
                     }
-                    pokemon.push(x);
+                    choices = pokemon;
+                    const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
+                
+                    await interaction.respond(
+                        filtered.slice(0, 25).map(choice => ({ name: choice.name + ": " + choice.move + ", Cost: " + choice.value, value: choice.name })),
+                    );
+                } else {
+                    for(let i = 0; i < itemFilter.length; i++){
+                        let x = {
+                            name: itemFilter[i].name,
+                            value: itemFilter[i].cost
+                        }
+                        pokemon.push(x);
+                    }
+                    choices = pokemon;
+                    const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
+                
+                    await interaction.respond(
+                        filtered.slice(0, 25).map(choice => ({ name: "Name: " + choice.name + ", Cost: " + choice.value, value: choice.name })),
+                    );
                 }
                 
-                choices = pokemon;
-                const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
-            
-                await interaction.respond(
-                    filtered.slice(0, 25).map(choice => ({ name: "Name: " + choice.name + ", Cost: " + choice.value, value: choice.name })),
-                );
+                
+                
                 
             }
             if(focusedOption.name === 'amount'){

@@ -58,7 +58,7 @@ module.exports = {
                 }
                 
                 choices = pokemon;
-                const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
+                const filtered = choices.filter(choice => choice.name.includes(focusedOption.value) || choice.value.includes(focusedOption.value));
             
                 await interaction.respond(
                     filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.value + ": " + choice.name, value: choice.value })),
@@ -105,6 +105,7 @@ module.exports = {
         
         
         let pokemonStuff = playerData.maids.find(function(expItem) { return expItem.pcID == Number(interaction.options.getString('pokemon'))});
+        let pokemonIndex =  playerData.maids.findIndex(function(item) { return item.pcID == Number(interaction.options.getString('pokemon'))})
         let moveArray = pokemonStuff.moves;
         let forgetMoveIndex = moveArray.findIndex(function(item) { return item.toLowerCase() == interaction.options.getString('forgetmove').toLowerCase()});
         let str = interaction.options.getString('learnmove');
@@ -126,7 +127,7 @@ module.exports = {
         } catch(err){
             console.log(err);
         }
-        interaction.reply(`Your ${pokemonStuff.id} with PC ID of ${pokemonStuff.pcID} learned ${interaction.options.getString('move')}`);
+        interaction.reply(`Your ${pokemonStuff.id} with PC ID of ${pokemonStuff.pcID} forgot ${interaction.options.getString('forgetmove')[0].toUpperCase() + interaction.options.getString('forgetmove').slice(1)} and learned ${modStr}`);
 
         
         

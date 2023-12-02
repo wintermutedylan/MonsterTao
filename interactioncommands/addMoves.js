@@ -53,7 +53,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                 }
                 
                 choices = pokemon;
-                const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
+                const filtered = choices.filter(choice => choice.name.includes(focusedOption.value) || choice.value.includes(focusedOption.value));
             
                 await interaction.respond(
                     filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.value + ": " + choice.name, value: choice.value })),

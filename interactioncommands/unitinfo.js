@@ -56,7 +56,7 @@ module.exports = {
                 
             }
 
-            const filtered = choices.filter(choice => choice.name.includes(focusedOption.value));
+            const filtered = choices.filter(choice => choice.name.includes(focusedOption.value) || choice.value.toString().includes(focusedOption.value));
             
             await interaction.respond(
                 filtered.slice(0, 25).map(choice => ({ name: "PCID# " + choice.value + ": " + choice.name, value: choice.value })),

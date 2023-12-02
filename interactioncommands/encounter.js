@@ -63,7 +63,7 @@ module.exports = {
         if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         var ID = interaction.user.id;
         
-        let route = interaction.options.getString('route');//use args here.  this is just a placeholder for testing
+        let route = interaction.options.getString('route');
         let encounterArr = [];
         for(let i = 0; i < routeEncounters.length; i++){
             if(routeEncounters[i].area == route){
