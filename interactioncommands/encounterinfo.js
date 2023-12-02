@@ -79,7 +79,7 @@ module.exports = {
             }
         }
         for(let v = 0; v < encounterArr.length; v++){
-            routeString += `${encounterArr[v].name[0].toUpperCase() + encounterArr[v].name.slice(1)}, Level: ${encounterArr[v].level}\n`;
+            routeString += `**${encounterArr[v].name[0].toUpperCase() + encounterArr[v].name.slice(1)}**, Level: ${encounterArr[v].level}\n`;
         }
         
 

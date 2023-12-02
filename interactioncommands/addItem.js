@@ -10,7 +10,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
     cooldown: 10,
     data: new SlashCommandBuilder()
 		.setName('buyitem')
-		.setDescription('Add a move to one of your pokemon')
+		.setDescription('Buy an item')
         
         .addStringOption(option =>
 			option.setName('type')

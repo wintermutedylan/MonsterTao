@@ -52,7 +52,7 @@ module.exports = {
           const newEmbed = new EmbedBuilder()
           .setColor('#E76AA3')
           .setTitle(`Item Help Menu`)
-          .setDescription(`List of commands\n__**/buyitem**__ Select the type of item you want to buy.  then type the item you want, then the amount.`)
+          .setDescription(`List of commands\n__**/buyitem**__ Select the type of item you want to buy.  then type the item you want, then the amount.\n\n__**/shop**__ Select which type of item shop you want to see and it will display all the items of that type that can be bought\n\n__**/iteminfo**__ Select the type of item then select the item you want to get more info about`)
           interaction.reply({ embeds: [newEmbed] });
         }
         
