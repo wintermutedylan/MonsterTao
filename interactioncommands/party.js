@@ -68,7 +68,13 @@ module.exports = {
         for(let h = 0; h < playerData.currentParty.length; h++){
             let unitIndex = playerData.maids.findIndex( function(item) { return item.pcID == playerData.currentParty[h] } );
             if(finalPoints > 0){
-                updateHappiness(finalPoints, ID, unitIndex);
+                if(playerData.maids[unitIndex].happiness + finalPoints < 255){
+                    let newFinal = (playerData.maids[unitIndex].happiness + finalPoints) - 255;
+                    updateHappiness(newFinal, ID, unitIndex);
+                } else {
+                    updateHappiness(finalPoints, ID, unitIndex);
+                }
+                
             }
         }
 
