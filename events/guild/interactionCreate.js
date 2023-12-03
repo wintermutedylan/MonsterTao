@@ -22,6 +22,7 @@ module.exports = async (Discord, client, interaction) => {
     
         if(timestamps.has(interaction.user.id)){
             const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
+			
     
             if(now < expirationTime){
                 const expiredTimestamp = Math.round(expirationTime / 1000);

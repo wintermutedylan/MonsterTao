@@ -34,7 +34,7 @@ module.exports = {
           const newEmbed = new EmbedBuilder()
           .setColor('#E76AA3')
           .setTitle(`Pokemon Help Menu`)
-          .setDescription(`List of commands\n\n__**/pokemoninfo**__ Shows you the information about one of your pokemon. Enter the PC ID or Case-sensitive name of the pokemon you want to view\n\n__**/party**__ Shows your current party.\n\n__**/setparty**__ Selectup to 6 pokemon to set your party to. The party will be in the order you select the pokemon in.\n\n__**/pc**__ Shows your pc\n\n__**/evolve**__ Evolves a pokemon. Select type of evolution from the given values, then if you have a eligible pokemon it will show up in the next option\n\n__**/basepokemoninfo**__ Shows you the base info about a pokemon.  Type out the case-sensitive name of a pokemon you would like to view`)
+          .setDescription(`List of commands\n\n__**/pokemoninfo**__ Shows you the information about one of your pokemon. Enter the PC ID or Case-sensitive name of the pokemon you want to view\n\n__**/party**__ Shows your current party.\n\n__**/setparty**__ Selectup to 6 pokemon to set your party to. The party will be in the order you select the pokemon in.\n\n__**/pc**__ Shows your pc. This can be filtered by level, type, nature, and name.  the operator applies to the level you select\n\n__**/evolve**__ Evolves a pokemon. Select type of evolution from the given values, then if you have a eligible pokemon it will show up in the next option\n\n__**/basepokemoninfo**__ Shows you the base info about a pokemon.  Type out the case-sensitive name of a pokemon you would like to view`)
           interaction.reply({ embeds: [newEmbed] });
         } else if(interaction.options.getSubcommand() === 'move'){
           const newEmbed = new EmbedBuilder()
@@ -52,7 +52,7 @@ module.exports = {
           const newEmbed = new EmbedBuilder()
           .setColor('#E76AA3')
           .setTitle(`Item Help Menu`)
-          .setDescription(`List of commands\n__**/buyitem**__ Select the type of item you want to buy.  then type the item you want, then the amount.\n\n__**/shop**__ Select which type of item shop you want to see and it will display all the items of that type that can be bought\n\n__**/iteminfo**__ Select the type of item then select the item you want to get more info about`)
+          .setDescription(`List of commands\n__**/buyitem**__ Select the type of item you want to buy.  then type the item you want, then the amount.\n\n__**/shop**__ Select which type of item shop you want to see and it will display all the items of that type that can be bought\n\n__**/iteminfo**__ Select the type of item then select the item you want to get more info about\n\n__**/bag**__ view what items you own, how much coins you have, and the badges you have obtained`)
           interaction.reply({ embeds: [newEmbed] });
         }
         

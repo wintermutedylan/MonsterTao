@@ -249,6 +249,7 @@ async function createBattleThread(message, boss, cost){
 }
 
 async function battle(p1party, p2party, p1current, p2current, thread, author, turn){
+    
     if(turn % 2 == 0){
         if(p1current.statusMap.burned || p1current.statusMap.poisoned){
             for (let j = 0; j < p1party.length; j++){
@@ -286,8 +287,31 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
     }
     
     if(p1current.currentHealth <= 0){
+        let happy = 0;
+        if(p2current.level - p1current.level >= 30){
+            if(p1current.happiness < 200){
+                let lowerHappy = p1current.happiness - 5;
+                if(lowerHappy < 0){
+                    happy = 5 - Math.abs(lowerHappy);
+                } else if(lowerHappy == 0){
+                    happy = 0;
+                } else {
+                    happy = 5;
+                }
+                
+            } else if(p1current.happiness >= 200 && p1current.happiness <= 255 ){
+                happy = 10;
+                
+            }
+        } else {
+            happy = 1;
+        }
+        let playerHap; 
+        playerHap = await playerModel.findOne({ userID: author.id});
+        let ind = playerHap.maids.findIndex(function(r) { return r.pcID == p1current.pcID});
+        incOrLowerHappiness(ind, happinessLow, author.id, false);
         
-        thread.send(`Your ${p1current.id} has fainted.`);
+        thread.send(`Your ${p1current.id} has fainted. Its happiness was lowered by ${happy}`);
         let usableUnits = false;
         for(let i = 0; i < p1party.length; i++){
             if (p1party[i].currentHealth > 0){
@@ -306,13 +330,14 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                 
             }
             if(turn == 1){
-                thread.send("Looks like you have alive pokemon in your party.  go run the /heal command. this thread will close in 15 seconds");
+                thread.send("Looks like you don't have alive pokemon in your party.  go run the /heal command. this thread will close in 15 seconds");
                 setTimeout(() => {
                     thread.delete();
                   }, 15000);
                   return;
                 
             } else {
+                
                 thread.send("Seems you are out of usable units.  you have died.  better luck next time. The thread will be deleted in 15 seconds");
                 setTimeout(() => {
                     thread.delete();
@@ -481,6 +506,19 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
                         setExperienceAndLevel(finalLevel, finalXP, newEvs, unitIndex, author.id, usedPCID[x].statusMap, newStats);
                         leveledUpString += `Your ${usedPCID[x].id} gained ${resultExp} XP and leveled up to level ${finalLevel}\n`;
                         let leveledPokemon = p1party.findIndex(function(item) { return item.pcID == usedPCID[x].pcID });
+                        let levelUpHappiness = 0;
+                        if(p1party[leveledPokemon].happiness < 100){
+                            levelUpHappiness = 5;
+                        } else if(p1party[leveledPokemon].happiness < 200){
+                            levelUpHappiness = 3;
+                        } else if(p1party[leveledPokemon].happiness < 255){
+                            if(p1party[leveledPokemon].happiness == 254){
+                                levelUpHappiness = 1;
+                            } else {
+                                levelUpHappiness = 2;
+                            }
+                        }
+                        incOrLowerHappiness(unitIndex, levelUpHappiness, author.id, true);
                         p1party[leveledPokemon].currentHealth += (newStats.health - usedPCID[x].health);
 
                     } else { //this is used if pokemon didnt level up
@@ -532,63 +570,131 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
             thread.send("it should never get to this point. since there is only 1 wild pokemon.  contact admin if this happens");
         }
     } else if(turn % 2 == 1){ //check if turn is odd so p1 goes
+        //let statusArray = getStatus(p1current, p2current);
+        
         if (turn == 1){
+            
+            
+            
             thread.send(`You have sent out ${p1current.id}`);
         } else {
+            
+            
             thread.send(`It is your turn to take action`)
         }
+        //You have <t:${expiredTimestamp}:R> left to take action
+        const atk = new ButtonBuilder()
+        .setCustomId('attack')
+        .setLabel('Attack')
+        .setStyle(ButtonStyle.Primary);
+        const itm = new ButtonBuilder()
+        .setCustomId('item')
+        .setLabel('Item')
+        .setStyle(ButtonStyle.Primary);
+        const swtch = new ButtonBuilder()
+        .setCustomId('switch')
+        .setLabel('Switch')
+        .setStyle(ButtonStyle.Primary);
+        const rn = new ButtonBuilder()
+        .setCustomId('run')
+        .setLabel('Run')
+        .setStyle(ButtonStyle.Primary);
+        
+        const row = new ActionRowBuilder()
+		.addComponents(atk, itm, swtch, rn);
         
         
-        
-        thread.send('What would you like to do: Attack, Item, Switch, Run (you have 60 seconds to decide)');
-
-
-        const filter = (m) => {
-            return  m.author.id === author.id && (m.content.toLowerCase() === 'attack' || m.content.toLowerCase() === 'item' || m.content.toLowerCase() === 'switch'|| m.content.toLowerCase() === 'run');
-        }
-        const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
-        var s;
-        
-        
-
-        collector.on('collect', message => {
-            s = message.content;
-            
-        });
-
-        collector.on('end', collected => {
-        
-            if (collected.size === 0) {
+        //thread.send('What would you like to do: Attack, Item, Switch, Run (you have 60 seconds to decide)');
+        const now = Date.now();
+        let timeRemaining = now + 60000;
+        const expiredTimestamp = Math.round(timeRemaining / 1000);
+        const response = await thread.send({content: `What would you like to do: Attack, Item, Switch, Run \nYou must take action <t:${expiredTimestamp}:R>`, components: [row]})
+            //response.edit({embeds: [newEmbed], components: [row]});
+            const collectorFilter = i => {
+                i.deferUpdate(); 
+                return i.user.id === author.id;
+            };
+            const collector = response.createMessageComponentCollector({ filter: collectorFilter, componentType: ComponentType.Button, time: 60000 });
+    
+            collector.on('collect', async i => {
+                if(i.customId == 'attack'){
+                    attack(p1party, p2party, p1current, p2current, thread, author, turn);
+                } else if(i.customId == 'item'){
+                    useItem(p1party, p2party, p1current, p2current, thread, author, turn);
+                } else if(i.customId == 'switch'){
+                    pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn);
+                } else if(i.customId == 'run'){
+                    let player1; 
+                    player1 = await playerModel.findOne({ userID: author.id});
+                    for(let un = 0; un < p1party.length; un++){
+                        let unIndex = player1.maids.findIndex( function(item) { return item.pcID == p1party[un].pcID } )
+                        if(unIndex != -1){
+                            setCurrentHealth(unIndex, p1party[un].currentHealth, author.id);
+                            setStatusMap(unIndex, p1party[un].statusMap, author.id);
+                        }
+                        
+                    }
+                        
+                        
+                    thread.send(`You have ran from the wild ${p2current.id}`);
+                    setTimeout(() => {
+                        thread.delete();
+                    }, 15000);
+                    return;
+                } else {
                     thread.send(`You took too long and now its the wild ${p2current.id}'s turn`);
                     turn++;
                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                
-                return
-            }
-            
-                if (s.toLowerCase() == 'attack'){
-                    
-                    attack(p1party, p2party, p1current, p2current, thread, author, turn);
-                 
-                } else if (s.toLowerCase() == 'item'){
-                    //for items have then categorized as ball, heal, and 
-                    useItem(p1party, p2party, p1current, p2current, thread, author, turn);
-                    
-                    
-                 
-                } else if (s.toLowerCase() == 'switch'){
-                    pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn);
-                    
-                    
-                 
-                } else if (s.toLowerCase() == 'run'){
-                    thread.send(`You have ran from the wild ${p2current.id}`);
-                    
-                    return;
                 }
+            });
+        
+
+        // const filter = (m) => {
+        //     return  m.author.id === author.id && (m.content.toLowerCase() === 'attack' || m.content.toLowerCase() === 'item' || m.content.toLowerCase() === 'switch'|| m.content.toLowerCase() === 'run');
+        // }
+        // const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+        // var s;
+        
+        
+
+        // collector.on('collect', message => {
+        //     s = message.content;
+            
+        // });
+
+        // collector.on('end', collected => {
+        
+        //     if (collected.size === 0) {
+        //             thread.send(`You took too long and now its the wild ${p2current.id}'s turn`);
+        //             turn++;
+        //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+        //         return
+        //     }
+            
+        //         if (s.toLowerCase() == 'attack'){
+                    
+        //             attack(p1party, p2party, p1current, p2current, thread, author, turn);
+                 
+        //         } else if (s.toLowerCase() == 'item'){
+        //             //for items have then categorized as ball, heal, and 
+        //             useItem(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+                    
+                 
+        //         } else if (s.toLowerCase() == 'switch'){
+        //             pokemonSwitch(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+                    
+                 
+        //         } else if (s.toLowerCase() == 'run'){
+        //             thread.send(`You have ran from the wild ${p2current.id}`);
+                    
+        //             return;
+        //         }
             
             
-        });
+        // });
     } else {
         thread.send(`The wild ${p2current.id} will now take action`);
         let move = p2current.moves[Math.floor(Math.random()*p2current.moves.length)];
@@ -601,51 +707,640 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
 
 }
 async function useItem(p1party, p2party, p1current, p2current, thread, author, turn){
-        thread.send('What type of item would you like to use: Heal, Ball, or type cancel to go back');
-
-
-        const filter = (m) => {
-            return  m.author.id === author.id && (m.content.toLowerCase() === 'heal' || m.content.toLowerCase() === 'ball' || m.content.toLowerCase() == 'cancel' );
-        }
-        const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
-        var s;
+        
+        const now = Date.now();
+        let timeRemaining = now + 60000;
+        const expiredTimestamp = Math.round(timeRemaining / 1000);
+        const heal = new ButtonBuilder()
+        .setCustomId('heal')
+        .setLabel('Heal')
+        .setStyle(ButtonStyle.Secondary);
+        const ball = new ButtonBuilder()
+        .setCustomId('ball')
+        .setLabel('Ball')
+        .setStyle(ButtonStyle.Secondary);
+        const cancel = new ButtonBuilder()
+        .setCustomId('cancel')
+        .setLabel('Canel')
+        .setStyle(ButtonStyle.Secondary);
         
         
+        const row = new ActionRowBuilder()
+		.addComponents(heal, ball, cancel);
+        const response = await thread.send({content: `What type of item would you like to use: Heal, Ball, or select cancel to go back \nYou must take action <t:${expiredTimestamp}:R>`, components: [row]});
+        const collectorFilter = i => {
+            i.deferUpdate(); 
+            return i.user.id === author.id;
+        };
+        const collector = response.createMessageComponentCollector({ filter: collectorFilter, componentType: ComponentType.Button, time: 60000 });
 
-        collector.on('collect', message => {
-            s = message.content;
-            
-        });
-
-        collector.on('end', collected => {
-        
-            if (collected.size === 0) {
-                
-                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                
-                return
+        collector.on('collect', async i => {
+            if(i.customId == 'cancel'){
+                thread.send("You have cancelled and have been sent back to battle select.");
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else if(i.customId == 'heal'){
+                selectHeal(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else if(i.customId == 'ball'){
+                selectBall(p1party, p2party, p1current, p2current, thread, author, turn);
+            } else {
+                thread.send(`You took too long and now its the wild ${p2current.id}'s turn`);
+                turn++;
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
             }
-            
-                if (s.toLowerCase() == 'cancel'){
-                    thread.send("You have cancelled and have been sent back to battle select.");
-                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                 
-                } else if (s.toLowerCase() == 'heal'){
-                    //for items have then categorized as ball, heal, and 
-                    thread.send("Not implemented yet going back to battle main function");
-                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                    
-                    
-                 
-                } else if (s.toLowerCase() == 'ball'){
-                    selectBall(p1party, p2party, p1current, p2current, thread, author, turn);
-                    
-                    
-                 
-                }
-            
-            
         });
+
+
+        // const filter = (m) => {
+        //     return  m.author.id === author.id && (m.content.toLowerCase() === 'heal' || m.content.toLowerCase() === 'ball' || m.content.toLowerCase() == 'cancel' );
+        // }
+        // const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+        // var s;
+        
+        
+
+        // collector.on('collect', message => {
+        //     s = message.content;
+            
+        // });
+
+        // collector.on('end', collected => {
+        
+        //     if (collected.size === 0) {
+                
+        //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+        //         return
+        //     }
+            
+        //         if (s.toLowerCase() == 'cancel'){
+        //             thread.send("You have cancelled and have been sent back to battle select.");
+        //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                 
+        //         } else if (s.toLowerCase() == 'heal'){
+                    
+        //             selectHeal(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+                    
+                 
+        //         } else if (s.toLowerCase() == 'ball'){
+        //             selectBall(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+                    
+                 
+        //         }
+            
+            
+        // });
+}
+async function selectHeal(p1party, p2party, p1current, p2current, thread, author, turn){
+    let playerBag; 
+    playerBag = await playerModel.findOne({ userID: author.id});
+    let healItems = [];
+    let healString = "";
+    let healItemName = [];
+    for(let b = 0 ; b < playerBag.bag.length; b++){
+        let foundItem = items.find(function(x){ return x.type == 'healing' && x.name == playerBag.bag[b].name});
+        if(foundItem){
+            let f = {
+                name: foundItem.name,
+                healAmount: foundItem.healAmount,
+                amount: playerBag.bag[b].amount
+            }
+            healItems.push(f);
+            healItemName.push(foundItem.name);
+            healString += `${foundItem.name}, owned: ${playerBag.bag[b].amount}\n`;
+        }
+    }
+    let componentsArray = [];
+    let compArryLength = componentsArray.length;
+    let actionRowArray = [];
+    for(let co = 0; co < healItems.length; co++){
+        let temp = new ButtonBuilder()
+        .setCustomId(healItems[co].name)
+        .setLabel(healItems[co].name)
+        .setStyle(ButtonStyle.Secondary);
+        componentsArray.push(temp);
+    }
+    let cancelTemp = new ButtonBuilder().setCustomId('Cancel').setLabel('Cancel').setStyle(ButtonStyle.Secondary);
+    componentsArray.push(cancelTemp);
+    if(componentsArray.length > 5 && componentsArray.length <= 10){
+        const moveRow = new ActionRowBuilder().addComponents(componentsArray.slice(0,4));
+        const moveRow1 = new ActionRowBuilder().addComponents(componentsArray.slice(5,9));
+        actionRowArray.push(moveRow);
+        actionRowArray.push(moveRow1);
+    } else if(componentsArray.length > 10 && componentsArray.length <= 15){
+        const moveRow = new ActionRowBuilder().addComponents(componentsArray.slice(0,4));
+        const moveRow1 = new ActionRowBuilder().addComponents(componentsArray.slice(5,9));
+        const moveRow2 = new ActionRowBuilder().addComponents(componentsArray.slice(10,14));
+        
+        actionRowArray.push(moveRow);
+        actionRowArray.push(moveRow1);
+        actionRowArray.push(moveRow2);
+    }
+    else if(componentsArray.length > 10 && componentsArray.length <= 15){
+        const moveRow = new ActionRowBuilder().addComponents(componentsArray.slice(0,4));
+        const moveRow1 = new ActionRowBuilder().addComponents(componentsArray.slice(5,9));
+        const moveRow2 = new ActionRowBuilder().addComponents(componentsArray.slice(10,14));
+        const moveRow3 = new ActionRowBuilder().addComponents(componentsArray.slice(15,19));
+        actionRowArray.push(moveRow);
+        actionRowArray.push(moveRow1);
+        actionRowArray.push(moveRow2);
+        actionRowArray.push(moveRow3);
+    }
+    else if(componentsArray.length > 10 && componentsArray.length <= 15){
+        const moveRow = new ActionRowBuilder().addComponents(componentsArray.slice(0,4));
+        const moveRow1 = new ActionRowBuilder().addComponents(componentsArray.slice(5,9));
+        const moveRow2 = new ActionRowBuilder().addComponents(componentsArray.slice(10,14));
+        const moveRow3 = new ActionRowBuilder().addComponents(componentsArray.slice(15,19));
+        const moveRow4 = new ActionRowBuilder().addComponents(componentsArray.slice(20,24));
+        
+        actionRowArray.push(moveRow);
+        actionRowArray.push(moveRow1);
+        actionRowArray.push(moveRow2);
+        actionRowArray.push(moveRow3);
+        actionRowArray.push(moveRow4);
+    } else {
+        const moveRow = new ActionRowBuilder().addComponents(componentsArray);
+        actionRowArray.push(moveRow);
+    }
+    
+    
+    
+    const now = Date.now();
+    let timeRemaining = now + 60000;
+    const expiredTimestamp = Math.round(timeRemaining / 1000);
+    const response = await thread.send({content: `What healing item would you like to use or type cancel to go back:\n${healString} \nYou must take action <t:${expiredTimestamp}:R>`, components: actionRowArray});
+    const collectorFilter = i => {
+        i.deferUpdate(); 
+        return i.user.id === author.id;
+    };
+    const collector = response.createMessageComponentCollector({ filter: collectorFilter, componentType: ComponentType.Button, time: 60000 });
+
+    collector.on('collect', async i => {
+        if(i.customId == 'Cancel'){
+            thread.send("You have cancelled and have been sent back to battle select.");
+            battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        } else if(healItemName.includes(i.customId)){
+            let heal = healItems.find(function(item) { return item.name.toLowerCase() == i.customId})
+            selectPokemonToUseItemOn(p1party, p2party, p1current, p2current, thread, author, turn, heal);
+        }  else {
+            thread.send(`You took too long and now its the wild ${p2current.id}'s turn`);
+            turn++;
+            battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        }
+    });
+
+    // const filter = (m) => {
+    //     let hasItem = false;
+    //     for (let j = 0; j < healItems.length; j++){
+    //         if (m.content.toLowerCase() === healItems[j].name.toLowerCase()){
+    //             hasItem = true;
+    //             break;
+    //         }
+    //     }
+    //     return  m.author.id === author.id && (hasItem || m.content.toLowerCase() === "cancel");
+    // }
+    // const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+    // var s;
+    
+    
+
+    // collector.on('collect', message => {
+    //     s = message.content;
+        
+    // });
+    // collector.on('end', collected => {
+    
+    //     if (collected.size === 0) {
+            
+    //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            
+    //         return
+    //     }
+        
+    //         if (s.toLowerCase() == 'cancel'){
+    //             thread.send("You have cancelled and been sent back to battle select");
+    //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+    //         } else {
+                
+    //             let heal = healItems.find(function(item) { return item.name.toLowerCase() == s.toLowerCase()})
+                
+    //             selectPokemonToUseItemOn(p1party, p2party, p1current, p2current, thread, author, turn, heal);
+    //         }
+    //     });
+}
+async function selectPokemonToUseItemOn(p1party, p2party, p1current, p2current, thread, author, turn, item){
+    let playerBag; 
+    playerBag = await playerModel.findOne({ userID: author.id});
+    let pokemonNames = [];
+    let pokemonString = "";
+    let pokemonNameArray = [];
+    for(let i = 0; i < p1party.length; i++){
+        if(item.name == "revive"){
+            pokemonNames.push(p1party[i]);
+            pokemonNameArray.push(p1party[i].pcID);
+            pokemonString += `Name: ${p1party[i].id} HP: ${p1party[i].currentHealth}/${p1party[i].health}\n`;
+        } else {
+            if(p1party[i].currentHealth > 0){
+                pokemonNames.push(p1party[i]);
+                pokemonNameArray.push(p1party[i].pcID);
+                pokemonString += `Name: ${p1party[i].id} HP: ${p1party[i].currentHealth}/${p1party[i].health}\n`;
+            }
+        }
+        
+    }
+    let componentsArray = [];
+    
+    let actionRowArray = [];
+    for(let co = 0; co < pokemonNames.length; co++){
+        let temp = new ButtonBuilder()
+        .setCustomId(pokemonNames[co].pcID.toString())
+        .setLabel(pokemonNames[co].id)
+        .setStyle(ButtonStyle.Secondary);
+        componentsArray.push(temp);
+    }
+    let cancelTemp = new ButtonBuilder().setCustomId('Cancel').setLabel('Cancel').setStyle(ButtonStyle.Secondary);
+    componentsArray.push(cancelTemp);
+    if(componentsArray.length > 5 && componentsArray.length <= 10){
+        const moveRow = new ActionRowBuilder().addComponents(componentsArray.slice(0,4));
+        const moveRow1 = new ActionRowBuilder().addComponents(componentsArray.slice(5,9));
+        actionRowArray.push(moveRow);
+        actionRowArray.push(moveRow1);
+    } else {
+        const moveRow = new ActionRowBuilder().addComponents(componentsArray);
+        actionRowArray.push(moveRow);
+    }
+    
+    const now = Date.now();
+    let timeRemaining = now + 60000;
+    const expiredTimestamp = Math.round(timeRemaining / 1000);
+    const response = await thread.send({content: `Which pokemon would you like use the ${item.name[0].toUpperCase() + item.name.slice(1)} on or type cancel to go back: \n${pokemonString}You must take action <t:${expiredTimestamp}:R>`, components: actionRowArray});
+    const collectorFilter = i => {
+        i.deferUpdate(); 
+        return i.user.id === author.id;
+    };
+    const collector = response.createMessageComponentCollector({ filter: collectorFilter, componentType: ComponentType.Button, time: 60000 });
+
+    collector.on('collect', async i => {
+        if(i.customId == 'Cancel'){
+            thread.send("You have cancelled and have been sent back to battle select.");
+            battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        } else if(pokemonNameArray.includes(Number(i.customId))){
+            let newBagArray = playerBag.bag;
+                let partyPosition = p1party.findIndex(function(hi) { return hi.pcID == i.customId});
+                let healIndex = playerBag.bag.findIndex(function(h) { return h.name == item.name});
+                let pokemonIndex = playerBag.maids.findIndex(function(hap) { return hap.pcID == p1party[partyPosition].pcID});
+                switch(item.name){
+                    case "full-restore":
+                        p1party[partyPosition].currentHealth += item.healAmount;
+                        p1party[partyPosition].statusMap.burned = false;
+                        p1party[partyPosition].statusMap.frozen = false;
+                        p1party[partyPosition].statusMap.paralysis = false;
+                        p1party[partyPosition].statusMap.poisoned = false;
+                        p1party[partyPosition].statusMap.asleep = false;
+                        p1party[partyPosition].statusMap.confusion = false;
+                        p1party[partyPosition].statusMap.sleepTurns = 0;
+                        p1party[partyPosition].statusMap.confusionTurns = 0;
+                        if(p1party[partyPosition].currentHealth > p1party[partyPosition].health){
+                            let overHeal = p1party[partyPosition].currentHealth - p1party[partyPosition].health;
+                            p1party[partyPosition].currentHealth = p1party[partyPosition].health;
+                            thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount - overHeal} HP and removed all status ailments`);
+                            break;
+                        } else {
+                            thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount} HP and removed all status ailments`);
+                            break;
+                        }
+                    case "energy-powder":
+                        p1party[partyPosition].currentHealth += item.healAmount;
+
+                        let happinessLowered = 0;
+                        if(p1party[partyPosition].happiness < 200){
+                            let lowerFriend = p1party[partyPosition].happiness - 5;
+                            if(lowerFriend < 0){
+                                happinessLowered = 5 - Math.abs(lowerFriend);
+                            } else if(lowerFriend == 0){
+                                happinessLowered = 0;
+                            } else {
+                                happinessLowered = 5;
+                            }
+                            
+                        } else if(p1party[partyPosition].happiness >= 200 && p1party[partyPosition].happiness <= 255 ){
+                            happinessLowered = 10;
+                            
+                        }
+                        incOrLowerHappiness(pokemonIndex, happinessLowered, author.id, false);
+                        if(p1party[partyPosition].currentHealth > p1party[partyPosition].health){
+                            let overHeal = p1party[partyPosition].currentHealth - p1party[partyPosition].health;
+                            p1party[partyPosition].currentHealth = p1party[partyPosition].health;
+                            thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount - overHeal} HP but lowered its happiness by ${happinessLowered}`);
+                            break;
+                        } else {
+                            thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount} HP but lowered its happiness by ${happinessLowered}`);
+                            break;
+                        }
+                    case "energy-root":
+                        p1party[partyPosition].currentHealth += item.healAmount;
+
+                        let happinessLow = 0;
+                        if(p1party[partyPosition].happiness < 200){
+                            let lowerFriendMore = p1party[partyPosition].happiness - 10;
+                            if(lowerFriendMore < 0){
+                                happinessLow = 10 - Math.abs(lowerFriendMore);
+                            } else if(lowerFriendMore == 0){
+                                happinessLow = 0;
+                            } else {
+                                happinessLow = 10;
+                            }
+                            
+                        } else if(p1party[partyPosition].happiness >= 200 && p1party[partyPosition].happiness <= 255 ){
+                            happinessLow = 15;
+                            
+                        }
+                        incOrLowerHappiness(pokemonIndex, happinessLow, author.id, false);
+                        if(p1party[partyPosition].currentHealth > p1party[partyPosition].health){
+                            let overHeal = p1party[partyPosition].currentHealth - p1party[partyPosition].health;
+                            p1party[partyPosition].currentHealth = p1party[partyPosition].health;
+                            thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount - overHeal} HP but lowered its happiness by ${happinessLow}`);
+                            break;
+                        } else {
+                            thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount} HP but lowered its happiness by ${happinessLow}`);
+                            break;
+                        }
+                    case "antidote":
+                        p1party[partyPosition].statusMap.poisoned = false;
+                        thread.send(`Your ${p1party[partyPosition].id} was cured of its poison`);
+                        break;
+                    case "burn-heal":
+                        p1party[partyPosition].statusMap.burned = false;
+                        thread.send(`Your ${p1party[partyPosition].id} was cured of its burn`);
+                        break;
+                    case "ice-heal":
+                        p1party[partyPosition].statusMap.frozen = false;
+                        thread.send(`Your ${p1party[partyPosition].id} was cured of its freeze`);
+                        break;
+                    case "awakening":
+                        p1party[partyPosition].statusMap.asleep = false;
+                        p1party[partyPosition].statusMap.sleepTurns = 0;
+                        thread.send(`Your ${p1party[partyPosition].id} was cured of its sleep and woke up`)
+                        break;
+                    case "paralyze-heal":
+                        p1party[partyPosition].statusMap.paralysis = false;
+                        thread.send(`Your ${p1party[partyPosition].id} was cured of its paralysis`);
+                        break;
+                    case "full-heal":
+                        p1party[partyPosition].statusMap.burned = false;
+                        p1party[partyPosition].statusMap.frozen = false;
+                        p1party[partyPosition].statusMap.paralysis = false;
+                        p1party[partyPosition].statusMap.poisoned = false;
+                        p1party[partyPosition].statusMap.asleep = false;
+                        p1party[partyPosition].statusMap.confusion = false;
+                        p1party[partyPosition].statusMap.sleepTurns = 0;
+                        p1party[partyPosition].statusMap.confusionTurns = 0;
+                        thread.send(`Your ${p1party[partyPosition].id} was cured of all its ailments`);
+                        break;
+                    default:
+                        p1party[partyPosition].currentHealth += item.healAmount;
+                        if(p1party[partyPosition].currentHealth > p1party[partyPosition].health){
+                            let overHeal = p1party[partyPosition].currentHealth - p1party[partyPosition].health;
+                            p1party[partyPosition].currentHealth = p1party[partyPosition].health;
+                            thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount - overHeal} HP`);
+                            break;
+                        } else {
+                            thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount} HP`);
+                            break;
+                        }
+                }
+                
+
+                
+                if(item.amount - 1 == 0){
+                    if(healIndex > -1){
+                        newBagArray.splice(healIndex, 1); 
+                        removeHeal(author.id, newBagArray)
+                    }   
+                } else {
+                    removeHealAmount(author.id, healIndex);
+                }
+
+                turn++
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        }  else {
+            thread.send(`You took too long and now its the wild ${p2current.id}'s turn`);
+            turn++;
+            battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        }
+    });
+    // const filter = (m) => {
+    //     let hasItem = false;
+    //     for (let j = 0; j < pokemonNames.length; j++){
+    //         if (m.content === pokemonNames[j]){
+    //             hasItem = true;
+    //             break;
+    //         }
+    //     }
+    //     return  m.author.id === author.id && (hasItem || m.content.toLowerCase() === "cancel");
+    // }
+    // const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+    // var s;
+    
+    
+
+    // collector.on('collect', message => {
+    //     s = message.content;
+        
+    // });
+    // collector.on('end', collected => {
+    
+    //     if (collected.size === 0) {
+            
+    //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            
+    //         return
+    //     }
+        
+    //         if (s.toLowerCase() == 'cancel'){
+    //             thread.send("You have cancelled and been sent back to battle select");
+    //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+    //         } else {
+    //             let newBagArray = playerBag.bag;
+    //             let partyPosition = Number(s);
+    //             let healIndex = playerBag.bag.findIndex(function(h) { return h.name == item.name});
+    //             let pokemonIndex = playerBag.maids.findIndex(function(hap) { return hap.pcID == p1party[partyPosition].pcID});
+    //             switch(item.name){
+    //                 case "full-restore":
+    //                     p1party[partyPosition].currentHealth += item.healAmount;
+    //                     p1party[partyPosition].statusMap.burned = false;
+    //                     p1party[partyPosition].statusMap.frozen = false;
+    //                     p1party[partyPosition].statusMap.paralysis = false;
+    //                     p1party[partyPosition].statusMap.poisoned = false;
+    //                     p1party[partyPosition].statusMap.asleep = false;
+    //                     p1party[partyPosition].statusMap.confusion = false;
+    //                     p1party[partyPosition].statusMap.sleepTurns = 0;
+    //                     p1party[partyPosition].statusMap.confusionTurns = 0;
+    //                     if(p1party[partyPosition].currentHealth > p1party[partyPosition].health){
+    //                         let overHeal = p1party[partyPosition].currentHealth - p1party[partyPosition].health;
+    //                         p1party[partyPosition].currentHealth = p1party[partyPosition].health;
+    //                         thread.send(`Your ${p1party[partyPosition].id} healed for ${overHeal} HP and removed all status ailments`);
+    //                         break;
+    //                     } else {
+    //                         thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount} HP and removed all status ailments`);
+    //                         break;
+    //                     }
+    //                 case "energy-powder":
+    //                     p1party[partyPosition].currentHealth += item.healAmount;
+
+    //                     let happinessLowered = 0;
+    //                     if(p1party[partyPosition].happiness < 200){
+    //                         let lowerFriend = p1party[partyPosition].happiness - 5;
+    //                         if(lowerFriend < 0){
+    //                             happinessLowered = 5 - Math.abs(lowerFriend);
+    //                         } else if(lowerFriend == 0){
+    //                             happinessLowered = 0;
+    //                         } else {
+    //                             happinessLowered = 5;
+    //                         }
+                            
+    //                     } else if(p1party[partyPosition].happiness >= 200 && p1party[partyPosition].happiness <= 255 ){
+    //                         happinessLowered = 10;
+                            
+    //                     }
+    //                     incOrLowerHappiness(pokemonIndex, happinessLowered, author.id, false);
+    //                     if(p1party[partyPosition].currentHealth > p1party[partyPosition].health){
+    //                         let overHeal = p1party[partyPosition].currentHealth - p1party[partyPosition].health;
+    //                         p1party[partyPosition].currentHealth = p1party[partyPosition].health;
+    //                         thread.send(`Your ${p1party[partyPosition].id} healed for ${overHeal} HP but lowered its happiness by ${happinessLowered}`);
+    //                         break;
+    //                     } else {
+    //                         thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount} HP but lowered its happiness by ${happinessLowered}`);
+    //                         break;
+    //                     }
+    //                 case "energy-root":
+    //                     p1party[partyPosition].currentHealth += item.healAmount;
+
+    //                     let happinessLow = 0;
+    //                     if(p1party[partyPosition].happiness < 200){
+    //                         let lowerFriendMore = p1party[partyPosition].happiness - 10;
+    //                         if(lowerFriendMore < 0){
+    //                             happinessLow = 10 - Math.abs(lowerFriendMore);
+    //                         } else if(lowerFriendMore == 0){
+    //                             happinessLow = 0;
+    //                         } else {
+    //                             happinessLow = 10;
+    //                         }
+                            
+    //                     } else if(p1party[partyPosition].happiness >= 200 && p1party[partyPosition].happiness <= 255 ){
+    //                         happinessLow = 15;
+                            
+    //                     }
+    //                     incOrLowerHappiness(pokemonIndex, happinessLow, author.id, false);
+    //                     if(p1party[partyPosition].currentHealth > p1party[partyPosition].health){
+    //                         let overHeal = p1party[partyPosition].currentHealth - p1party[partyPosition].health;
+    //                         p1party[partyPosition].currentHealth = p1party[partyPosition].health;
+    //                         thread.send(`Your ${p1party[partyPosition].id} healed for ${overHeal} HP but lowered its happiness by ${happinessLow}`);
+    //                         break;
+    //                     } else {
+    //                         thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount} HP but lowered its happiness by ${happinessLow}`);
+    //                         break;
+    //                     }
+    //                 case "antidote":
+    //                     p1party[partyPosition].statusMap.poisoned = false;
+    //                     thread.send(`Your ${p1party[partyPosition].id} was cured of its poison`);
+    //                     break;
+    //                 case "burn-heal":
+    //                     p1party[partyPosition].statusMap.burned = false;
+    //                     thread.send(`Your ${p1party[partyPosition].id} was cured of its burn`);
+    //                     break;
+    //                 case "ice-heal":
+    //                     p1party[partyPosition].statusMap.frozen = false;
+    //                     thread.send(`Your ${p1party[partyPosition].id} was cured of its freeze`);
+    //                     break;
+    //                 case "awakening":
+    //                     p1party[partyPosition].statusMap.asleep = false;
+    //                     p1party[partyPosition].statusMap.sleepTurns = 0;
+    //                     thread.send(`Your ${p1party[partyPosition].id} was cured of its sleep and woke up`)
+    //                     break;
+    //                 case "paralyze-heal":
+    //                     p1party[partyPosition].statusMap.paralysis = false;
+    //                     thread.send(`Your ${p1party[partyPosition].id} was cured of its paralysis`);
+    //                     break;
+    //                 case "full-heal":
+    //                     p1party[partyPosition].statusMap.burned = false;
+    //                     p1party[partyPosition].statusMap.frozen = false;
+    //                     p1party[partyPosition].statusMap.paralysis = false;
+    //                     p1party[partyPosition].statusMap.poisoned = false;
+    //                     p1party[partyPosition].statusMap.asleep = false;
+    //                     p1party[partyPosition].statusMap.confusion = false;
+    //                     p1party[partyPosition].statusMap.sleepTurns = 0;
+    //                     p1party[partyPosition].statusMap.confusionTurns = 0;
+    //                     thread.send(`Your ${p1party[partyPosition].id} was cured of all its ailments`);
+    //                     break;
+    //                 default:
+    //                     p1party[partyPosition].currentHealth += item.healAmount;
+    //                     if(p1party[partyPosition].currentHealth > p1party[partyPosition].health){
+    //                         let overHeal = p1party[partyPosition].currentHealth - p1party[partyPosition].health;
+    //                         p1party[partyPosition].currentHealth = p1party[partyPosition].health;
+    //                         thread.send(`Your ${p1party[partyPosition].id} healed for ${overHeal} HP`);
+    //                         break;
+    //                     } else {
+    //                         thread.send(`Your ${p1party[partyPosition].id} healed for ${item.healAmount} HP`);
+    //                         break;
+    //                     }
+    //             }
+                
+
+                
+    //             if(item.amount - 1 == 0){
+    //                 if(healIndex > -1){
+    //                     newBagArray.splice(healIndex, 1); 
+    //                     removeHeal(author.id, newBagArray)
+    //                 }   
+    //             } else {
+    //                 removeHealAmount(author.id, healIndex);
+    //             }
+
+    //             turn++
+    //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+    //         }
+    //     });
+}
+async function removeHealAmount(ID, location){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $inc: {
+                    ["bag." + location + ".amount"]: -1
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+async function removeHeal(ID, bagArray){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $set: {
+                    bag: bagArray
+                }
+                
+            }
+        );
+
+    } catch(err){
+        console.log(err);
+    }
 }
 async function selectBall(p1party, p2party, p1current, p2current, thread, author, turn){
 
@@ -653,6 +1348,7 @@ async function selectBall(p1party, p2party, p1current, p2current, thread, author
     playerBag = await playerModel.findOne({ userID: author.id});
     let balls = [];
     let ballString = "";
+    let ballNameArray = [];
     for(let b = 0 ; b < playerBag.bag.length; b++){
         let foundItem = items.find(function(x){ return x.type == 'ball' && x.name == playerBag.bag[b].name});
         if(foundItem){
@@ -662,194 +1358,375 @@ async function selectBall(p1party, p2party, p1current, p2current, thread, author
                 amount: playerBag.bag[b].amount
             }
             balls.push(f);
+            ballNameArray.push(foundItem.name);
             ballString += `${foundItem.name}, owned: ${playerBag.bag[b].amount}\n`;
         }
     }
+    let componentsArray = [];
     
-        
-    
-    thread.send(`What ball would you like to use:\n${ballString}`);
-
-
-    const filter = (m) => {
-        let hasItem = false;
-        for (let j = 0; j < balls.length; j++){
-            if (m.content.toLowerCase() === balls[j].name.toLowerCase()){
-                hasItem = true;
-                break;
-            }
-        }
-        return  m.author.id === author.id && (hasItem || m.content.toLowerCase() === "cancel");
+    let actionRowArray = [];
+    for(let co = 0; co < balls.length; co++){
+        let temp = new ButtonBuilder()
+        .setCustomId(balls[co].name)
+        .setLabel(balls[co].name[0].toUpperCase() + balls[co].name.slice(1))
+        .setStyle(ButtonStyle.Secondary);
+        componentsArray.push(temp);
     }
-    const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
-    var s;
+    let cancelTemp = new ButtonBuilder().setCustomId('Cancel').setLabel('Cancel').setStyle(ButtonStyle.Secondary);
+    componentsArray.push(cancelTemp);
+    if(componentsArray.length > 5 && componentsArray.length <= 10){
+        const moveRow = new ActionRowBuilder().addComponents(componentsArray.slice(0,4));
+        const moveRow1 = new ActionRowBuilder().addComponents(componentsArray.slice(5,9));
+        actionRowArray.push(moveRow);
+        actionRowArray.push(moveRow1);
+    } else {
+        const moveRow = new ActionRowBuilder().addComponents(componentsArray);
+        actionRowArray.push(moveRow);
+    }
     
-    
+    const now = Date.now();
+    let timeRemaining = now + 60000;
+    const expiredTimestamp = Math.round(timeRemaining / 1000);
+    const response = await thread.send({content: `What ball would you like to use:\n${ballString}You must take action <t:${expiredTimestamp}:R>`, components: actionRowArray});
+    const collectorFilter = i => {
+        i.deferUpdate(); 
+        return i.user.id === author.id;
+    };
+    const collector = response.createMessageComponentCollector({ filter: collectorFilter, componentType: ComponentType.Button, time: 60000 });
 
-    collector.on('collect', message => {
-        s = message.content;
-        
-    });
-
-    collector.on('end', collected => {
-    
-        if (collected.size === 0) {
-            
-                battle(p1party, p2party, p1current, p2current, thread, author, turn);
-            
-            return
-        }
-        
-            if (s.toLowerCase() == 'cancel'){
-                thread.send("You have cancelled and been sent back to battle select");
-                battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                
+    collector.on('collect', async i => {
+        if(i.customId == 'Cancel'){
+            thread.send("You have cancelled and have been sent back to battle select.");
+            battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        } else if(ballNameArray.includes(i.customId)){
+            let newBagArray = playerBag.bag;
+            let ball = balls.find(function(item) { return item.name.toLowerCase() == i.customId.toLowerCase()})
+            let modifier = ball.catchModifier;
+            let statusModifier = 1;
+            let ballIndex = playerBag.bag.findIndex(function(h) { return h.name == ball.name});
+            if(p2current.statusMap.asleep == true || p2current.statusMap.frozen == true){
+                statusModifier = 2.5;
+            } else if(p2current.statusMap.burn == true || p2current.statusMap.poisoned == true || p2current.statusMap.paralysis == true){
+                statusModifier = 1.5;
             } else {
-                let newBagArray = playerBag.bag;
-                let ball = balls.find(function(item) { return item.name.toLowerCase() == s.toLowerCase()})
-                let modifier = ball.catchModifier;
-                let statusModifier = 1;
-                let ballIndex = playerBag.bag.findIndex(function(h) { return h.name == ball.name});
-                if(p2current.statusMap.asleep == true || p2current.statusMap.frozen == true){
-                    statusModifier = 2.5;
-                } else if(p2current.statusMap.burn == true || p2current.statusMap.poisoned == true || p2current.statusMap.paralysis == true){
-                    statusModifier = 1.5;
-                } else {
-                    statusModifier = 1;
-                }
-                if(ball.amount - 1 == 0){
-                    if(ballIndex > -1){
-                        newBagArray.splice(ballIndex, 1); 
-                        removeBall(author.id, newBagArray)
-                    }   
-                } else {
-                    removeBallAmount(author.id, ballIndex);
-                }
-                let badgesNeeded = badgePenalty.find(function(item) { return p2current.level <= item.maxLevel }).badges;
-                let lowLevelModifier = (36 - 2 * p2current.level)/10;
-                if(lowLevelModifier < 1){
-                    lowLevelModifier = 1;
-                }
-                
-                let bp = badgesNeeded - playerBag.badges.length;
-                if(bp < 0){
-                    bp = 0;
-                }
-                let finalBP = 0.8 ** bp;
-                
-                let fullCatchRate = (((3*p2current.health - 2*p2current.currentHealth)*1*p2current.catchRate*modifier*finalBP)/(3*p2current.health)) * lowLevelModifier * statusModifier;
-                
-                let shakeCheck = Math.floor(65536/(255/fullCatchRate)**0.1875);
-                
-                let shakeTimes = 0;
-                if(fullCatchRate >= 255){
-                    shakeTimes = 4;
-                } else {
-                    for(let shake = 0; shake < 4; shake++){
-                        let shakeRandomNumber = randomIntFromInterval(0, 65535);
-                        
-                        
-                        if(shakeRandomNumber < shakeCheck){
-                            shakeTimes++;
-                        }
-
-                    }
-                }
-                let delay = 1000; //1 second delay that will increase in the for loop
-                if(shakeTimes == 0){
-                    setTimeout(() => {
-                        thread.send("Oh, no! The Pokémon broke free!");
-                        turn++;
-                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                    }, delay)
+                statusModifier = 1;
+            }
+            if(ball.amount - 1 == 0){
+                if(ballIndex > -1){
+                    newBagArray.splice(ballIndex, 1); 
+                    removeBall(author.id, newBagArray)
+                }   
+            } else {
+                removeBallAmount(author.id, ballIndex);
+            }
+            let badgesNeeded = badgePenalty.find(function(item) { return p2current.level <= item.maxLevel }).badges;
+            let lowLevelModifier = (36 - 2 * p2current.level)/10;
+            if(lowLevelModifier < 1){
+                lowLevelModifier = 1;
+            }
+            
+            let bp = badgesNeeded - playerBag.badges.length;
+            if(bp < 0){
+                bp = 0;
+            }
+            let finalBP = 0.8 ** bp;
+            
+            let fullCatchRate = (((3*p2current.health - 2*p2current.currentHealth)*1*p2current.catchRate*modifier*finalBP)/(3*p2current.health)) * lowLevelModifier * statusModifier;
+            
+            let shakeCheck = Math.floor(65536/(255/fullCatchRate)**0.1875);
+            
+            let shakeTimes = 0;
+            if(fullCatchRate >= 255){
+                shakeTimes = 4;
+            } else {
+                for(let shake = 0; shake < 4; shake++){
+                    let shakeRandomNumber = randomIntFromInterval(0, 65535);
                     
-                } else if(shakeTimes == 1){
-                    for(let i = 0; i < 1; i++){
-                        setTimeout(() => {
-                            thread.send("*Shake*");
-                        }, delay);
-                        delay+= 1000;
+                    
+                    if(shakeRandomNumber < shakeCheck){
+                        shakeTimes++;
                     }
-                    setTimeout(() => {
-                        thread.send("Aww! It appeared to be caught!");
-                        turn++;
-                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                    }, delay);
-
-                } else if(shakeTimes == 2){
-                    for(let i = 0; i < 2; i++){
-                        setTimeout(() => {
-                            thread.send("*Shake*");
-                        }, delay);
-                        delay+= 1000;
-                    }
-                    setTimeout(() => {
-                        thread.send("Aargh! Almost had it!");
-                        turn++;
-                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                    }, delay);
-
-                } else if(shakeTimes == 3){
-                    for(let i = 0; i < 3; i++){
-                        setTimeout(() => {
-                            thread.send("*Shake*");
-                        }, delay);
-                        delay+= 1000;
-                    }
-                    setTimeout(() => {
-                        thread.send("Shoot! It was so close, too!");
-                        turn++;
-                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                    }, delay);
-
-                } else {
-                    for(let i = 0; i < 4; i++){
-                        setTimeout(() => {
-                            thread.send("*Shake*");
-                        }, delay);
-                        delay+= 1000;
-                    }
-                    setTimeout(() => {
-                        
-                        thread.send(`Gotcha! ${p2current.id} was caught!`);
-                        let pcID = playerBag.maids.length + 1;
-                        
-                        
-                        let unitExp = expTable.find(function(item) { return item.name == p2current.growthRate});
-                        let exp = unitExp.levelTable.find(function(expItem) { return expItem.level == p2current.level}).experience;
-                        let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == p2current.level + 1});
-                        const newEmbed = new EmbedBuilder()
-                        .setColor('#E76AA3')
-                        .setTitle(`Pokemon Info`)
-                        .setDescription(`__**${p2current.id} PCID# ${pcID}**__`)
-                        .setFields(
-                            {name: "Level", value:`Level: ${p2current.level}, EXP: ${exp}/${expToNextLevel.experience}` },
-                            {name: "Stats", value:`Hp: ${p2current.health}/${p2current.health}, Atk: ${p2current.attack}, SpAtk: ${p2current.specialAttack}, Def: ${p2current.defense}, SpDef: ${p2current.specialDefense}` },
-                            {name: "IVs", value: `Hp: ${p2current.healthIV}, Atk: ${p2current.attackIV}, SpAtk: ${p2current.specialAttackIV}, Def: ${p2current.defenseIV}, SpDef: ${p2current.specialDefenseIV}`},
-                            {name: "Moves", value: `${p2current.moves.join(", ")}`}
-                        )
-                        thread.send({content: "Here are the stats of the pokemon you just caught", embeds:[newEmbed]});
-                        let pokemonLocation = playerBag.maids.findIndex(function(item) {return item.id.toLowerCase() == p1current.id.toLowerCase()});
-                        addUnit(p2current, author.id, p2current.level, pcID, exp, p2current.nature);
-                        setCurrentHealth(pokemonLocation, p1current.currentHealth, author.id);
-                        setStatusMap(pokemonLocation, p1current.statusMap, author.id);
-                        let reward = p2current.level * 35;
-                        addCoins(reward, author.id);
-                        thread.send(`You have obtained ${reward} coins`);
-                        thread.send("This thread will now self-destruct in 15 seconds.")
-                        setTimeout(() => {
-                            thread.delete();
-                          }, 15000);
-                        return;
-                    }, delay);
 
                 }
+            }
+            let delay = 1000; //1 second delay that will increase in the for loop
+            if(shakeTimes == 0){
+                setTimeout(() => {
+                    thread.send("Oh, no! The Pokémon broke free!");
+                    turn++;
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                }, delay)
+                
+            } else if(shakeTimes == 1){
+                for(let i = 0; i < 1; i++){
+                    setTimeout(() => {
+                        thread.send("*Shake*");
+                    }, delay);
+                    delay+= 1000;
+                }
+                setTimeout(() => {
+                    thread.send("Aww! It appeared to be caught!");
+                    turn++;
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                }, delay);
 
+            } else if(shakeTimes == 2){
+                for(let i = 0; i < 2; i++){
+                    setTimeout(() => {
+                        thread.send("*Shake*");
+                    }, delay);
+                    delay+= 1000;
+                }
+                setTimeout(() => {
+                    thread.send("Aargh! Almost had it!");
+                    turn++;
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                }, delay);
+
+            } else if(shakeTimes == 3){
+                for(let i = 0; i < 3; i++){
+                    setTimeout(() => {
+                        thread.send("*Shake*");
+                    }, delay);
+                    delay+= 1000;
+                }
+                setTimeout(() => {
+                    thread.send("Shoot! It was so close, too!");
+                    turn++;
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                }, delay);
+
+            } else {
+                for(let i = 0; i < 4; i++){
+                    setTimeout(() => {
+                        thread.send("*Shake*");
+                    }, delay);
+                    delay+= 1000;
+                }
+                setTimeout(() => {
+                    
+                    thread.send(`Gotcha! ${p2current.id} was caught!`);
+                    let pcID = playerBag.maids.length + 1;
+                    
+                    
+                    let unitExp = expTable.find(function(item) { return item.name == p2current.growthRate});
+                    let exp = unitExp.levelTable.find(function(expItem) { return expItem.level == p2current.level}).experience;
+                    let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == p2current.level + 1});
+                    const newEmbed = new EmbedBuilder()
+                    .setColor('#E76AA3')
+                    .setTitle(`Pokemon Info`)
+                    .setDescription(`__**${p2current.id} PCID# ${pcID}**__`)
+                    .setFields(
+                        {name: "Level", value:`Level: ${p2current.level}, EXP: ${exp}/${expToNextLevel.experience}` },
+                        {name: "Stats", value:`Hp: ${p2current.health}/${p2current.health}, Atk: ${p2current.attack}, SpAtk: ${p2current.specialAttack}, Def: ${p2current.defense}, SpDef: ${p2current.specialDefense}` },
+                        {name: "IVs", value: `Hp: ${p2current.healthIV}, Atk: ${p2current.attackIV}, SpAtk: ${p2current.specialAttackIV}, Def: ${p2current.defenseIV}, SpDef: ${p2current.specialDefenseIV}`},
+                        {name: "Moves", value: `${p2current.moves.join(", ")}`}
+                    )
+                    thread.send({content: "Here are the stats of the pokemon you just caught", embeds:[newEmbed]});
+                    let pokemonLocation = playerBag.maids.findIndex(function(item) {return item.id.toLowerCase() == p1current.id.toLowerCase()});
+                    addUnit(p2current, author.id, p2current.level, pcID, exp, p2current.nature);
+                    setCurrentHealth(pokemonLocation, p1current.currentHealth, author.id);
+                    setStatusMap(pokemonLocation, p1current.statusMap, author.id);
+                    let reward = p2current.level * 35;
+                    addCoins(reward, author.id);
+                    thread.send(`You have obtained ${reward} coins`);
+                    thread.send("This thread will now self-destruct in 15 seconds.")
+                    setTimeout(() => {
+                        thread.delete();
+                      }, 15000);
+                    return;
+                }, delay);
 
             }
-        
-        
+
+
+        }  else {
+            thread.send(`You took too long and now its the wild ${p2current.id}'s turn`);
+            turn++;
+            battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        }
     });
+
+
+    // const filter = (m) => {
+    //     let hasItem = false;
+    //     for (let j = 0; j < balls.length; j++){
+    //         if (m.content.toLowerCase() === balls[j].name.toLowerCase()){
+    //             hasItem = true;
+    //             break;
+    //         }
+    //     }
+    //     return  m.author.id === author.id && (hasItem || m.content.toLowerCase() === "cancel");
+    // }
+    // const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+    // var s;
+    
+    
+
+    // collector.on('collect', message => {
+    //     s = message.content;
+        
+    // });
+
+    // collector.on('end', collected => {
+    
+    //     if (collected.size === 0) {
+            
+    //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            
+    //         return
+    //     }
+        
+    //         if (s.toLowerCase() == 'cancel'){
+    //             thread.send("You have cancelled and been sent back to battle select");
+    //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+    //         } else {
+    //             let newBagArray = playerBag.bag;
+    //             let ball = balls.find(function(item) { return item.name.toLowerCase() == s.toLowerCase()})
+    //             let modifier = ball.catchModifier;
+    //             let statusModifier = 1;
+    //             let ballIndex = playerBag.bag.findIndex(function(h) { return h.name == ball.name});
+    //             if(p2current.statusMap.asleep == true || p2current.statusMap.frozen == true){
+    //                 statusModifier = 2.5;
+    //             } else if(p2current.statusMap.burn == true || p2current.statusMap.poisoned == true || p2current.statusMap.paralysis == true){
+    //                 statusModifier = 1.5;
+    //             } else {
+    //                 statusModifier = 1;
+    //             }
+    //             if(ball.amount - 1 == 0){
+    //                 if(ballIndex > -1){
+    //                     newBagArray.splice(ballIndex, 1); 
+    //                     removeBall(author.id, newBagArray)
+    //                 }   
+    //             } else {
+    //                 removeBallAmount(author.id, ballIndex);
+    //             }
+    //             let badgesNeeded = badgePenalty.find(function(item) { return p2current.level <= item.maxLevel }).badges;
+    //             let lowLevelModifier = (36 - 2 * p2current.level)/10;
+    //             if(lowLevelModifier < 1){
+    //                 lowLevelModifier = 1;
+    //             }
+                
+    //             let bp = badgesNeeded - playerBag.badges.length;
+    //             if(bp < 0){
+    //                 bp = 0;
+    //             }
+    //             let finalBP = 0.8 ** bp;
+                
+    //             let fullCatchRate = (((3*p2current.health - 2*p2current.currentHealth)*1*p2current.catchRate*modifier*finalBP)/(3*p2current.health)) * lowLevelModifier * statusModifier;
+                
+    //             let shakeCheck = Math.floor(65536/(255/fullCatchRate)**0.1875);
+                
+    //             let shakeTimes = 0;
+    //             if(fullCatchRate >= 255){
+    //                 shakeTimes = 4;
+    //             } else {
+    //                 for(let shake = 0; shake < 4; shake++){
+    //                     let shakeRandomNumber = randomIntFromInterval(0, 65535);
+                        
+                        
+    //                     if(shakeRandomNumber < shakeCheck){
+    //                         shakeTimes++;
+    //                     }
+
+    //                 }
+    //             }
+    //             let delay = 1000; //1 second delay that will increase in the for loop
+    //             if(shakeTimes == 0){
+    //                 setTimeout(() => {
+    //                     thread.send("Oh, no! The Pokémon broke free!");
+    //                     turn++;
+    //                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
+    //                 }, delay)
+                    
+    //             } else if(shakeTimes == 1){
+    //                 for(let i = 0; i < 1; i++){
+    //                     setTimeout(() => {
+    //                         thread.send("*Shake*");
+    //                     }, delay);
+    //                     delay+= 1000;
+    //                 }
+    //                 setTimeout(() => {
+    //                     thread.send("Aww! It appeared to be caught!");
+    //                     turn++;
+    //                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
+    //                 }, delay);
+
+    //             } else if(shakeTimes == 2){
+    //                 for(let i = 0; i < 2; i++){
+    //                     setTimeout(() => {
+    //                         thread.send("*Shake*");
+    //                     }, delay);
+    //                     delay+= 1000;
+    //                 }
+    //                 setTimeout(() => {
+    //                     thread.send("Aargh! Almost had it!");
+    //                     turn++;
+    //                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
+    //                 }, delay);
+
+    //             } else if(shakeTimes == 3){
+    //                 for(let i = 0; i < 3; i++){
+    //                     setTimeout(() => {
+    //                         thread.send("*Shake*");
+    //                     }, delay);
+    //                     delay+= 1000;
+    //                 }
+    //                 setTimeout(() => {
+    //                     thread.send("Shoot! It was so close, too!");
+    //                     turn++;
+    //                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
+    //                 }, delay);
+
+    //             } else {
+    //                 for(let i = 0; i < 4; i++){
+    //                     setTimeout(() => {
+    //                         thread.send("*Shake*");
+    //                     }, delay);
+    //                     delay+= 1000;
+    //                 }
+    //                 setTimeout(() => {
+                        
+    //                     thread.send(`Gotcha! ${p2current.id} was caught!`);
+    //                     let pcID = playerBag.maids.length + 1;
+                        
+                        
+    //                     let unitExp = expTable.find(function(item) { return item.name == p2current.growthRate});
+    //                     let exp = unitExp.levelTable.find(function(expItem) { return expItem.level == p2current.level}).experience;
+    //                     let expToNextLevel = unitExp.levelTable.find(function(expItem) { return expItem.level == p2current.level + 1});
+    //                     const newEmbed = new EmbedBuilder()
+    //                     .setColor('#E76AA3')
+    //                     .setTitle(`Pokemon Info`)
+    //                     .setDescription(`__**${p2current.id} PCID# ${pcID}**__`)
+    //                     .setFields(
+    //                         {name: "Level", value:`Level: ${p2current.level}, EXP: ${exp}/${expToNextLevel.experience}` },
+    //                         {name: "Stats", value:`Hp: ${p2current.health}/${p2current.health}, Atk: ${p2current.attack}, SpAtk: ${p2current.specialAttack}, Def: ${p2current.defense}, SpDef: ${p2current.specialDefense}` },
+    //                         {name: "IVs", value: `Hp: ${p2current.healthIV}, Atk: ${p2current.attackIV}, SpAtk: ${p2current.specialAttackIV}, Def: ${p2current.defenseIV}, SpDef: ${p2current.specialDefenseIV}`},
+    //                         {name: "Moves", value: `${p2current.moves.join(", ")}`}
+    //                     )
+    //                     thread.send({content: "Here are the stats of the pokemon you just caught", embeds:[newEmbed]});
+    //                     let pokemonLocation = playerBag.maids.findIndex(function(item) {return item.id.toLowerCase() == p1current.id.toLowerCase()});
+    //                     addUnit(p2current, author.id, p2current.level, pcID, exp, p2current.nature);
+    //                     setCurrentHealth(pokemonLocation, p1current.currentHealth, author.id);
+    //                     setStatusMap(pokemonLocation, p1current.statusMap, author.id);
+    //                     let reward = p2current.level * 35;
+    //                     addCoins(reward, author.id);
+    //                     thread.send(`You have obtained ${reward} coins`);
+    //                     thread.send("This thread will now self-destruct in 15 seconds.")
+    //                     setTimeout(() => {
+    //                         thread.delete();
+    //                       }, 15000);
+    //                     return;
+    //                 }, delay);
+
+    //             }
+
+
+    //         }
+        
+        
+    // });
 }
 async function addUnit(unit, ID, level, pcID, exp, nature){
     
@@ -961,37 +1838,46 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
             }
         }
         if (forceSwape){
-            thread.send(`What unit would you like to switch in: ${pokemonAlive.join(", ")}`);
-            const filter = (m) => {
-                let isPokemon = false;
-                for (let j = 0; j < pokemonAlive.length; j++){
-                    if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase()){
-                        isPokemon = true;
-                        break;
-                    }
-                }
-                return  m.author.id === author.id && (isPokemon);
+            let componentsArray = [];
+    
+            let actionRowArray = [];
+            for(let co = 0; co < pokemonAlive.length; co++){
+                let temp = new ButtonBuilder()
+                .setCustomId(pokemonAlive[co])
+                .setLabel(pokemonAlive[co])
+                .setStyle(ButtonStyle.Secondary);
+                componentsArray.push(temp);
             }
-            const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
-            var s;
+            //let cancelTemp = new ButtonBuilder().setCustomId('Cancel').setLabel('Cancel').setStyle(ButtonStyle.Secondary);
+            //componentsArray.push(cancelTemp);
+            if(componentsArray.length > 5 && componentsArray.length <= 10){
+                const moveRow = new ActionRowBuilder().addComponents(componentsArray.slice(0,4));
+                const moveRow1 = new ActionRowBuilder().addComponents(componentsArray.slice(5,9));
+                actionRowArray.push(moveRow);
+                actionRowArray.push(moveRow1);
+            } else {
+                const moveRow = new ActionRowBuilder().addComponents(componentsArray);
+                actionRowArray.push(moveRow);
+            }
             
-            
-
-            collector.on('collect', message => {
-                s = message.content;
-                
-            });
-
-            collector.on('end', collected => {
-            
-                if (collected.size === 0) {
-                        //battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                    
-                    return
-                }
-                    
+            const now = Date.now();
+            let timeRemaining = now + 60000;
+            const expiredTimestamp = Math.round(timeRemaining / 1000);
+            const response = await thread.send({content: `What unit would you like to switch in: ${pokemonAlive.join(", ")}\nYou must take action <t:${expiredTimestamp}:R>`, components: actionRowArray});
+            const collectorFilter = i => {
+                i.deferUpdate(); 
+                return i.user.id === author.id;
+            };
+            const collector = response.createMessageComponentCollector({ filter: collectorFilter, componentType: ComponentType.Button, time: 60000 });
+        
+            collector.on('collect', async i => {
+                /*if(i.customId == 'Cancel'){
+                    thread.send("You have cancelled and have been sent back to battle select.");
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                }*/
+                if(pokemonAlive.includes(i.customId)){
                     for (let k = 0; k < p1party.length; k++){
-                        if (p1party[k].id.toLowerCase() == s.toLowerCase()){
+                        if (p1party[k].id.toLowerCase() == i.customId.toLowerCase()){
                             p1current = p1party[k];
                             p1party[k].usedInBattle = true;
                             p1party[k].stages = {
@@ -1006,55 +1892,127 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
                         }
                     }
                     thread.send(`You have sent in ${p1current.id}`);
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                } else {
+                    for (let k = 0; k < p1party.length; k++){
+                        if (p1party[k].id.toLowerCase() == pokemonAlive[0].toLowerCase()){
+                            p1current = p1party[k];
+                            p1party[k].usedInBattle = true;
+                            p1party[k].stages = {
+                                attack: 0,
+                                defense: 0,
+                                specialAttack: 0,
+                                specialDefense: 0,
+                                evasion: 0,
+                                accuracy: 0
+                            };
+                            break;
+                        }
+                    }
+                    thread.send(`You took too long and have sent in ${p1current.id}, now its the wild ${p2current.id}'s turn`);
+                    turn++;
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+
+                    
+                }
+            });
+            // thread.send(`What unit would you like to switch in: ${pokemonAlive.join(", ")}`);
+            // const filter = (m) => {
+            //     let isPokemon = false;
+            //     for (let j = 0; j < pokemonAlive.length; j++){
+            //         if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase()){
+            //             isPokemon = true;
+            //             break;
+            //         }
+            //     }
+            //     return  m.author.id === author.id && (isPokemon);
+            // }
+            // const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+            // var s;
+            
+            
+
+            // collector.on('collect', message => {
+            //     s = message.content;
+                
+            // });
+
+            // collector.on('end', collected => {
+            
+            //     if (collected.size === 0) {
+            //             //battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+            //         return
+            //     }
+                    
+            //         for (let k = 0; k < p1party.length; k++){
+            //             if (p1party[k].id.toLowerCase() == s.toLowerCase()){
+            //                 p1current = p1party[k];
+            //                 p1party[k].usedInBattle = true;
+            //                 p1party[k].stages = {
+            //                     attack: 0,
+            //                     defense: 0,
+            //                     specialAttack: 0,
+            //                     specialDefense: 0,
+            //                     evasion: 0,
+            //                     accuracy: 0
+            //                 };
+            //                 break;
+            //             }
+            //         }
+            //         thread.send(`You have sent in ${p1current.id}`);
                     
 
-                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            //         battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 
                 
                     
                 
                 
-            });
+            // });
 
         } else {
 
-            
-            thread.send(`What unit would you like to switch in: ${pokemonAlive.join(", ")} or type Cancel to go back`);
-            const filter = (m) => {
-                let isPokemon = false;
-                for (let j = 0; j < pokemonAlive.length; j++){
-                    if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase()){
-                        isPokemon = true;
-                        break;
-                    }
-                }
-                return  m.author.id === author.id && (isPokemon || m.content.toLowerCase() === "cancel");
+            let componentsArray = [];
+    
+            let actionRowArray = [];
+            for(let co = 0; co < pokemonAlive.length; co++){
+                let temp = new ButtonBuilder()
+                .setCustomId(pokemonAlive[co])
+                .setLabel(pokemonAlive[co])
+                .setStyle(ButtonStyle.Secondary);
+                componentsArray.push(temp);
             }
-            const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
-            var s;
+            let cancelTemp = new ButtonBuilder().setCustomId('Cancel').setLabel('Cancel').setStyle(ButtonStyle.Secondary);
+            componentsArray.push(cancelTemp);
+            if(componentsArray.length > 5 && componentsArray.length <= 10){
+                const moveRow = new ActionRowBuilder().addComponents(componentsArray.slice(0,4));
+                const moveRow1 = new ActionRowBuilder().addComponents(componentsArray.slice(5,9));
+                actionRowArray.push(moveRow);
+                actionRowArray.push(moveRow1);
+            } else {
+                const moveRow = new ActionRowBuilder().addComponents(componentsArray);
+                actionRowArray.push(moveRow);
+            }
             
-            
-
-            collector.on('collect', message => {
-                s = message.content;
-                
-            });
-
-            collector.on('end', collected => {
-            
-                if (collected.size === 0) {
-                        thread.send(`You took too long going back to battle select`);
-                        battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                    
-                    return
-                }
-                if (s.toLowerCase() == "cancel"){
-                    thread.send(`You have cancelled and have been sent back to battle select`);
+            const now = Date.now();
+            let timeRemaining = now + 60000;
+            const expiredTimestamp = Math.round(timeRemaining / 1000);
+            const response = await thread.send({content: `What unit would you like to switch in: ${pokemonAlive.join(", ")} or type Cancel to go back\nYou must take action <t:${expiredTimestamp}:R>`, components: actionRowArray});
+            const collectorFilter = i => {
+                i.deferUpdate(); 
+                return i.user.id === author.id;
+            };
+            const collector = response.createMessageComponentCollector({ filter: collectorFilter, componentType: ComponentType.Button, time: 60000 });
+        
+            collector.on('collect', async i => {
+                if(i.customId == 'Cancel'){
+                    thread.send("You have cancelled and have been sent back to battle select.");
                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                } else {
+                } else if(pokemonAlive.includes(i.customId)){
                     let oldCurrent = p1current.id;
                     for (let k = 0; k < p1party.length; k++){
-                        if (p1party[k].id.toLowerCase() == s.toLowerCase()){
+                        if (p1party[k].id.toLowerCase() == i.customId.toLowerCase()){
                             p1current = p1party[k];
                             p1party[k].usedInBattle = true;
                             p1party[k].stages = {
@@ -1072,12 +2030,71 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
                     turn++;
                     
                     battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                } else {
+                    thread.send(`You took too long and now its the wild ${p2current.id}'s turn`);
+                    turn++;
+                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
                 }
+            });
+            // thread.send(`What unit would you like to switch in: ${pokemonAlive.join(", ")} or type Cancel to go back`);
+            // const filter = (m) => {
+            //     let isPokemon = false;
+            //     for (let j = 0; j < pokemonAlive.length; j++){
+            //         if (m.content.toLowerCase() === pokemonAlive[j].toLowerCase()){
+            //             isPokemon = true;
+            //             break;
+            //         }
+            //     }
+            //     return  m.author.id === author.id && (isPokemon || m.content.toLowerCase() === "cancel");
+            // }
+            // const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+            // var s;
+            
+            
+
+            // collector.on('collect', message => {
+            //     s = message.content;
+                
+            // });
+
+            // collector.on('end', collected => {
+            
+            //     if (collected.size === 0) {
+            //             thread.send(`You took too long going back to battle select`);
+            //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                    
+            //         return
+            //     }
+            //     if (s.toLowerCase() == "cancel"){
+            //         thread.send(`You have cancelled and have been sent back to battle select`);
+            //         battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            //     } else {
+            //         let oldCurrent = p1current.id;
+            //         for (let k = 0; k < p1party.length; k++){
+            //             if (p1party[k].id.toLowerCase() == s.toLowerCase()){
+            //                 p1current = p1party[k];
+            //                 p1party[k].usedInBattle = true;
+            //                 p1party[k].stages = {
+            //                     attack: 0,
+            //                     defense: 0,
+            //                     specialAttack: 0,
+            //                     specialDefense: 0,
+            //                     evasion: 0,
+            //                     accuracy: 0
+            //                 };
+            //                 break;
+            //             }
+            //         }
+            //         thread.send(`You have switched out ${oldCurrent} and sent in ${p1current.id}`);
+            //         turn++;
+                    
+            //         battle(p1party, p2party, p1current, p2current, thread, author, turn);
+            //     }
                 
                     
                 
                 
-            });
+            // });
         }
     } else {
         let pokemonAlive = [];
@@ -1115,50 +2132,85 @@ async function pokemonSwitch(p1party, p2party, p1current, p2current, thread, aut
 
 async function attack(p1party, p2party, p1current, p2current, thread, author, turn){
     let moves = p1current.moves;
-    thread.send(`What attack would you like to use: ${moves.join(", ")} or type cancel to go back`);
+    let componentsArray = [];
+    for(let co = 0; co < moves.length; co++){
+        let temp = new ButtonBuilder()
+        .setCustomId(moves[co])
+        .setLabel(moves[co])
+        .setStyle(ButtonStyle.Secondary);
+        componentsArray.push(temp);
+    }
+    let cancelTemp = new ButtonBuilder().setCustomId('Cancel').setLabel('Cancel').setStyle(ButtonStyle.Secondary);
+    componentsArray.push(cancelTemp);
+    const moveRow = new ActionRowBuilder().addComponents(componentsArray);
+    const now = Date.now();
+    let timeRemaining = now + 60000;
+    let expiredTimestamp = Math.round(timeRemaining / 1000);
+    const response = await thread.send({content: `What attack would you like to use: ${moves.join(", ")} or select cancel to go back.\nYou must take action <t:${expiredTimestamp}:R>`, components: [moveRow]});
+    //response.edit({embeds: [newEmbed], components: [row]});
+    const collectorFilter = i => {
+        i.deferUpdate(); 
+        return i.user.id === author.id;
+    };
+    const collector = response.createMessageComponentCollector({ filter: collectorFilter, componentType: ComponentType.Button, time: 60000 });
 
-
-        const filter = (m) => {
-            let isPokemonMove = false;
-            for (let j = 0; j < moves.length; j++){
-                if (m.content.toLowerCase() === moves[j].toLowerCase()){
-                    isPokemonMove = true;
-                    break;
-                }
-            }
-            return  m.author.id === author.id && (isPokemonMove || m.content.toLowerCase() === "cancel");
-        }
-        const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
-        var s;
+    collector.on('collect', async i => {
+         
         
-        
-
-        collector.on('collect', message => {
-            s = message.content;
             
-        });
-
-        collector.on('end', collected => {
-        
-            if (collected.size === 0) {
-                
-                    battle(p1party, p2party, p1current, p2current, thread, author, turn);
-                
-                return
-            } if (s.toLowerCase() == "cancel"){
+            if (i.customId == "Cancel"){
                 thread.send(`You have cancelled and have been sent back to battle select`);
                 battle(p1party, p2party, p1current, p2current, thread, author, turn);
-            } else {
+            } else if(moves.includes(i.customId)) {
+                dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, i.customId)
+            }else {
+                thread.send(`You took too long and now its the wild ${p2current.id}'s turn`);
+                turn++;
+                battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        }
+    });
+
+        // const filter = (m) => {
+        //     let isPokemonMove = false;
+        //     for (let j = 0; j < moves.length; j++){
+        //         if (m.content.toLowerCase() === moves[j].toLowerCase()){
+        //             isPokemonMove = true;
+        //             break;
+        //         }
+        //     }
+        //     return  m.author.id === author.id && (isPokemonMove || m.content.toLowerCase() === "cancel");
+        // }
+        // const collector = thread.createMessageCollector({ filter, max: 1, time: 60000})
+        // var s;
+        
+        
+
+        // collector.on('collect', message => {
+        //     s = message.content;
+            
+        // });
+
+        // collector.on('end', collected => {
+        
+        //     if (collected.size === 0) {
                 
-                //thread.send(`You have selected the following move: ${s}`);
+        //             battle(p1party, p2party, p1current, p2current, thread, author, turn);
+                
+        //         return
+        //     } if (s.toLowerCase() == "cancel"){
+        //         thread.send(`You have cancelled and have been sent back to battle select`);
+        //         battle(p1party, p2party, p1current, p2current, thread, author, turn);
+        //     } else {
+                
+        //         //thread.send(`You have selected the following move: ${s}`);
                 
     
-                dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, s)
-            }
+        //         dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, s)
+        //     }
             
             
             
-        });
+        // });
 
 }
 function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, move){
@@ -1249,6 +2301,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 missed = true;
             } else {
                 thread.send(`Your ${p1current.id} woke up`);
+                p1current.statusMap.asleep = false;
                 missed = false;
             }
             
@@ -1258,6 +2311,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 missed = true;
             } else {
                 thread.send(`The wild ${p2current.id} woke up`);
+                p2current.statusMap.asleep = false;
                 missed = false;
             }
             
@@ -1276,6 +2330,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 
             } else {
                 thread.send(`Your ${p1current.id} snapped out of confusion`);
+                p1current.statusMap.confusion = false;
                 missed = false;
             }
             
@@ -1291,6 +2346,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 
             } else {
                 thread.send(`The wild ${p2current.id} snapped out of confusion`);
+                p2current.statusMap.confusion = false;
                 missed = false;
             }
             
@@ -1770,7 +2826,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
                 moveDetails.power = power;
                 damage = damageFormula(moveDetails, p1current, p2current, turn);
-                moveDetails.power = orPower;
+                
                 
                 
                 
@@ -3190,51 +4246,92 @@ async function snapshot(message, boss, thread, cost){
             
     let p2current = p2party[0];
     thread.send(`You have used ${cost} coins to enter this encounter`);
-    thread.send(`A wild Level ${p2current.level} ${p2current.id} has appeared`);
+    removeCoins(cost, message.user.id);
+
+    let statusArray = getStatus(p1current, p2current);
+    const newEmbed = new EmbedBuilder()
+    .setColor('#E76AA3')
+    .setTitle(`A wild Level ${p2current.level} ${p2current.id} has appeared`)
+    .setDescription(`Your ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
+            
+
+    thread.send({ embeds: [newEmbed] }).then(msg => {
+        startBattle(p1party, p2party, p1current, p2current, thread, message.user, msg.id);
+    });
+    
+    //thread.send(`A wild Level ${p2current.level} ${p2current.id} has appeared`);
         
     
-    startBattle(p1party, p2party, p1current, p2current, thread, message.user);
+    //startBattle(p1party, p2party, p1current, p2current, thread, message.user);
 }
-async function startBattle(p1party, p2party, p1current, p2current, thread, author){
+async function startBattle(p1party, p2party, p1current, p2current, thread, author, embedID){
+        const start = new ButtonBuilder()
+        .setCustomId('start')
+        .setLabel('Start')
+        .setStyle(ButtonStyle.Primary);
+        const row = new ActionRowBuilder()
+		.addComponents(start);
 
-        thread.send('The battle will start in 2 minutes or if you type Start');
-
-
-        const filter = (m) => {
-            return  m.author.id === author.id && (m.content.toLowerCase() === 'start');
-        }
-        const collector = thread.createMessageCollector({ filter, max: 1, time: 120000})
-        var s;
-        
-        
-
-        collector.on('collect', message => {
-            s = message.content;
+        let statusArray = getStatus(p1current, p2current);
+        const newEmbed = new EmbedBuilder()
+        .setColor('#E76AA3')
+        .setTitle(`A wild Level ${p2current.level} ${p2current.id} has appeared`)
+        .setDescription(`**The battle will start in 2 minutes or if you select Start**\n\nYour ${p1current.id}'s health is: **${p1current.currentHealth}/${p1current.health}**\nStatus': ${statusArray[0].join(", ")}\nThe wild ${p2current.id} health is: **${p2current.currentHealth}/${p2current.health}**\nStatus': ${statusArray[1].join(", ")}`)
             
+        thread.messages.fetch(embedID).then(response => {
+            response.edit({embeds: [newEmbed], components: [row]});
+            const collectorFilter = i => {
+                i.deferUpdate(); 
+                return i.user.id === author.id;
+            };
+            const collector = response.createMessageComponentCollector({ filter: collectorFilter, componentType: ComponentType.Button, time: 120000 });
+    
+            collector.on('collect', async i => {
+                if(i.customId == 'start'){
+                    battle(p1party, p2party, p1current, p2current, thread, author, 1);
+                } else {
+                    battle(p1party, p2party, p1current, p2current, thread, author, 1);
+                }
+            });
         });
-
-        collector.on('end', collected => {
         
-            if (collected.size === 0) {
-                
-                
-                
-                    battle(p1party, p2party, p1current, p2current, thread, author, 1);
-                
-                return
-            }
+        //thread.send('The battle will start in 2 minutes or if you type Start');
+        
+        // const filter = (m) => {
+        //     return  m.author.id === author.id && (m.content.toLowerCase() === 'start');
+        // }
+        // const collector = thread.createMessageCollector({ filter, max: 1, time: 120000})
+        // var s;
+        
+        
+
+        // collector.on('collect', message => {
+        //     s = message.content;
             
-                if (s.toLowerCase() == 'start'){
+        // });
+
+        // collector.on('end', collected => {
+        
+        //     if (collected.size === 0) {
+                
+                
+                
+        //             battle(p1party, p2party, p1current, p2current, thread, author, 1);
+                
+        //         return
+        //     }
+            
+        //         if (s.toLowerCase() == 'start'){
                     
-                    battle(p1party, p2party, p1current, p2current, thread, author, 1);
+        //             battle(p1party, p2party, p1current, p2current, thread, author, 1);
                     
                     
                    
 
-                }
+        //         }
             
             
-        });
+        // });
 
 }
 async function setExperienceAndLevel(finalLevel, finalXP, evMap, location, ID, status, stats){
@@ -3311,6 +4408,48 @@ async function setCurrentHealth(location, currenthealth, ID){
         console.log(err);
     }
 }
+async function incOrLowerHappiness(location, happiness, ID, increase){
+    if(increase){
+        try {
+            await playerModel.findOneAndUpdate(
+                {
+                    userID: ID
+                },
+                {
+                    $inc: {
+                        ["maids." + location + ".happiness"]: happiness,
+                        
+                    }
+                    
+                }
+                
+            );
+
+        } catch(err){
+            console.log(err);
+        }
+    } else {
+        try {
+            await playerModel.findOneAndUpdate(
+                {
+                    userID: ID
+                },
+                {
+                    $inc: {
+                        ["maids." + location + ".happiness"]: -happiness,
+                        
+                    }
+                    
+                }
+                
+            );
+
+        } catch(err){
+            console.log(err);
+        }
+    }
+}
+
 async function setStatusMap(location, status, ID){
     try {
         await playerModel.findOneAndUpdate(
@@ -3340,6 +4479,27 @@ async function addCoins(amount, ID){
             {
                 $inc: {
                     coins: amount,
+                    
+                }
+                
+            }
+            
+        );
+
+    } catch(err){
+        console.log(err);
+    }
+}
+
+async function removeCoins(amount, ID){
+    try {
+        await playerModel.findOneAndUpdate(
+            {
+                userID: ID
+            },
+            {
+                $inc: {
+                    coins: -amount,
                     
                 }
                 

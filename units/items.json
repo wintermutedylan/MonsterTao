@@ -352,6 +352,54 @@
         "type": "healing"
     },
     {
+        "name": "antidote",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": null,
+        "cost": 200,
+        "type": "healing"
+    },
+    {
+        "name": "burn-heal",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": null,
+        "cost": 200,
+        "type": "healing"
+    },
+    {
+        "name": "ice-heal",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": null,
+        "cost": 200,
+        "type": "healing"
+    },
+    {
+        "name": "awakening",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": null,
+        "cost": 200,
+        "type": "healing"
+    },
+    {
+        "name": "paralyze-heal",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": null,
+        "cost": 200,
+        "type": "healing"
+    },
+    {
+        "name": "full-heal",
+        "catchModifier": null,
+        "healAmount": null,
+        "moveName": null,
+        "cost": 400,
+        "type": "healing"
+    },
+    {
         "name": "tm01",
         "catchModifier": null,
         "healAmount": null,
