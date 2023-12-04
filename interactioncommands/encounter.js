@@ -309,7 +309,7 @@ async function battle(p1party, p2party, p1current, p2current, thread, author, tu
         let playerHap; 
         playerHap = await playerModel.findOne({ userID: author.id});
         let ind = playerHap.maids.findIndex(function(r) { return r.pcID == p1current.pcID});
-        incOrLowerHappiness(ind, happinessLow, author.id, false);
+        incOrLowerHappiness(ind, happy, author.id, false);
         
         thread.send(`Your ${p1current.id} has fainted. Its happiness was lowered by ${happy}`);
         let usableUnits = false;
@@ -2826,6 +2826,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
                 moveDetails.power = power;
                 damage = damageFormula(moveDetails, p1current, p2current, turn);
+                if(damage == 0){
+                    stageQuote += `\nIt's doesn't effect the enemy`;
+                }
                 
                 
                 

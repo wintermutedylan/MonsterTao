@@ -68,10 +68,10 @@ module.exports = {
         for(let h = 0; h < playerData.currentParty.length; h++){
             let unitIndex = playerData.maids.findIndex( function(item) { return item.pcID == playerData.currentParty[h] } );
             if(finalPoints > 0){
-                if(playerData.maids[unitIndex].happiness + finalPoints < 255){
+                if(playerData.maids[unitIndex].happiness + finalPoints > 255){
                     let newFinal = (playerData.maids[unitIndex].happiness + finalPoints) - 255;
                     updateHappiness(newFinal, ID, unitIndex);
-                } else {
+                } else if(playerData.maids[unitIndex].happiness != 255){
                     updateHappiness(finalPoints, ID, unitIndex);
                 }
                 
@@ -110,7 +110,7 @@ module.exports = {
                 // }
                 if(status.length == 0) status.push("none");
                 newEmbed.addFields(
-                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: ${sorted[j].experience}/${expToNextLevel.experience}\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nType: ${sorted[j].types.join(", ")}\nStatus: ${status.join(", ")}\nMoves: ${sorted[j].moves.join(", ")}`}
+                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: ${sorted[j].experience}/${expToNextLevel.experience}\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nType: ${sorted[j].types.join(", ")}\nStatus: ${status.join(", ")}\nMoves: ${sorted[j].moves.join(", ")}\nHappiness: ${sorted[j].happiness}`}
                 )
             } else {
                 for(var key in sorted[j].statusMap) {
@@ -121,7 +121,7 @@ module.exports = {
                 }
                 if(status.length == 0) status.push("none");
                 newEmbed.addFields(
-                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: Max Level\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nType: ${sorted[j].types.join(", ")}\nStatus: ${status.join(", ")}\nMoves: ${sorted[j].moves.join(", ")}`}
+                    { name: `PCID# ${sorted[j].pcID}: ${sorted[j].id}`, value: `Level: ${sorted[j].level}, EXP: Max Level\nHealth: ${sorted[j].currentHealth}/${sorted[j].health}\nType: ${sorted[j].types.join(", ")}\nStatus: ${status.join(", ")}\nMoves: ${sorted[j].moves.join(", ")}\nHappiness: ${sorted[j].happiness}`}
                 )
             }
 
