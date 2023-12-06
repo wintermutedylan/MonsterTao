@@ -2398,6 +2398,33 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     }
                     break;
                 }
+            case "Belly-drum":
+                if(turn % 2 == 1){
+                    
+                    if(p1current.stages.attack == 6 || p1current.currentHealth < Math.floor(p1current.health * 0.50)){
+                        
+                        stageQuote += `${moveDetails.move} Failed!\n`;
+                    } else {
+                        p1current.stages.attack = 6;
+                        p1current.currentHealth -= Math.floor(p1current.health * 0.50);
+                        
+                        stageQuote += `Your ${p1current.id}'s health was reduced by ${Math.floor(p1current.health * 0.50)}\n`
+                        stageQuote += `Your ${p1current.id}'s Attack Sharply rose!\n`;
+                    }
+                    break;
+                } else {
+                    if(p2current.stages.attack == 6 || p2current.currentHealth < Math.floor(p2current.health * 0.50)){
+                        
+                        stageQuote += `${moveDetails.move} Failed!\n`;
+                    } else {
+                        p2current.stages.attack = 6;
+                        p2current.currentHealth -= Math.floor(p2current.health * 0.50);
+                        
+                        stageQuote += `The wild ${p2current.id}'s health was reduced by ${Math.floor(p2current.health * 0.50)}\n`
+                        stageQuote += `The wild ${p2current.id}'s Attack Sharply rose!\n`;
+                    }
+                    break;
+                }
             case "Double-team":
             case "Minimize":
                 if(turn % 2 == 1){
@@ -2422,6 +2449,8 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Recover":
             case "Soft-boiled":
             case "Ingrain":
+            case "Milk-drink":
+            case "Heal-bell":
                 if(turn % 2 == 1){
                     let healAmount = Math.floor(p1current.health/2);
                     
@@ -2583,6 +2612,25 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 p2current.stages.accuracy = 0;
                 stageQuote += "All stat changes were eliminated!\n"
                 break;
+            case "Psych-up":
+                if(turn % 2 == 1){
+                    p1current.stages.attack = p2current.stages.attack;
+                    p1current.stages.defense = p2current.stages.defense;
+                    p1current.stages.specialAttack = p2current.stages.specialAttack;
+                    p1current.stages.specialDefense = p2current.stages.specialDefense;
+                    p1current.stages.evasion = p2current.stages.evasion;
+                    p1current.stages.accuracy = p2current.stages.accuracy;
+                    stageQuote += `Your ${p1current.id} copied the wild ${p2current.id} stat changes\n`;
+                } else {
+                    p2current.stages.attack = p1current.stages.attack;
+                    p2current.stages.defense = p1current.stages.defense;
+                    p2current.stages.specialAttack = p1current.stages.specialAttack;
+                    p2current.stages.specialDefense = p1current.stages.specialDefense;
+                    p2current.stages.evasion = p1current.stages.evasion;
+                    p2current.stages.accuracy = p1current.stages.accuracy;
+                    stageQuote += `The wild ${p2current.id} copied your ${p1current.id} stat changes\n`;
+                }
+                break;
             case "Light-screen":
             case "Reflect":
             case "Mirror-move":
@@ -2594,11 +2642,39 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 break;
             case "Swift":
             case "Shock-wave":
+            case "Feint-attack":
+            case "Vital-throw":
                 isSwift = true;
                 damage = damageFormula(moveDetails, p1current, p2current, turn);
                 break;
             case "Splash":
+            case "Sketch":
+            case "Spider-web":
+            case "Mind-reader":
+            case "Curse":
+            case "Conversion-2":
+            case "Cotton-spore":
+            case "Protect":
+            case "Spikes":
+            case "Foresight":
+            case "Destiny-bond":
+            case "Perish-song":
+            case "Detect":
+            case "Lock-on":
+            case "Endure":
+            case "Mean-look":
+            case "Sleep-talk":
+            case "Safeguard":
+            case "Baton-pass":
+            case "Morning-sun":
+            case "Synthesis":
+            case "Moonlight":
+            case "Rain-dance":
+            case "Sunny-day":
                 stageQuote += `No Effect!`;
+                break;
+            case "Sandstorm":
+                stageQuote += `Darude! (no effect)`;
                 break;
             case "Rest":
                 if(turn % 2 == 1){
@@ -2637,6 +2713,30 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     stageQuote += `The wild${p2current.id} healed for ${healAmount} hp and fell asleep\n`;
                     break;
                 }
+            case "Pain-split":
+                let totalHealth = Math.floor((p1current.currentHealth + p2current.currentHealth)/2);
+                if(p1current.currentHealth - totalHealth < 0){
+                    p1current.currentHealth += Math.abs(totalHealth);
+                    if(p1current.currentHealth > p1current.health){
+                        p1current.currentHealth = p1current.health;
+                    }
+                    stageQuote += `Your ${p1current.id} healed for ${Math.abs(totalHealth)}`;
+                } else {
+                    p1current.currentHealth -= totalHealth;
+                    stageQuote += `Your ${p1current.id} lost ${totalHealth} HP`;
+                }
+                if(p2current.currentHealth - totalHealth < 0){
+                    p2current.currentHealth += Math.abs(totalHealth);
+                    if(p2current.currentHealth > p2current.health){
+                        p2current.currentHealth = p2current.health;
+                    }
+                    stageQuote += `The wild ${p2current.id} healed for ${Math.abs(totalHealth)}`;
+                } else {
+                    p2current.currentHealth -= totalHealth;
+                    stageQuote += `The wild ${p2current.id} lost ${totalHealth} HP`;
+                }
+                break;
+            
             
                 
             
@@ -2771,6 +2871,10 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Fury-swipes":
             case "Rock-blast":
             case "Sand-tomb":
+            case "Bone-rush":
+            case "Rollout":
+            case "Fury-cutter":
+            case "Whirlpool":
                 let amountCheck = Math.round(Math.random() * 100);
                 let amount;
                 if (amountCheck < 35){ // this is 2 slaps
@@ -2826,6 +2930,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
                 moveDetails.power = power;
                 damage = damageFormula(moveDetails, p1current, p2current, turn);
+                moveDetails.power = orPower;
                 if(damage == 0){
                     stageQuote += `\nIt's doesn't effect the enemy`;
                 }
@@ -2838,8 +2943,11 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Fire-punch":
             case "Flamethrower":
             case "Fire-blast":
+            case "Flame-wheel":
+                
                 let isBurned = nonVolitileCheck(p1current, p2current, turn, 10, ["Fire"], thread);
                 if(isBurned && turn % 2 == 1){
+                    
                     p2current.statusMap.burned = true;
                     thread.send(`The wild ${p2current.id} has been burned.`);
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
@@ -2850,13 +2958,45 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 } else {
+                    if(turn % 2 == 1){
+                        p2current.statusMap.frozen = false;
+                        thread.send(`The wild ${p2current.id} has thawed out`);
+                    } else {
+                        p1current.statusMap.frozen = false;
+                        thread.send(`Your ${p1current.id} has thawed out`);
+                    }
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                }
+            case "Sacred-fire":
+                
+                let isSacred = nonVolitileCheck(p1current, p2current, turn, 50, ["Fire"], thread);
+                if(isSacred && turn % 2 == 1){
                     
+                    p2current.statusMap.burned = true;
+                    thread.send(`The wild ${p2current.id} has been burned.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else if(isSacred && turn % 2 == 0){
+                    p1current.statusMap.burned = true;
+                    thread.send(`Your ${p1current.id} has been burned.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else {
+                    if(turn % 2 == 1){
+                        p2current.statusMap.frozen = false;
+                        thread.send(`The wild ${p2current.id} has thawed out`);
+                    } else {
+                        p1current.statusMap.frozen = false;
+                        thread.send(`Your ${p1current.id} has thawed out`);
+                    }
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }
             case "Ice-punch":
             case "Ice-beam":
             case "Blizzard":
+            case "Powder-snow":
                 let isFrozen = nonVolitileCheck(p1current, p2current, turn, 10, ["Ice"], thread);
                 if(isFrozen && turn % 2 == 1){
                     p2current.statusMap.frozen = true;
@@ -2893,6 +3033,21 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     damage = damageFormula(moveDetails, p1current, p2current, turn);
                     break;
                 }
+            case "Zap-cannon":
+                let isZap = nonVolitileCheck(p1current, p2current, turn, 100, ["Electric"], thread);
+                if(isZap && turn % 2 == 1){
+                    p2current.statusMap.paralysis = true;
+                    thread.send(`The wild ${p2current.id} has been paralyzed.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else if(isZap && turn % 2 == 0){
+                    p1current.statusMap.paralysis = true;
+                    thread.send(`Your ${p1current.id} has been paralyzed.`);
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    break;
+                } else {
+                    break;
+                }
             case "Double-kick":
             case "Bonemerang":
                 for (let a = 0; a < 2; a++){
@@ -2900,9 +3055,24 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
                 thread.send(`${moveDetails.move} hit 2 times.`);
                 break;
+            case "Triple-kick":
+                let originalPow = moveDetails.power;
+                for (let a = 0; a < 3; a++){
+                    if(a == 1){
+                        moveDetails.power = 20;
+                    } else if (a == 2){
+                        moveDetails.power = 30;
+                    }
+                    damage += damageFormula(moveDetails, p1current, p2current, turn);
+
+                }
+                moveDetails.power = originalPow;
+                thread.send(`${moveDetails.move} hit 3 times.`);
+                break;
             case "Sand-attack":
             case "Smokescreen":
             case "Kinesis":
+            case "Sweet-scent":
                 
 
                 if(turn % 2 == 1){
@@ -2931,6 +3101,8 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Body-slam":
             case "Lick":
             case "Bounce":
+            case "Spark":
+            case "Dragon-breath":
                 let bodyCheck = nonVolitileCheck(p1current, p2current, turn, 30, ["Electric"], thread);
                 if(bodyCheck && turn % 2 == 1){
                     p2current.statusMap.paralysis = true;
@@ -3007,6 +3179,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             case "Thrash":
             case "Petal-dance":
+            case "Outrage":
                 for(let mv = 0; mv < 3; mv++){
                     damage += damageFormula(moveDetails, p1current, p2current, turn);
                 }
@@ -3047,6 +3220,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     
                 }
             case "Poison-sting":
+            case "Sludge-bomb":
                 let isPoisoned = nonVolitileCheck(p1current, p2current, turn, 30, ["Poison", "Steel"], thread);
                 if(isPoisoned && turn % 2 == 1){
                     p2current.statusMap.poisoned = true;
@@ -3106,6 +3280,59 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     break;
                     
                 }
+            case "Charm":
+                if(turn % 2 == 1){
+                    
+                    p2current.stages.attack -= 2;
+                    if(p2current.stages.attack < -6){
+                        p2current.stages.attack = -6;
+                        stageQuote += `The wild ${p2current.id}'s Attack won't go lower\n`;
+                    } else{
+                        stageQuote += `The wild ${p2current.id}'s Attack Sharply fell\n`;
+                    }
+                    break;
+                } else {
+                    
+                    p1current.stages.attack -= 2;
+                    if(p1current.stages.attack < -6){
+                        p1current.stages.attack = -6;
+                        stageQuote += `Your ${p1current.id}'s Attack won't go lower\n`;
+                    } else{
+                        stageQuote += `Your ${p1current.id}'s Attack Sharply fell\n`;
+                    }
+                    
+                    break;
+                    
+                }
+            case "Swagger":
+                if(turn % 2 == 1){
+                    
+                    p2current.stages.attack += 2;
+                    
+                    if(p2current.stages.attack > 6){
+                        p2current.stages.attack = 6;
+                        stageQuote += `The wild ${p2current.id}'s Attack won't go higher\n`;
+                    } else{
+                        stageQuote += `The wild ${p2current.id}'s Attack Sharply rose\nThe wild ${p2current.id} is now confused`;
+                        p2current.statusMap.confusion = true;
+                        p2current.statusMap.confusionTurns = randomIntFromInterval(1,5);
+                    }
+                    break;
+                } else {
+                    
+                    p1current.stages.attack += 2;
+                    if(p1current.stages.attack > 6){
+                        p1current.stages.attack = 6;
+                        stageQuote += `Your ${p1current.id}'s Attack won't go higher\n`;
+                    } else{
+                        stageQuote += `Your ${p1current.id}'s Attack Sharply rose\nYour ${p1current.id} is now confused`;
+                        p1current.statusMap.confusion = true;
+                        p1current.statusMap.confusionTurns = randomIntFromInterval(1,5);
+                    }
+                    
+                    break;
+                    
+                }
             case "Flash":
                 if(turn % 2 == 1){
                     
@@ -3130,6 +3357,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     break;
                     
                 }
+            
             case "Mud-slap":
                 if(turn % 2 == 1){
                     
@@ -3180,6 +3408,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             case "Supersonic":
             case "Confuse-ray":
+            case "Sweet-kiss":
                 if(turn % 2 == 1){
                     if(p2current.statusMap.confusion == false){
                         p2current.statusMap.confusion = true;
@@ -3202,6 +3431,37 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         stageQuote += `Your ${p1current.id} is now confused\n`;
                     } else {
                         stageQuote += `Your ${p1current.id} is already confused\n`;
+                    }
+                    break;
+                    
+                }
+            case "Dynamic-punch":
+                if(turn % 2 == 1){
+                    if(p2current.statusMap.confusion == false){
+                        p2current.statusMap.confusion = true;
+                        p2current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
+                    
+                    
+                        stageQuote += `The wild ${p2current.id} is now confused\n`;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        stageQuote += `The wild ${p2current.id} is already confused\n`;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                } else {
+                    
+                    if(p1current.statusMap.confusion == false){
+                        p1current.statusMap.confusion = true;
+                        p1current.statusMap.confusionTurns = randomIntFromInterval(1, 5);
+                    
+                    
+                        stageQuote += `Your ${p1current.id} is now confused\n`;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        stageQuote += `Your ${p1current.id} is already confused\n`;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
                     }
                     break;
                     
@@ -3254,6 +3514,290 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         damage = damageFormula(moveDetails, p1current, p2current, turn);
                     }
                     
+                    break;
+                    
+                }
+            case "Steel-wing":
+                let wingCheck = Math.round(Math.random() * 100);
+                
+                if(turn % 2 == 1){
+                    if(wingCheck < 10){
+                        p1current.stages.defense += 1;
+                        if(p1current.stages.defense > 6){
+                            p1current.stages.defense = 6;
+                            stageQuote += `Your ${p1current.id}'s Defense won't go higher\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Defense rose\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                } else {
+                    if(wingCheck < 10){
+                    p2current.stages.defense += 1;
+                    if(p2current.stages.defense > 6){
+                        p2current.stages.defense = 6;
+                        stageQuote += `The wild ${p2current.id}'s Defense won't go higher\n`;
+                    } else{
+                        stageQuote += `The wild ${p2current.id}'s Defense rose\n`;
+                    }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                    
+                }
+            case "Ancient-power":
+                let ancientPowerCheck = Math.round(Math.random() * 100);
+                
+                if(turn % 2 == 1){
+                    if(ancientPowerCheck < 10){
+                        p1current.stages.attack += 1;
+                        if(p1current.stages.attack > 6){
+                            p1current.stages.attack = 6;
+                            stageQuote += `Your ${p1current.id}'s Attack won't go higher\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Attack rose\n`;
+                        }
+                        p1current.stages.defense += 1;
+                        if(p1current.stages.defense > 6){
+                            p1current.stages.defense = 6;
+                            stageQuote += `Your ${p1current.id}'s Defense won't go higher\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Defense rose\n`;
+                        }
+                        p1current.stages.specialAttack += 1;
+                        if(p1current.stages.specialAttack > 6){
+                            p1current.stages.specialAttack = 6;
+                            stageQuote += `Your ${p1current.id}'s Special Attack won't go higher\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Special Attack rose\n`;
+                        }
+                        p1current.stages.specialDefense += 1;
+                        if(p1current.stages.specialDefense > 6){
+                            p1current.stages.specialDefense = 6;
+                            stageQuote += `Your ${p1current.id}'s Special Defense won't go higher\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Special Defense rose\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                } else {
+                    if(ancientPowerCheck < 10){
+                        p2current.stages.attack += 1;
+                        if(p2current.stages.attack > 6){
+                            p2current.stages.attack = 6;
+                            stageQuote += `The wild ${p2current.id}'s Attack won't go higher\n`;
+                        } else{
+                            stageQuote += `The wild ${p2current.id}'s Attack rose\n`;
+                        }
+                        p2current.stages.defense += 1;
+                        if(p2current.stages.defense > 6){
+                            p2current.stages.defense = 6;
+                            stageQuote += `The wild ${p2current.id}'s Defense won't go higher\n`;
+                        } else{
+                            stageQuote += `The wild ${p2current.id}'s Defense rose\n`;
+                        }
+                        p2current.stages.specialAttack += 1;
+                        if(p2current.stages.specialAttack > 6){
+                            p2current.stages.specialAttack = 6;
+                            stageQuote += `The wild ${p2current.id}'s Special Attack won't go higher\n`;
+                        } else{
+                            stageQuote += `The wild ${p2current.id}'s Special Attack rose\n`;
+                        }
+                        p2current.stages.specialDefense += 1;
+                        if(p2current.stages.specialDefense > 6){
+                            p2current.stages.specialDefense = 6;
+                            stageQuote += `The wild ${p2current.id}'s Special Defense won't go higher\n`;
+                        } else{
+                            stageQuote += `The wild ${p2current.id}'s Special Defense rose\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                    
+                }
+            case "Metal-claw":
+                let clawCheck = Math.round(Math.random() * 100);
+                
+                if(turn % 2 == 1){
+                    if(clawCheck < 10){
+                        p1current.stages.attack += 1;
+                        if(p1current.stages.attack > 6){
+                            p1current.stages.attack = 6;
+                            stageQuote += `Your ${p1current.id}'s Attack won't go higher\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Attack rose\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                } else {
+                    if(clawCheck < 10){
+                    p2current.stages.attack += 1;
+                    if(p2current.stages.attack > 6){
+                        p2current.stages.attack = 6;
+                        stageQuote += `The wild ${p2current.id}'s Attack won't go higher\n`;
+                    } else{
+                        stageQuote += `The wild ${p2current.id}'s Attack rose\n`;
+                    }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    
+                    break;
+                    
+                }
+            case "Octazooka":
+                let octaCheck = Math.round(Math.random() * 100);
+                if(turn % 2 == 1){
+                    if(octaCheck < 50){
+                        p2current.stages.accuracy -= 1;
+                        if(p2current.stages.accuracy < -6){
+                            p2current.stages.accuracy = -6;
+                            stageQuote += `The wild ${p2current.id}'s Accuracy won't go lower\n`;
+                        } else{
+                            stageQuote += `The wild ${p2current.id}'s Accuracy fell\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        
+                    }
+                    break;
+                } else {
+                    if(octaCheck < 50){
+                        p1current.stages.accuracy -= 1;
+                        if(p1current.stages.accuracy < -6){
+                            p1current.stages.accuracy = -6;
+                            stageQuote += `Your ${p1current.id}'s Accuracy won't go lower\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Accuracy fell\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    break;
+                    
+                }
+            case "Iron-tail":
+                let tailCheck = Math.round(Math.random() * 100);
+                if(turn % 2 == 1){
+                    if(tailCheck < 30){
+                        p2current.stages.defense -= 1;
+                        if(p2current.stages.defense < -6){
+                            p2current.stages.defense = -6;
+                            stageQuote += `The wild ${p2current.id}'s Defense won't go lower\n`;
+                        } else{
+                            stageQuote += `The wild ${p2current.id}'s Defense fell\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        
+                    }
+                    break;
+                } else {
+                    if(tailCheck < 30){
+                        p1current.stages.defense -= 1;
+                        if(p1current.stages.defense < -6){
+                            p1current.stages.defense = -6;
+                            stageQuote += `Your ${p1current.id}'s Defense won't go lower\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Defense fell\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    break;
+                    
+                }
+            case "Rock-smash":
+                let rockSmashCheck = Math.round(Math.random() * 100);
+                if(turn % 2 == 1){
+                    if(rockSmashCheck < 50){
+                        p2current.stages.defense -= 1;
+                        if(p2current.stages.defense < -6){
+                            p2current.stages.defense = -6;
+                            stageQuote += `The wild ${p2current.id}'s Defense won't go lower\n`;
+                        } else{
+                            stageQuote += `The wild ${p2current.id}'s Defense fell\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        
+                    }
+                    break;
+                } else {
+                    if(rockSmashCheck < 50){
+                        p1current.stages.defense -= 1;
+                        if(p1current.stages.defense < -6){
+                            p1current.stages.defense = -6;
+                            stageQuote += `Your ${p1current.id}'s Defense won't go lower\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Defense fell\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
+                    break;
+                    
+                }
+            case "Crunch":
+            case "Shadow-ball":
+                let crunchCheck = Math.round(Math.random() * 100);
+                if(turn % 2 == 1){
+                    if(crunchCheck < 20){
+                        p2current.stages.specialDefense -= 1;
+                        if(p2current.stages.specialDefense < -6){
+                            p2current.stages.specialDefense = -6;
+                            stageQuote += `The wild ${p2current.id}'s Special Defense won't go lower\n`;
+                        } else{
+                            stageQuote += `The wild ${p2current.id}'s Special Defense fell\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        
+                    }
+                    break;
+                } else {
+                    if(crunchCheck < 30){
+                        p1current.stages.specialDefense -= 1;
+                        if(p1current.stages.specialDefense < -6){
+                            p1current.stages.specialDefense = -6;
+                            stageQuote += `Your ${p1current.id}'s Special Defense won't go lower\n`;
+                        } else{
+                            stageQuote += `Your ${p1current.id}'s Special Defense fell\n`;
+                        }
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    }
                     break;
                     
                 }
@@ -3351,7 +3895,10 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             case "Mimic":
             case "Leech-seed":
-                stageQuote = "NOT IMPLEMENTED YET SORRY";
+            case "Encore":
+            case "Mirror-coat":
+            case "Beat-up":
+                stageQuote += "No Effect!\n";
                 break;
             case "Stun-spore":
             case "Thunder-wave":
@@ -3374,6 +3921,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         break;
                     
                 }
+                
             case "Dragon-rage":
                 damage = 40;
                 break;
@@ -3537,10 +4085,10 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     
                 }
             case "Dream-eater":
-                damage = damageFormula(moveDetails, p1current, p2current, turn);
+                
                 if(turn % 2 == 1){
                     if(p2current.statusMap.sleep == true){
-                    
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
                         let healAmount = 0;
                         if(damage == 1){
                             healAmount = 1;
@@ -3567,6 +4115,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     }
                 } else {
                     if(p1current.statusMap.sleep == true){
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
                         let healAmount = 0;
                         if(damage == 1){
                             healAmount = 1;
@@ -3592,6 +4141,10 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 }
             case "Transform":
             case "Substitute":
+            case "Nightmare":
+            case "Spite":
+            case "Scary-face":
+            case "Attract":
                 stageQuote += "THIS MOVE DOESN'T WORK.  SORRY\n";
                 break;
             case "Dizzy-punch":
@@ -3707,6 +4260,251 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     }
                     break;
                 }
+            case "Snore":
+                
+                if(turn % 2 == 1){
+                    if(p2current.statusMap.sleep != true){
+                        stageQuote += `You used Snore but failed becuase the enemy isn't asleep\n`;
+                        
+                        break;
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        break;
+                    }
+                } else {
+                    if(p1current.statusMap.sleep != true){
+                        stageQuote += `The enemy used Snore but failed becuase you aren't sleep\n`;
+                        break;
+                    } else {
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        break;
+                    }
+                }
+            case "Flail":
+            case "Reversal":
+                let origPower = moveDetails.power;
+                if(turn % 2 == 1){
+                    if(p1current.currentHealth >= (p1current.health * 0.6875)){
+                        moveDetails.power = 20
+                    } else if((p1current.health * 0.3542) <= p1current.currentHealth && p1current.currentHealth < (p1current.health * 0.6875)){
+                        moveDetails.power = 40
+                    } else if((p1current.health * 0.2083) <= p1current.currentHealth && p1current.currentHealth < (p1current.health * 0.3542)){
+                        moveDetails.power = 80
+                    } else if((p1current.health * 0.1042) <= p1current.currentHealth && p1current.currentHealth < (p1current.health * 0.2083)){
+                        moveDetails.power = 100
+                    } else if((p1current.health * 0.0417) <= p1current.currentHealth && p1current.currentHealth < (p1current.health * 0.1042)){
+                        moveDetails.power = 150
+                    } else if(p1current.currentHealth < (p1current.health * 0.0417)){
+                        moveDetails.power = 200
+                    }
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    moveDetails.power = origPower;
+                    break;
+
+                } else {
+                    if(p2current.currentHealth >= (p2current.health * 0.6875)){
+                        moveDetails.power = 20
+                    } else if((p2current.health * 0.3542) <= p2current.currentHealth && p2current.currentHealth < (p2current.health * 0.6875)){
+                        moveDetails.power = 40
+                    } else if((p2current.health * 0.2083) <= p2current.currentHealth && p2current.currentHealth < (p2current.health * 0.3542)){
+                        moveDetails.power = 80
+                    } else if((p2current.health * 0.1042) <= p2current.currentHealth && p2current.currentHealth < (p2current.health * 0.2083)){
+                        moveDetails.power = 100
+                    } else if((p2current.health * 0.0417) <= p2current.currentHealth && p2current.currentHealth < (p2current.health * 0.1042)){
+                        moveDetails.power = 150
+                    } else if(p2current.currentHealth < (p2current.health * 0.0417)){
+                        moveDetails.power = 200
+                    }
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    moveDetails.power = origPower;
+                    break;
+                }
+            case "Return":
+                if(turn % 2 == 1){
+                    let orP = moveDetails.power;
+                    moveDetails.power = (p1current.happiness / 2.5)
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    moveDetails.power = orP;
+                    break;
+                } else {
+                    let orP = moveDetails.power;
+                    moveDetails.power = 10;
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    moveDetails.power = orP;
+                    break;
+                }
+            case "Frustration":
+                if(turn % 2 == 1){
+                    let orP = moveDetails.power;
+                    moveDetails.power = ((255 - p1current.happiness) / 2.5)
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    moveDetails.power = orP;
+                    break;
+                } else {
+                    let orP = moveDetails.power;
+                    moveDetails.power = 10;
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    moveDetails.power = orP;
+                    break;
+                }
+            case "Present":
+                if(turn % 2 == 1){
+                    let healRandom = Math.round(Math.random() * 100);
+                    let moveP = moveDetails.power;
+                    if(healRandom < 10){
+                        moveDetails.power = 40;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        moveDetails.power = moveP;
+                    } else if(healRandom < 30) {
+                        p2current.currentHealth += Math.floor(p2current.health * 0.25);
+                        if(p2current.currentHealth > p2current.health){
+                            p2current.currentHealth = p2current.health;
+                        }
+                        stageQuote += `The wild ${p2current.id} was healed for ${Math.floor(p2current.health * 0.25)}\n`;
+                    } else if(healRandom < 60) {
+                        moveDetails.power = 40;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        moveDetails.power = moveP;
+                    } else {
+                        moveDetails.power = 40;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        moveDetails.power = moveP;
+                    }
+                    break;
+                } else {
+                    let healRandom = Math.round(Math.random() * 100);
+                    let moveP = moveDetails.power;
+                    if(healRandom < 10){
+                        moveDetails.power = 40;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        moveDetails.power = moveP;
+                    } else if(healRandom < 30) {
+                        p1current.currentHealth += Math.floor(p1current.health * 0.25);
+                        if(p1current.currentHealth > p1current.health){
+                            p1current.currentHealth = p1current.health;
+                        }
+                        stageQuote += `Your ${p1current.id} was healed for ${Math.floor(p1current.health * 0.25)}\n`;
+                    } else if(healRandom < 60) {
+                        moveDetails.power = 40;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        moveDetails.power = moveP;
+                    } else {
+                        moveDetails.power = 40;
+                        damage = damageFormula(moveDetails, p1current, p2current, turn);
+                        moveDetails.power = moveP;
+                    }
+                    break;
+                }
+            case "Hidden-power":
+                if(turn % 2 == 1){
+                    let hiddenType = (4 * (p1current.ivMap.attackIV % 4)) + (p1current.ivMap.defenseIV % 4);
+                    if(hiddenType == 0){
+                        moveDetails.type = "Fighting";
+                        stageQuote += "Fighting Hidden Power\n";
+                    } else if(hiddenType == 1){
+                        moveDetails.type = "Flying";
+                        stageQuote += "Flying Hidden Power\n";
+                    } else if(hiddenType == 2){
+                        moveDetails.type = "Poison";
+                        stageQuote += "Poison Hidden Power\n";
+                    } else if(hiddenType == 3){
+                        moveDetails.type = "Ground";
+                        stageQuote += "Ground Hidden Power\n";
+                    } else if(hiddenType == 4){
+                        moveDetails.type = "Rock";
+                        stageQuote += "Rock Hidden Power\n";
+                    } else if(hiddenType == 5){
+                        moveDetails.type = "Bug";
+                        stageQuote += "Bug Hidden Power\n";
+                    } else if(hiddenType == 6){
+                        moveDetails.type = "Ghost";
+                        stageQuote += "Ghost Hidden Power\n";
+                    } else if(hiddenType == 7){
+                        moveDetails.type = "Steel";
+                        stageQuote += "Steel Hidden Power\n";
+                    } else if(hiddenType == 8){
+                        moveDetails.type = "Fire";
+                        stageQuote += "Fire Hidden Power\n";
+                    } else if(hiddenType == 9){
+                        moveDetails.type = "Water";
+                        stageQuote += "Water Hidden Power\n";
+                    } else if(hiddenType == 10){
+                        moveDetails.type = "Grass";
+                        stageQuote += "Grass Hidden Power\n";
+                    } else if(hiddenType == 11){
+                        moveDetails.type = "Electric";
+                        stageQuote += "Electric Hidden Power\n";
+                    } else if(hiddenType == 12){
+                        moveDetails.type = "Psychic";
+                        stageQuote += "Psychic Hidden Power\n";
+                    } else if(hiddenType == 13){
+                        moveDetails.type = "Ice";
+                        stageQuote += "Ice Hidden Power\n";
+                    } else if(hiddenType == 14){
+                        moveDetails.type = "Dragon";
+                        stageQuote += "Dragon Hidden Power\n";
+                    } else if(hiddenType == 15){
+                        moveDetails.type = "Dark";
+                        stageQuote += "Dark Hidden Power\n";
+                    }
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    moveDetails.type = "Normal";
+                    break;
+                } else {
+                    let hiddenType = (4 * (p2current.attackIV % 4)) + (p2current.defenseIV % 4);
+                    if(hiddenType == 0){
+                        moveDetails.type = "Fighting";
+                        stageQuote += "Fighting Hidden Power\n";
+                    } else if(hiddenType == 1){
+                        moveDetails.type = "Flying";
+                        stageQuote += "Flying Hidden Power\n";
+                    } else if(hiddenType == 2){
+                        moveDetails.type = "Poison";
+                        stageQuote += "Poison Hidden Power\n";
+                    } else if(hiddenType == 3){
+                        moveDetails.type = "Ground";
+                        stageQuote += "Ground Hidden Power\n";
+                    } else if(hiddenType == 4){
+                        moveDetails.type = "Rock";
+                        stageQuote += "Rock Hidden Power\n";
+                    } else if(hiddenType == 5){
+                        moveDetails.type = "Bug";
+                        stageQuote += "Bug Hidden Power\n";
+                    } else if(hiddenType == 6){
+                        moveDetails.type = "Ghost";
+                        stageQuote += "Ghost Hidden Power\n";
+                    } else if(hiddenType == 7){
+                        moveDetails.type = "Steel";
+                        stageQuote += "Steel Hidden Power\n";
+                    } else if(hiddenType == 8){
+                        moveDetails.type = "Fire";
+                        stageQuote += "Fire Hidden Power\n";
+                    } else if(hiddenType == 9){
+                        moveDetails.type = "Water";
+                        stageQuote += "Water Hidden Power\n";
+                    } else if(hiddenType == 10){
+                        moveDetails.type = "Grass";
+                        stageQuote += "Grass Hidden Power\n";
+                    } else if(hiddenType == 11){
+                        moveDetails.type = "Electric";
+                        stageQuote += "Electric Hidden Power\n";
+                    } else if(hiddenType == 12){
+                        moveDetails.type = "Psychic";
+                        stageQuote += "Psychic Hidden Power\n";
+                    } else if(hiddenType == 13){
+                        moveDetails.type = "Ice";
+                        stageQuote += "Ice Hidden Power\n";
+                    } else if(hiddenType == 14){
+                        moveDetails.type = "Dragon";
+                        stageQuote += "Dragon Hidden Power\n";
+                    } else if(hiddenType == 15){
+                        moveDetails.type = "Dark";
+                        stageQuote += "Dark Hidden Power\n";
+                    }
+                    damage = damageFormula(moveDetails, p1current, p2current, turn);
+                    moveDetails.type = "Normal";
+                    break;
+                }
             
 
             
@@ -3758,6 +4556,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 for (let j = 0; j < p2party.length; j++){
                     if (p2current.id === p2party[j].id){
                         p2party[j].currentHealth = p2party[j].currentHealth - damage;  //this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                        if(moveDetails.move == "False-swipe" && p2party[j].currentHealth <= 0){
+                            p2party[j].currentHealth = 1;
+                        }
                     }
                 }
                 
@@ -3801,6 +4602,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 for (let j = 0; j < p1party.length; j++){
                     if (p1current.id === p1party[j].id){
                         p1party[j].currentHealth = p1party[j].currentHealth - damage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
+                        if(moveDetails.move == "False-swipe" && p1party[j].currentHealth <= 0){
+                            p1party[j].currentHealth = 1;
+                        }
                     }
                 }
                 
