@@ -1800,7 +1800,7 @@
 
 {
         "move": "Sweet-kiss",
-        "type": "Fairy",
+        "type": "Normal",
         "damageClass": "Status",
         "power": "None",
         "pp": 10,
@@ -1980,7 +1980,7 @@
 
 {
         "move": "Charm",
-        "type": "Fairy",
+        "type": "Normal",
         "damageClass": "Status",
         "power": "None",
         "pp": 20,
@@ -2303,7 +2303,7 @@
 
 {
         "move": "Moonlight",
-        "type": "Fairy",
+        "type": "Normal",
         "damageClass": "Status",
         "power": "None",
         "pp": 5,
