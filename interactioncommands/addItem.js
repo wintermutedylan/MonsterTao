@@ -118,12 +118,12 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         var ID = interaction.user.id;
         if( items.findIndex(function(item) { return item.name == interaction.options.getString('item')}) == -1){
-            return interaction.reply(`${interaction.options.getString('item')} is not a valid item to buy.`);
+            return interaction.reply({content:`${interaction.options.getString('item')} is not a valid item to buy.`,ephemeral: true});
         }
         let itemStuff = items.find(function(item) { return item.name == interaction.options.getString('item')});
         let limit = Math.floor(playerData.coins/(itemStuff.cost));
         if(limit == 0){
-            return interaction.reply(`You don't have enough coins to buy ${interaction.options.getInteger('amount')} ${interaction.options.getString('item')}`);
+            return interaction.reply({content:`You don't have enough coins to buy ${interaction.options.getInteger('amount')} ${interaction.options.getString('item')}`, ephemeral: true});
         }
 
         let newAmount = playerData.coins - (interaction.options.getInteger('amount')*itemStuff.cost);
@@ -192,7 +192,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
             }
         }
         
-        interaction.reply(`You have bought ${interaction.options.getInteger('amount')} ${interaction.options.getString('item')}.  ${(interaction.options.getInteger('amount')*itemStuff.cost)} coins has been deducted.`);
+        interaction.reply({content: `You have bought ${interaction.options.getInteger('amount')} ${interaction.options.getString('item')}.  ${(interaction.options.getInteger('amount')*itemStuff.cost)} coins has been deducted.`, ephemeral: true});
         
 
 

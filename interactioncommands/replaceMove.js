@@ -98,9 +98,9 @@ module.exports = {
         var ID = interaction.user.id;
 
         if( moves.findIndex(function(item) { return item.move.toLowerCase() == interaction.options.getString('forgetmove').toLowerCase()}) == -1){
-            return interaction.reply(`${interaction.options.getString('forgetmove')} is not a valid move to forget`);
+            return interaction.reply({content: `${interaction.options.getString('forgetmove')} is not a valid move to forget`, ephemeral: true});
         } else if( moves.findIndex(function(item) { return item.move.toLowerCase() == interaction.options.getString('learnmove').toLowerCase()}) == -1){
-            return interaction.reply(`${interaction.options.getString('learnmove')} is not a valid move to learn`);
+            return interaction.reply({content: `${interaction.options.getString('learnmove')} is not a valid move to learn`, ephemeral: true});
         }
         
         
@@ -127,7 +127,7 @@ module.exports = {
         } catch(err){
             console.log(err);
         }
-        interaction.reply(`Your ${pokemonStuff.id} with PC ID of ${pokemonStuff.pcID} forgot ${interaction.options.getString('forgetmove')[0].toUpperCase() + interaction.options.getString('forgetmove').slice(1)} and learned ${modStr}`);
+        interaction.reply({content: `Your ${pokemonStuff.id} with PC ID of ${pokemonStuff.pcID} forgot ${interaction.options.getString('forgetmove')[0].toUpperCase() + interaction.options.getString('forgetmove').slice(1)} and learned ${modStr}`, ephemeral: true});
 
         
         

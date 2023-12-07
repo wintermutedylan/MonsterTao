@@ -97,7 +97,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         var ID = interaction.user.id;
         if( items.findIndex(function(item) { return item.name == interaction.options.getString('item')}) == -1){
-            return interaction.reply(`${interaction.options.getString('item')} is not a valid item to view.`);
+            return interaction.reply({content: `${interaction.options.getString('item')} is not a valid item to view.`, ephemeral: true});
         }
         let itemStuff = items.find(function(item) { return item.name == interaction.options.getString('item')});
     
@@ -133,7 +133,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         newEmbed.addFields({name: "Cost", value: `Value: ${itemStuff.cost}`});
 
 
-        interaction.reply({embeds: [newEmbed]});
+        interaction.reply({embeds: [newEmbed], ephemeral: true});
         
 
 

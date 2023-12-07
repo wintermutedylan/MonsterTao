@@ -98,7 +98,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         var ID = interaction.user.id;
         let moveDetails = items.find(function(item) { return item.name == interaction.options.getString('tm')});
         if( moves.findIndex(function(item) { return item.move.toLowerCase() == moveDetails.moveName.toLowerCase()}) == -1){
-            return interaction.reply(`${moveDetails.moveName} is not a valid move to learn`);
+            return interaction.reply({content: `${moveDetails.moveName} is not a valid move to learn`, ephemeral: true});
         }
         
         let newBagArray = playerData.bag;
@@ -113,10 +113,10 @@ module.exports = { //make this a slash command where when you enter the pcid it 
 
         let moveUpper = moveDetails.moveName[0].toUpperCase() + moveDetails.moveName.slice(1);
         if(pokemonInfo.moves.includes(moveUpper)){
-            return interaction.reply(`Your ${pokemonInfo.id} already knows ${moveUpper}`);
+            return interaction.reply({content: `Your ${pokemonInfo.id} already knows ${moveUpper}`, ephemeral: true});
         }
         if(pokemonInfo.moves.length >= 4){
-            interaction.reply(`Your ${pokemonInfo.id} with PC ID of ${pokemonInfo.pcID} already knows 4 moves which move would you like to forget: ${pokemonInfo.moves.join(", ")}`);
+            interaction.reply({content: `Your ${pokemonInfo.id} with PC ID of ${pokemonInfo.pcID} already knows 4 moves which move would you like to forget: ${pokemonInfo.moves.join(", ")}`, ephemeral: true});
             const filter = (m) => {
                 return  m.author.id === interaction.user.id && (m.content.toLowerCase() === pokemonInfo.moves[0].toLowerCase() || m.content.toLowerCase() === pokemonInfo.moves[1].toLowerCase() || m.content.toLowerCase() === pokemonInfo.moves[2].toLowerCase() || m.content.toLowerCase() === pokemonInfo.moves[3].toLowerCase());
             }
@@ -180,7 +180,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
             } catch(err){
                 console.log(err);
             }
-            interaction.reply(`Your ${pokemonInfo.id} with PC ID of ${pokemonInfo.pcID} learned ${moveDetails.moveName[0].toUpperCase() + moveDetails.moveName.slice(1)}`);
+            interaction.reply({content: `Your ${pokemonInfo.id} with PC ID of ${pokemonInfo.pcID} learned ${moveDetails.moveName[0].toUpperCase() + moveDetails.moveName.slice(1)}`, ephemeral: true});
         }
         
         

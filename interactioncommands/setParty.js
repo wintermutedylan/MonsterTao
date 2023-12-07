@@ -137,35 +137,35 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         newParty.push(interaction.options.getInteger('slot1'));
         if(interaction.options.getInteger('slot2') != null){
             if(newParty.findIndex(function(unit) { return unit == interaction.options.getInteger('slot2')}) != -1){
-                return interaction.reply(`Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot2')}).id} with PCID# ${interaction.options.getInteger('slot2')}, was already added in an earlier slot please run the command again`);
+                return interaction.reply({content: `Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot2')}).id} with PCID# ${interaction.options.getInteger('slot2')}, was already added in an earlier slot please run the command again`, ephemeral: true});
             } else {
                 newParty.push(interaction.options.getInteger('slot2'));
             }
         }
         if(interaction.options.getInteger('slot3') != null){
             if(newParty.findIndex(function(unit) { return unit == interaction.options.getInteger('slot3')}) != -1){
-                return interaction.reply(`Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot3')}).id} with PCID# ${interaction.options.getInteger('slot3')}, was already added in an earlier slot please run the command again`);
+                return interaction.reply({content: `Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot3')}).id} with PCID# ${interaction.options.getInteger('slot3')}, was already added in an earlier slot please run the command again`, ephemeral: true});
             } else {
                 newParty.push(interaction.options.getInteger('slot3'));
             }
         }
         if(interaction.options.getInteger('slot4') != null){
             if(newParty.findIndex(function(unit) { return unit == interaction.options.getInteger('slot4')}) != -1){
-                return interaction.reply(`Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot4')}).id} with PCID# ${interaction.options.getInteger('slot4')}, was already added in an earlier slot please run the command again`);
+                return interaction.reply({content: `Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot4')}).id} with PCID# ${interaction.options.getInteger('slot4')}, was already added in an earlier slot please run the command again`, ephemeral: true});
             } else {
                 newParty.push(interaction.options.getInteger('slot4'));
             }
         }
         if(interaction.options.getInteger('slot5') != null){
             if(newParty.findIndex(function(unit) { return unit == interaction.options.getInteger('slot5')}) != -1){
-                return interaction.reply(`Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot5')}).id} with PCID# ${interaction.options.getInteger('slot5')}, was already added in an earlier slot please run the command again`);
+                return interaction.reply({content: `Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot5')}).id} with PCID# ${interaction.options.getInteger('slot5')}, was already added in an earlier slot please run the command again`, ephemeral: true});
             } else {
                 newParty.push(interaction.options.getInteger('slot5'));
             }
         }
         if(interaction.options.getInteger('slot6') != null){
             if(newParty.findIndex(function(unit) { return unit == interaction.options.getInteger('slot6')}) != -1){
-                return interaction.reply(`Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot6')}).id} with PCID# ${interaction.options.getInteger('slot6')}, was already added in an earlier slot please run the command again`);
+                return interaction.reply({content: `Your unit, ${playerData.maids.find(function(item) { return item.pcID == interaction.options.getInteger('slot6')}).id} with PCID# ${interaction.options.getInteger('slot6')}, was already added in an earlier slot please run the command again`, ephemeral: true});
             } else {
                 newParty.push(interaction.options.getInteger('slot6'));
             }

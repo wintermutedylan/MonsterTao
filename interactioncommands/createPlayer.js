@@ -32,12 +32,12 @@ module.exports = {
                 console.log(err);
             }
             
-            interaction.reply("Profile created! Please select a starter\nYour options are: \nGen 1: Bulbasaur, Charmander, Squirtle\nGen 2: Chikorita, Cyndaquill, Totodile\nGen 3: Treecko, Torchic, Mudkip\nGen 4: Turtwig, Chimchar, Piplup\n---------------------------------------\nDev Note: The starters past gen 1 won't really work since I only have gen 1 moves in.  pick gen 1 for now until I get the rest of the moves in");
+            interaction.reply("Profile created! Please select a starter __By typing out the name in chat__\nYour options are: \nGen 1: Bulbasaur, Charmander, Squirtle\nGen 2: Chikorita, Cyndaquill, Totodile\nGen 3: Treecko, Torchic, Mudkip\nGen 4: Turtwig, Chimchar, Piplup\n---------------------------------------\nDev Note: The starters past gen 2 won't really work since I only have gen 1 and 2 moves in.  pick gen 1 or 2 for now until I get the rest of the moves in");
             //DEV THING HERE TO TELL MELDOY THAT SOME STARTERS SHOULDNT BE PICKED
             
             
             const filter = (m) => {
-                return  m.author.id === interaction.user.id && (m.content.toLowerCase() === 'bulbasaur' || m.content.toLowerCase() === 'charmander' || m.content.toLowerCase() === 'squirtle');
+                return  m.author.id === interaction.user.id && (m.content.toLowerCase() === 'bulbasaur' || m.content.toLowerCase() === 'charmander' || m.content.toLowerCase() === 'squirtle' || m.content.toLowerCase() === 'chikorita'|| m.content.toLowerCase() === 'cyndaquil'|| m.content.toLowerCase() === 'totodile');
             }
             const collector = interaction.channel.createMessageCollector({ filter, max: 1, time: 60000})
             var s;
@@ -61,6 +61,12 @@ module.exports = {
                         return createAndAddStarter(interaction.user.id, 'Charmander', interaction, s);
                     } else if (s.content.toLowerCase() == 'squirtle'){
                         return createAndAddStarter(interaction.user.id, 'Squirtle', interaction, s);
+                    } else if (s.content.toLowerCase() == 'chikorita'){
+                        return createAndAddStarter(interaction.user.id, 'Chikorita', interaction, s);
+                    } else if (s.content.toLowerCase() == 'cyndaquil'){
+                        return createAndAddStarter(interaction.user.id, 'Cyndaquil', interaction, s);
+                    } else if (s.content.toLowerCase() == 'totodile'){
+                        return createAndAddStarter(interaction.user.id, 'Totodile', interaction, s);
                     }
                     
             });
@@ -77,6 +83,7 @@ module.exports = {
 async function createAndAddStarter(ID, starter, interaction, message){
         let levelToSetUnit = 5;
         let exp = 1;
+        let moves = [];
         
         let unit;
         for (let i = 0; i < maids.length; i++){
@@ -86,11 +93,17 @@ async function createAndAddStarter(ID, starter, interaction, message){
         }
         
         if(starter == 'Bulbasaur'){
-            let moves = ["Tackle", "Growl"];
+            moves = ["Tackle", "Growl"];
         } else if(starter == 'Charmander'){
-            let moves = ["Scratch", "Growl"];
+            moves = ["Scratch", "Growl"];
         } else if(starter == 'Squirtle'){
-            let moves = ["Tackle", "Tail-whip"];
+            moves = ["Tackle", "Tail-whip"];
+        } else if(starter == 'Chikorita'){
+            moves = ["Tackle", "Growl"];
+        } else if(starter == 'Cyndaquil'){
+            moves = ["Tackle", "Leer"];
+        } else if(starter == 'Totodile'){
+            moves = ["Scratch", "Leer"];
         }
 
         

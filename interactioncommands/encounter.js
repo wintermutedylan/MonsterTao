@@ -3898,6 +3898,12 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
             case "Encore":
             case "Mirror-coat":
             case "Beat-up":
+            case "Transform":
+            case "Substitute":
+            case "Nightmare":
+            case "Spite":
+            case "Scary-face":
+            case "Attract":
                 stageQuote += "No Effect!\n";
                 break;
             case "Stun-spore":
@@ -4139,14 +4145,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                         break;
                     }
                 }
-            case "Transform":
-            case "Substitute":
-            case "Nightmare":
-            case "Spite":
-            case "Scary-face":
-            case "Attract":
-                stageQuote += "THIS MOVE DOESN'T WORK.  SORRY\n";
-                break;
+            
             case "Dizzy-punch":
             case "Water-pulse":
                 let dizzyCheck = Math.round(Math.random() * 100);

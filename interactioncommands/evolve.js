@@ -75,7 +75,7 @@ module.exports = {
         
         let pokemonLocation = playerData.maids.findIndex(function(item) { return item.pcID == Number(interaction.options.getString('pokemon'))})
         if(pokemonLocation == -1){
-            return interaction.reply("An has occured while trying to get the pokemon you selected");
+            return interaction.reply({content: "An has occured while trying to get the pokemon you selected", ephemeral: true});
         }
         let pokemonInfo = playerData.maids[pokemonLocation];
         
@@ -86,8 +86,11 @@ module.exports = {
         if(interaction.options.getString('type') == 'level'){
             
             let actualEvoTo = evoTo.find(function(item) { return item.evolutionData.trigger.name == "level-up" && item.evolutionData.min_level != null});
+            
             if(!actualEvoTo){
-                return interaction.reply(`${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`);
+                return interaction.reply({content: `${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`, ephemeral: true});
+            } else if (actualEvoTo.evolutionData.min_level > pokemonInfo.level){
+                return interaction.reply({content:`${pokemonInfo.id} can't evolve because it isn't a high enough level`, ephemeral: true});
             }
             if(unitDetails.id == "Wurmple"){
                 let amountCheck = Math.round(Math.random() * 100);
@@ -114,7 +117,7 @@ module.exports = {
         } else if(interaction.options.getString('type') == 'move'){
             let actualEvoTo = evoTo.find(function(item) { return item.evolutionData.trigger.name == "move" && item.evolutionData.known_move != null});
             if(!actualEvoTo){
-                return interaction.reply(`${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`);
+                return interaction.reply({content:`${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`, ephemeral: true});
             }
             if(pokemonInfo.moves.findIndex(function(item) { return item.toLowerCase() == actualEvoTo.evolutionData.known_move.name}) != -1){
                 unitToEvolveTo = maids.find(function(e) { return e.id.toLowerCase() == actualEvoTo.evolvesTo.toLowerCase() });
@@ -122,7 +125,7 @@ module.exports = {
         } else if(interaction.options.getString('type') == 'happiness'){
             let actualEvoTo = evoTo.find(function(item) { return item.evolutionData.trigger.name == "happiness" && item.evolutionData.min_happiness != null});
             if(!actualEvoTo){
-                return interaction.reply(`${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`);
+                return interaction.reply({content: `${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`, ephemeral: true});
             }
             if(pokemonInfo.happiness >= actualEvoTo.evolutionData.min_happiness){
                 unitToEvolveTo = maids.find(function(e) { return e.id.toLowerCase() == actualEvoTo.evolvesTo.toLowerCase() });
@@ -132,7 +135,7 @@ module.exports = {
             let itemIndex = pokemonInfo.bag.findIndex(function(item) { return item.name.toLowerCase() == actualEvoTo.evolutionData.item.name.toLowerCase()})
             let newBagArray = playerBag.bag;
             if(!actualEvoTo){
-                return interaction.reply(`${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`);
+                return interaction.reply({content: `${pokemonInfo.id} can't evolve this way, run /pokemoninfo to see if/how it can evolve`, ephemeral: true});
             }
             if(itemIndex != -1){
                 unitToEvolveTo = maids.find(function(e) { return e.id.toLowerCase() == actualEvoTo.evolvesTo.toLowerCase() });
@@ -198,7 +201,7 @@ module.exports = {
         )
         
         setEvolvePokemon(pokemonLocation,pokemonInfo,interaction.user.id);
-        return interaction.reply({content:`Congrats your ${unitDetails.id} evolved into ${pokemonInfo.id}`, embeds:[newEmbed]});
+        return interaction.reply({content:`Congrats your ${unitDetails.id} evolved into ${pokemonInfo.id}`, embeds:[newEmbed], ephemeral: true});
         
 
         

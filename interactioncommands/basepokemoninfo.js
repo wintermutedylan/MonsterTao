@@ -57,7 +57,7 @@ module.exports = {
         let learnedString = "";
         let otherString = "";
         let sorted = maids.find( function(item) { return item.id.toLowerCase() == interaction.options.getString('pokemon').toLowerCase() } );
-        if(!sorted) return interaction.reply(`An error has occurred trying to find the pokemon: ${interaction.options.getString('pokemon')}, please try again.`);
+        if(!sorted) return interaction.reply({content:`An error has occurred trying to find the pokemon: ${interaction.options.getString('pokemon')}, please try again.`, ephemeral: true});
         let learnedMoves = moveinfo.find(function(m) { return m.id.toLowerCase() == sorted.id.toLowerCase()}).leveUpMoves;
         let otherMoves = moveinfo.find(function(m) { return m.id.toLowerCase() == sorted.id.toLowerCase()}).otherMoves;
         otherMoves = otherMoves.filter(function(n) { return n.method == "machine"});
@@ -95,7 +95,7 @@ module.exports = {
             }
             newEmbed.addFields({name: "Evolution Details", value: evolveString});
         }
-        interaction.reply({embeds: [newEmbed]});
+        interaction.reply({embeds: [newEmbed], ephemeral: true});
         
         
         

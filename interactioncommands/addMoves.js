@@ -86,7 +86,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         
         let pokemonInfo = playerData.maids.find(function(item) { return item.pcID == Number(interaction.options.getString('pokemon'))})
         let pokemonIndex =  playerData.maids.findIndex(function(item) { return item.pcID == Number(interaction.options.getString('pokemon'))})
-        if(pokemonInfo.moves.length >= 4) return interaction.reply(`${pokemonInfo.id} already knows 4 moves, please use the command replace move`);
+        if(pokemonInfo.moves.length >= 4) return interaction.reply({content:`${pokemonInfo.id} already knows 4 moves, please use the command replace move`, ephemeral: true});
         let str = interaction.options.getString('move');
         let modStr = str[0].toUpperCase() + str.slice(1);
 
@@ -106,7 +106,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         } catch(err){
             console.log(err);
         }
-        interaction.reply(`Your ${pokemonInfo.id} with PC ID of ${pokemonInfo.pcID} learned ${interaction.options.getString('move')}`);
+        interaction.reply({content:`Your ${pokemonInfo.id} with PC ID of ${pokemonInfo.pcID} learned ${interaction.options.getString('move')}`, ephemeral: true});
         
 
 

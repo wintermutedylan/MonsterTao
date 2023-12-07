@@ -46,7 +46,7 @@ module.exports = {
         if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         var ID = interaction.user.id;
         let info = moves.find(function(item) { return item.move.toLowerCase() == interaction.options.getString('move').toLowerCase()});
-        if(!info) return interaction.reply(`An error has occurred trying to find the move: ${interaction.options.getString('move')}, please try again.`);
+        if(!info) return interaction.reply({content: `An error has occurred trying to find the move: ${interaction.options.getString('move')}, please try again.`, ephemeral: true});
         let learnedByString = [];
         for(let i = 0; i < info.learnedBy.length; i++){
             if(maids.findIndex(function(e) { return e.id.toLowerCase() == info.learnedBy[i].toLowerCase()}) != -1){
@@ -61,7 +61,7 @@ module.exports = {
         newEmbed.addFields(
             {name: "Pokemon that can learn this move", value: learnedByString.join(", ")}
             )
-        interaction.reply({embeds: [newEmbed]});
+        interaction.reply({embeds: [newEmbed], ephemeral: true});
         
         
         

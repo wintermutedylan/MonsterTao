@@ -222,12 +222,12 @@ module.exports = {
         const rowmenu = new ActionRowBuilder()
             .addComponents(select);
         if(sortedOG.length == 0){
-            interaction.reply("The filters you set didn't return any pokemon. try again later");
+            interaction.reply({content: "The filters you set didn't return any pokemon. try again later", ephemeral: true});
         }
         else if(sortedOG.length == 1){
             interaction.reply({ embeds: [newEmbed]});
         } else {
-            const response = await interaction.reply({ embeds: [newEmbed], components: [rowmenu]});
+            const response = await interaction.reply({ embeds: [newEmbed], components: [rowmenu], ephemeral: true});
             
             const collectorFilter = i => {
                 i.deferUpdate(); 
@@ -292,7 +292,7 @@ module.exports = {
                     //if(pageNumber >= sortedTotal){
                     //    await interaction.editReply({embeds: [newEmbedNext], components: [rowend]});
                     //} else {
-                        await interaction.editReply({embeds: [newEmbedNext], components: [rowmenu2]}); //everything commented out is for buttons
+                        await interaction.editReply({embeds: [newEmbedNext], components: [rowmenu2], ephemeral: true}); //everything commented out is for buttons
                     //}
                 /*
                 if(i.customId == 'next'){

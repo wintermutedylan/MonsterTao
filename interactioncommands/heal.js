@@ -21,6 +21,7 @@ module.exports = {
         playerData = await playerModel.findOne({ userID: interaction.user.id});
         if (!playerData) return interaction.reply({content: "You don't exist. Please run /register to create a profile", ephemeral: true});
         var ID = interaction.user.id;
+        if(interaction.channel.isThread()) return interaction.reply("please use this command out of a thread");
 
         for(let i = 0; i < playerData.currentParty.length; i++){
             let location = playerData.maids.findIndex(function(item) { return item.pcID == playerData.currentParty[i]});
@@ -38,7 +39,7 @@ module.exports = {
         }
         
 
-        interaction.reply("Your Party is now full health.  Good luck out there");
+        interaction.reply({content: "Your Party is now full health.  Good luck out there", ephemeral: true});
         
         
     }
