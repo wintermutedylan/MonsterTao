@@ -96,6 +96,6 @@ module.exports = {
         
         
         
-        interaction.reply({ embeds: [newEmbed], ephemeral: true });
+        interaction.reply({ embeds: [newEmbed]});
     }
 }

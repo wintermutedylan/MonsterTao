@@ -61,7 +61,7 @@ module.exports = {
         newEmbed.addFields(
             {name: "Pokemon that can learn this move", value: learnedByString.join(", ")}
             )
-        interaction.reply({embeds: [newEmbed], ephemeral: true});
+        interaction.reply({embeds: [newEmbed]});
         
         
         

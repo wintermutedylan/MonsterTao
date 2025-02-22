@@ -93,7 +93,7 @@ module.exports = {
             {name: "Moves", value: `${sorted.moves.join(", ")}`}
             )
         
-        interaction.reply({embeds: [newEmbed]});
+        interaction.reply({embeds: [newEmbed], ephemeral: true});
         
         
         

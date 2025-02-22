@@ -133,7 +133,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         newEmbed.addFields({name: "Cost", value: `Value: ${itemStuff.cost}`});
 
 
-        interaction.reply({embeds: [newEmbed], ephemeral: true});
+        interaction.reply({embeds: [newEmbed]});
         
 
 

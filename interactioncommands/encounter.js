@@ -2736,6 +2736,9 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                     stageQuote += `The wild ${p2current.id} lost ${totalHealth} HP`;
                 }
                 break;
+            default:
+                stageQuote += "NOT IMPLEMENTED YET SORRY\n";
+                break;
             
             
                 
@@ -4684,7 +4687,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 battle(p1party, p2party, p1current, p2current, thread, author, turn);
             }  else if(status.includes("confusion") && missed){
                 let randomConfusionNumber = randomIntFromInterval(85, 100);
-                let confusionDamage = ((((2 * p1current.level / 5 + 2) * (p1current.attack) * 40 / (p1current.defense)) / 50) + 2) * 1 * 1 * randomConfusionNumber / 100;
+                let confusionDamage = Math.floor(((((2 * p1current.level / 5 + 2) * (p1current.attack) * 40 / (p1current.defense)) / 50) + 2) * 1 * 1 * randomConfusionNumber / 100);
                 for (let j = 0; j < p1party.length; j++){
                     if (p1current.id === p1party[j].id){
                         p1party[j].currentHealth = p1party[j].currentHealth - confusionDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool
@@ -4776,7 +4779,7 @@ function dmgcalc(p1party, p2party, p1current, p2current, thread, author, turn, m
                 battle(p1party, p2party, p1current, p2current, thread, author, turn);
             }  else if(status.includes("confusion") && missed){
                 let randomConfusionNumber = randomIntFromInterval(85, 100);
-                let confusionDamage = ((((2 * p2current.level / 5 + 2) * (p2current.attack) * 40 / (p2current.defense)) / 50) + 2) * 1 * 1 * randomConfusionNumber / 100;
+                let confusionDamage = Math.floor(((((2 * p2current.level / 5 + 2) * (p2current.attack) * 40 / (p2current.defense)) / 50) + 2) * 1 * 1 * randomConfusionNumber / 100);
                 for (let j = 0; j < p2party.length; j++){
                     if (p2current.id === p2party[j].id){
                         p2party[j].currentHealth = p2party[j].currentHealth - confusionDamage;//this does the dmg but some how it also updates the current BECAUSE REFERENCES.  im passing a reference to the party. its very cool

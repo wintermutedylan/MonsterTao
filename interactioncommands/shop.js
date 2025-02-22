@@ -85,7 +85,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
         
         
         
-        const response = await interaction.reply({ embeds: [newEmbed], components: [rowmenu], ephemeral: true});
+        const response = await interaction.reply({ embeds: [newEmbed], components: [rowmenu]});
             
             const collectorFilter = i => {
                 i.deferUpdate(); 
@@ -138,7 +138,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
                     
                     
                     
-                        await interaction.editReply({embeds: [newEmbedNext], components: [rowmenu], ephemeral: true}); 
+                        await interaction.editReply({embeds: [newEmbedNext], components: [rowmenu]}); 
                 
                 
                 
@@ -162,7 +162,7 @@ module.exports = { //make this a slash command where when you enter the pcid it 
             
             
             
-            interaction.reply({ embeds: [newEmbed], ephemeral: true });
+            interaction.reply({ embeds: [newEmbed]});
     
         }
         

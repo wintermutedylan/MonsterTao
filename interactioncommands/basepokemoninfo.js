@@ -57,18 +57,30 @@ module.exports = {
         let learnedString = "";
         let otherString = "";
         let sorted = maids.find( function(item) { return item.id.toLowerCase() == interaction.options.getString('pokemon').toLowerCase() } );
-        if(!sorted) return interaction.reply({content:`An error has occurred trying to find the pokemon: ${interaction.options.getString('pokemon')}, please try again.`, ephemeral: true});
+        if(!sorted) return interaction.reply({content:`An error has occurred trying to find the pokemon: ${interaction.options.getString('pokemon')}, please try again.`});
         let learnedMoves = moveinfo.find(function(m) { return m.id.toLowerCase() == sorted.id.toLowerCase()}).leveUpMoves;
         let otherMoves = moveinfo.find(function(m) { return m.id.toLowerCase() == sorted.id.toLowerCase()}).otherMoves;
         otherMoves = otherMoves.filter(function(n) { return n.method == "machine"});
         var learnedSorted = learnedMoves.sort((a, b) => (a.level) - (b.level));
-        for(let i = 0; i < learnedSorted.length; i++){
+        
+        if(learnedSorted.length > 0){
+            for(let i = 0; i < learnedSorted.length; i++){
             
-            learnedString += `${learnedSorted[i].name[0].toUpperCase() + learnedSorted[i].name.slice(1)}, Level: ${learnedSorted[i].level}\n`;
+                learnedString += `${learnedSorted[i].name[0].toUpperCase() + learnedSorted[i].name.slice(1)}, Level: ${learnedSorted[i].level}\n`;
+            }
+        } else {
+            learnedSorted = "None";
         }
-        for(let j = 0; j < otherMoves.length; j++){
-            otherString += `${otherMoves[j].name[0].toUpperCase() + otherMoves[j].name.slice(1)}, `;
+        
+        if(otherMoves.length > 0){
+            for(let j = 0; j < otherMoves.length; j++){
+                otherString += `${otherMoves[j].name[0].toUpperCase() + otherMoves[j].name.slice(1)}, `;
+            }
+        } else {
+            otherString = "None";
         }
+        
+        
         const newEmbed = new EmbedBuilder()
         .setColor('#E76AA3')
         .setTitle("**Pokemon Info**")
@@ -95,7 +107,7 @@ module.exports = {
             }
             newEmbed.addFields({name: "Evolution Details", value: evolveString});
         }
-        interaction.reply({embeds: [newEmbed], ephemeral: true});
+        interaction.reply({embeds: [newEmbed]});
         
         
         
